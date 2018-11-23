@@ -1,12 +1,11 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <!--
-Copyright 2017 Google Inc.
+Copyright 2016 Google Inc. All Rights Reserved.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
 You may obtain a copy of the License at
 
-    http://www.apache.org/licenses/LICENSE-2.0
+http://www.apache.org/licenses/LICENSE-2.0
 
 Unless required by applicable law or agreed to in writing, software
 distributed under the License is distributed on an "AS IS" BASIS,
@@ -14,39 +13,37 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -->
-<!-- [START pom] -->
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project>
   <modelVersion>4.0.0</modelVersion>
-  <groupId>com.jonkimbel</groupId>
-  <artifactId>busboybackend</artifactId>
-  <version>1.0.1</version>
   <packaging>war</packaging>
+  <version>1.0</version>
+
+  <groupId>com.jonkimbel.busboybackend</groupId>
+  <artifactId>bus-boy</artifactId>
 
   <!-- Parent POM defines common plugins and properties. -->
   <parent>
     <groupId>com.google.cloud.samples</groupId>
     <artifactId>shared-configuration</artifactId>
-    <version>1.0.9</version>
+    <version>1.0.1</version>
   </parent>
 
-<!-- [START properties] -->
   <properties>
-    <maven.compiler.source>1.8</maven.compiler.source>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.compiler.target>1.8</maven.compiler.target>
-    <!-- REQUIRED by appengine-maven-plugin plugin, if web.xml does not exist for your application -->
-    <failOnMissingWebXml>false</failOnMissingWebXml>
-<!-- [END_EXCLUDE] -->
+    <maven.compiler.source>1.8</maven.compiler.source>
 
+    <appengine.app.version>1</appengine.app.version>
+    <appengine.target.version>1.9.67</appengine.target.version>
+    <appengine-maven-plugin-version>1.3.2</appengine-maven-plugin-version>
   </properties>
-<!-- [END properties] -->
 
   <dependencies>
     <!-- Compile/runtime dependencies -->
-    <!-- App Engine SDK dependency : only required if you need to explicitly use App Engine API -->
     <dependency>
       <groupId>com.google.appengine</groupId>
       <artifactId>appengine-api-1.0-sdk</artifactId>
-      <version>1.9.67</version>
+      <version>${appengine.target.version}</version>
     </dependency>
     <!-- [START servlet] -->
     <dependency>
@@ -63,19 +60,19 @@ limitations under the License.
     <dependency>
       <groupId>com.google.appengine</groupId>
       <artifactId>appengine-testing</artifactId>
-      <version>1.9.67</version>
+      <version>${appengine.target.version}</version>
       <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>com.google.appengine</groupId>
       <artifactId>appengine-api-stubs</artifactId>
-      <version>1.9.67</version>
+      <version>${appengine.target.version}</version>
       <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>com.google.appengine</groupId>
       <artifactId>appengine-tools-sdk</artifactId>
-      <version>1.9.67</version>
+      <version>${appengine.target.version}</version>
       <scope>test</scope>
     </dependency>
 
@@ -101,17 +98,30 @@ limitations under the License.
   </dependencies>
 
   <build>
-    <!-- for hot reload of the web application-->
-    <outputDirectory>${project.build.directory}/${project.build.finalName}/WEB-INF/classes</outputDirectory>
+    <outputDirectory>target/${project.artifactId}/WEB-INF/classes</outputDirectory>
+
     <plugins>
-      <!-- [START cloudplugin] -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-war-plugin</artifactId>
+        <version>2.3</version>
+        <configuration>
+          <archiveClasses>true</archiveClasses>
+          <webResources>
+            <!-- in order to interpolate version from pom into appengine-web.xml -->
+            <resource>
+              <directory>${basedir}/src/main/webapp/WEB-INF</directory>
+              <filtering>true</filtering>
+              <targetPath>WEB-INF</targetPath>
+            </resource>
+          </webResources>
+        </configuration>
+      </plugin>
       <plugin>
         <groupId>com.google.cloud.tools</groupId>
         <artifactId>appengine-maven-plugin</artifactId>
-        <version>1.3.1</version>
+        <version>${appengine-maven-plugin-version}</version>
       </plugin>
-      <!-- [END cloudplugin] -->
     </plugins>
   </build>
 </project>
-<!-- [END pom] -->
