@@ -36,11 +36,11 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 /**
- * Unit tests for {@link HelloAppEngine}.
+ * Unit tests for {@link BusBoyServlet}.
  */
 // [START example]
 @RunWith(JUnit4.class)
-public class HelloAppEngineTest {
+public class BusBoyServletTest {
   private static final String FAKE_URL = "fake.fk/hello";
   // Set up a helper so that the ApiProxy returns a valid environment for local testing.
   private final LocalServiceTestHelper helper = new LocalServiceTestHelper();
@@ -48,7 +48,7 @@ public class HelloAppEngineTest {
   @Mock private HttpServletRequest mockRequest;
   @Mock private HttpServletResponse mockResponse;
   private StringWriter responseWriter;
-  private HelloAppEngine servletUnderTest;
+  private BusBoyServlet servletUnderTest;
 
   @Before
   public void setUp() throws Exception {
@@ -62,7 +62,7 @@ public class HelloAppEngineTest {
     responseWriter = new StringWriter();
     when(mockResponse.getWriter()).thenReturn(new PrintWriter(responseWriter));
 
-    servletUnderTest = new HelloAppEngine();
+    servletUnderTest = new BusBoyServlet();
   }
 
   @After public void tearDown() {
@@ -75,16 +75,8 @@ public class HelloAppEngineTest {
 
     // We expect our hello world response.
     assertThat(responseWriter.toString())
-        .named("HelloAppEngine response")
+        .named("BusBoyServlet response")
         .contains("Hello App Engine - Standard ");
-  }
-
-  @Test
-  public void helloInfoTest() {
-    String result = HelloAppEngine.getInfo();
-    assertThat(result)
-      .named("HelloInfo.getInfo")
-      .containsMatch("^Version:\\s+.+OS:\\s+.+User:\\s");
   }
 }
 // [END example]
