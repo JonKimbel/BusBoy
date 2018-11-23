@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <!--
   Copyright 2016 Google Inc. All Rights Reserved.
 
@@ -13,7 +14,8 @@
   See the License for the specific language governing permissions and
   limitations under the License.
 -->
-<project>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
   <modelVersion>4.0.0</modelVersion>
   <packaging>war</packaging>
   <version>1.0</version>
@@ -32,6 +34,8 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.compiler.target>1.8</maven.compiler.target>
     <maven.compiler.source>1.8</maven.compiler.source>
+    <!-- REQUIRED by appengine-maven-plugin plugin, if web.xml does not exist for your application -->
+    <failOnMissingWebXml>false</failOnMissingWebXml>
 
     <appengine.app.version>1</appengine.app.version>
     <appengine.target.version>1.9.67</appengine.target.version>
