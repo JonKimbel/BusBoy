@@ -1,7 +1,13 @@
-The following docs were copied from Google's [appengine-try-java](
-https://github.com/GoogleCloudPlatform/appengine-try-java) project.
+# BusBoyBackend (`appengine` directory)
 
-## Before you begin
+[TOC]
+
+## Running the code
+
+The docs in this section were copied from Google's [appengine-try-java repo](
+https://github.com/GoogleCloudPlatform/appengine-try-java).
+
+### Before you begin
 
 1.  Download and install the [Google Cloud
     SDK](https://cloud.google.com/sdk/docs/).
@@ -16,7 +22,7 @@ https://github.com/GoogleCloudPlatform/appengine-try-java) project.
 
         gcloud components install app-engine-java
 
-## Deploying to App Engine
+### Deploying to App Engine
 
 To run the application locally, use the [Maven App Engine
 plugin](https://cloud.google.com/appengine/docs/java/tools/using-maven).
