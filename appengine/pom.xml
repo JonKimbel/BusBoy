@@ -16,23 +16,18 @@ limitations under the License.
 -->
 <!-- [START pom] -->
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-
   <modelVersion>4.0.0</modelVersion>
-  <!-- REQUIRED : your application must be packed as a .war to deploy on App Engine Standard -->
+  <groupId>com.jonkimbel</groupId>
+  <artifactId>busboybackend</artifactId>
+  <version>1.0.1</version>
   <packaging>war</packaging>
 
-  <groupId>com.example.appengine-j8</groupId>
-  <artifactId>helloworld</artifactId>
-  <version>1.0-SNAPSHOT</version>
-
-  <!-- [START_EXCLUDE] -->
-  <parent>                              <!-- Get parameters and allow bulk testing -->
-    <artifactId>getting-started-java</artifactId>
-    <groupId>com.example</groupId>
-    <version>1.0.0</version>
-    <relativePath>../..</relativePath>
+  <!-- Parent POM defines common plugins and properties. -->
+  <parent>
+    <groupId>com.google.cloud.samples</groupId>
+    <artifactId>shared-configuration</artifactId>
+    <version>1.0.9</version>
   </parent>
-  <!-- [END_EXCLUDE] -->
 
 <!-- [START properties] -->
   <properties>
