@@ -17,19 +17,16 @@
 
 package com.jonkimbel.busboybackend;
 
-import com.google.appengine.api.utils.SystemProperty;
 import com.google.gson.Gson;
 import java.io.IOException;
 import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.Map;
 import javax.annotation.Nullable; // Needs entry in POM.
-import javax.servlet.annotation.WebServlet;
+import javax.inject.Inject;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebServlet(name = "BusBoyServlet", value = "/busboy")
 public class BusBoyServlet extends HttpServlet {
   private final static String STOP_QUERY_PARAM = "stop";
 
@@ -38,6 +35,13 @@ public class BusBoyServlet extends HttpServlet {
       // Email OBA_API_KEY@soundtransit.org to get a real key if you're planning
       // on actually using this app beyond testing.
       "/%s.json?key=TEST";
+
+  private final HttpUtils httpUtils;
+
+  @Inject
+  public BusBoyServlet(HttpUtils httpUtils) {
+    this.httpUtils = httpUtils;
+  }
 
   /**
    * Serves HTTP requests to /busboy.
@@ -64,9 +68,7 @@ public class BusBoyServlet extends HttpServlet {
       response.setStatus(HttpUtils.SC_INTERNAL_SERVER_ERROR);
       response.getWriter().println("Error creating URL for OneBusAway.");
       return;
-    }
-
-    if (data == null) {
+    } catch (IOException e) {
       response.setStatus(HttpUtils.SC_SERVICE_UNAVAILABLE);
       response.getWriter().println("Error sending request to OneBusAway.");
       return;
@@ -76,21 +78,15 @@ public class BusBoyServlet extends HttpServlet {
   }
 
   @Nullable
-  private static String getStopIdFromQueryString(String queryString) {
-    Map<String, String> map = HttpUtils.parseQueryString(queryString);
+  private String getStopIdFromQueryString(String queryString) {
+    Map<String, String> map = httpUtils.parseQueryString(queryString);
     return map.get(STOP_QUERY_PARAM);
   }
 
-  @Nullable
-  private static ArrivalAndDepartureResponse getDataForStopId(String stopId)
-      throws MalformedURLException {
-    URL urlForStopId = new URL(String.format(OBA_URL_FORMAT_STRING, stopId));
-    String json;
-    try {
-      json = HttpUtils.sendGetRequest(urlForStopId);
-    } catch (IOException e) {
-      return null;
-    }
+  private ArrivalAndDepartureResponse getDataForStopId(String stopId)
+      throws MalformedURLException, IOException {
+    String urlForStopId = String.format(OBA_URL_FORMAT_STRING, stopId);
+    String json = httpUtils.sendGetRequest(urlForStopId);
 
     Gson gson = new Gson();
     return gson.fromJson(json, ArrivalAndDepartureResponse.class);

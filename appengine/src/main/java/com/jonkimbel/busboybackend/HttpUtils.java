@@ -1,8 +1,9 @@
 package com.jonkimbel.busboybackend;
 
+import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.IOException;
-import java.io.BufferedReader;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
@@ -21,7 +22,7 @@ public class HttpUtils {
    * <p>If an unexpected format is used, a partial map will be returned where
    * possible.
    */
-  public static Map<String, String> parseQueryString(
+  public Map<String, String> parseQueryString(
       @Nullable String queryString) {
     Map<String, String> map = new HashMap<>();
     if (queryString == null) {
@@ -47,7 +48,8 @@ public class HttpUtils {
     return map;
   }
 
-  public static String sendGetRequest(URL url) throws IOException {
+  public String sendGetRequest(String urlString) throws IOException, MalformedURLException {
+    URL url = new URL(urlString);
     BufferedReader responseReader =
         new BufferedReader(new InputStreamReader(url.openStream()));
     StringBuffer response = new StringBuffer();

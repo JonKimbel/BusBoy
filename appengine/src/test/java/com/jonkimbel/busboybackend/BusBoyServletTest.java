@@ -18,21 +18,21 @@
 package com.jonkimbel.busboybackend;
 
 import static com.google.common.truth.Truth.assertThat;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 import com.google.appengine.tools.development.testing.LocalServiceTestHelper;
-
+import com.google.common.collect.ImmutableMap;
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
-
+import java.net.MalformedURLException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
+import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
@@ -42,11 +42,15 @@ import org.mockito.MockitoAnnotations;
 @RunWith(JUnit4.class)
 public class BusBoyServletTest {
   private static final String FAKE_URL = "fake.fk/busboy?stop=ID";
+  private static final String QUERY_STRING = "stop=ID";
+  private static final String FAKE_JSON_RESPONSE = "{ \"code\": 200 }";
+
   // Set up a helper so that the ApiProxy returns a valid environment for local testing.
   private final LocalServiceTestHelper helper = new LocalServiceTestHelper();
 
   @Mock private HttpServletRequest mockRequest;
   @Mock private HttpServletResponse mockResponse;
+  @Mock private HttpUtils mockHttpUtils;
   private StringWriter responseWriter;
   private BusBoyServlet servletUnderTest;
 
@@ -57,13 +61,13 @@ public class BusBoyServletTest {
 
     //  Set up some fake HTTP requests
     when(mockRequest.getRequestURI()).thenReturn(FAKE_URL);
-    when(mockRequest.getQueryString()).thenReturn("stop=ID");
+    when(mockRequest.getQueryString()).thenReturn(QUERY_STRING);
 
     // Set up a fake HTTP response.
     responseWriter = new StringWriter();
     when(mockResponse.getWriter()).thenReturn(new PrintWriter(responseWriter));
 
-    servletUnderTest = new BusBoyServlet();
+    servletUnderTest = new BusBoyServlet(mockHttpUtils);
   }
 
   @After public void tearDown() {
@@ -71,12 +75,47 @@ public class BusBoyServletTest {
   }
 
   @Test
-  public void doGetWritesResponse() throws Exception {
+  public void doGet_badQueryString_returnsBadRequest() throws Exception {
     servletUnderTest.doGet(mockRequest, mockResponse);
 
-    // We expect our hello world response.
+    verify(mockResponse).setStatus(400);
     assertThat(responseWriter.toString())
-        .named("BusBoyServlet response")
+        .contains("Request format: /busboy?stop=<ID>");
+  }
+
+  @Test
+  public void doGet_failedRequestToOneBusAway_returnsInternalServerError() throws Exception {
+    when(mockHttpUtils.parseQueryString(QUERY_STRING)).thenReturn(ImmutableMap.of("stop", "ID"));
+    when(mockHttpUtils.sendGetRequest(any())).thenThrow(MalformedURLException.class);
+
+    servletUnderTest.doGet(mockRequest, mockResponse);
+
+    verify(mockResponse).setStatus(500);
+    assertThat(responseWriter.toString())
+        .contains("Error creating URL for OneBusAway.");
+  }
+
+  @Test
+  public void doGet_failedRequestToOneBusAway_returnsServiceUnreachable() throws Exception {
+    when(mockHttpUtils.parseQueryString(QUERY_STRING)).thenReturn(ImmutableMap.of("stop", "ID"));
+    when(mockHttpUtils.sendGetRequest(any())).thenThrow(IOException.class);
+
+    servletUnderTest.doGet(mockRequest, mockResponse);
+
+    // verify(mockResponse).setStatus(503);
+    assertThat(responseWriter.toString())
+        .contains("Error sending request to OneBusAway.");
+  }
+
+  @Test
+  public void doGet() throws Exception {
+    when(mockHttpUtils.parseQueryString(QUERY_STRING)).thenReturn(ImmutableMap.of("stop", "ID"));
+    when(mockHttpUtils.sendGetRequest(any())).thenReturn(FAKE_JSON_RESPONSE);
+
+    servletUnderTest.doGet(mockRequest, mockResponse);
+
+    // verify(mockResponse).setStatus(503);
+    assertThat(responseWriter.toString())
         .contains("Hello busboy");
   }
 }
