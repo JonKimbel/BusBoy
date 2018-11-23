@@ -20,11 +20,11 @@ package com.jonkimbel.busboybackend;
 import static javax.servlet.http.SC_BAD_REQUEST;
 
 import com.google.appengine.api.utils.SystemProperty;
+import com.google.gson.Gson;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Map;
 import javax.annotation.Nullable; // Needs entry in POM.
-import com.google.gson.Gson;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -58,7 +58,7 @@ public class BusBoyServlet extends HttpServlet {
       return;
     }
 
-    OneBusAwayData data = getDataForStopId(stopId);
+    ArrivalAndDepartureResponse data = getDataForStopId(stopId);
 
     response.getWriter().println("Hello busboy");
   }
@@ -69,11 +69,11 @@ public class BusBoyServlet extends HttpServlet {
     return map.get(STOP_QUERY_PARAM);
   }
 
-  private static OneBusAwayData getDataForStopId(String stopId) {
+  private static ArrivalAndDepartureResponse getDataForStopId(String stopId) {
     URL urlForStopId = new URL(String.format(OBA_URL_FORMAT_STRING, stopId));
     String json = HttpUtils.sendGetRequest(urlForStopId);
     Gson gson = new Gson();
 
-    OneBusAwayData obj2 = gson.fromJson(json, OneBusAwayData.class);
+    return gson.fromJson(json, ArrivalAndDepartureResponse.class);
   }
 }

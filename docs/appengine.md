@@ -12,8 +12,7 @@ https://github.com/GoogleCloudPlatform/appengine-try-java).
 1.  Download and install the [Google Cloud
     SDK](https://cloud.google.com/sdk/docs/).
 1.  [Install and configure Apache Maven](http://maven.apache.org/index.html).
-1.  [Create a new Google Cloud Platform project, or use an existing
-		one](https://console.cloud.google.com/project).
+1.  [Create a new Google Cloud Platform project, or use an existing one](https://console.cloud.google.com/project).
 1.  Initialize the Cloud SDK.
 
         gcloud init
