@@ -76,7 +76,7 @@ public class BusBoyServletTest {
     // We expect our hello world response.
     assertThat(responseWriter.toString())
         .named("BusBoyServlet response")
-        .contains("Hello App Engine - Standard ");
+        .isEqualTo("Hello busboy");
   }
 }
 // [END example]
