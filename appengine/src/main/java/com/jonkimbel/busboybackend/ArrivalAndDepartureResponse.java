@@ -20,7 +20,7 @@ public class ArrivalAndDepartureResponse {
   private int version;
 
   /** No-args constructor required by GSON. */
-  public OneBusAwayData() { }
+  public ArrivalAndDepartureResponse() { }
 
   public int getCode() {
     return code;

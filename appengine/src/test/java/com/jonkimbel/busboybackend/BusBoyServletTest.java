@@ -39,10 +39,9 @@ import org.mockito.MockitoAnnotations;
 /**
  * Unit tests for {@link BusBoyServlet}.
  */
-// [START example]
 @RunWith(JUnit4.class)
 public class BusBoyServletTest {
-  private static final String FAKE_URL = "fake.fk/hello";
+  private static final String FAKE_URL = "fake.fk/busboy?stop=ID";
   // Set up a helper so that the ApiProxy returns a valid environment for local testing.
   private final LocalServiceTestHelper helper = new LocalServiceTestHelper();
 
@@ -58,6 +57,7 @@ public class BusBoyServletTest {
 
     //  Set up some fake HTTP requests
     when(mockRequest.getRequestURI()).thenReturn(FAKE_URL);
+    when(mockRequest.getQueryString()).thenReturn("stop=ID");
 
     // Set up a fake HTTP response.
     responseWriter = new StringWriter();
@@ -80,4 +80,3 @@ public class BusBoyServletTest {
         .contains("Hello busboy");
   }
 }
-// [END example]

@@ -17,11 +17,10 @@
 
 package com.jonkimbel.busboybackend;
 
-import static javax.servlet.http.SC_BAD_REQUEST;
-
 import com.google.appengine.api.utils.SystemProperty;
 import com.google.gson.Gson;
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Map;
 import javax.annotation.Nullable; // Needs entry in POM.
@@ -53,12 +52,25 @@ public class BusBoyServlet extends HttpServlet {
     String stopId = getStopIdFromQueryString(request.getQueryString());
 
     if (stopId == null) {
-      response.setStatus(SC_BAD_REQUEST);
+      response.setStatus(HttpUtils.SC_BAD_REQUEST);
       response.getWriter().println("Request format: /busboy?stop=<ID>");
       return;
     }
 
-    ArrivalAndDepartureResponse data = getDataForStopId(stopId);
+    ArrivalAndDepartureResponse data;
+    try {
+      data = getDataForStopId(stopId);
+    } catch (MalformedURLException e) {
+      response.setStatus(HttpUtils.SC_INTERNAL_SERVER_ERROR);
+      response.getWriter().println("Error creating URL for OneBusAway.");
+      return;
+    }
+
+    if (data == null) {
+      response.setStatus(HttpUtils.SC_SERVICE_UNAVAILABLE);
+      response.getWriter().println("Error sending request to OneBusAway.");
+      return;
+    }
 
     response.getWriter().println("Hello busboy");
   }
@@ -69,11 +81,18 @@ public class BusBoyServlet extends HttpServlet {
     return map.get(STOP_QUERY_PARAM);
   }
 
-  private static ArrivalAndDepartureResponse getDataForStopId(String stopId) {
+  @Nullable
+  private static ArrivalAndDepartureResponse getDataForStopId(String stopId)
+      throws MalformedURLException {
     URL urlForStopId = new URL(String.format(OBA_URL_FORMAT_STRING, stopId));
-    String json = HttpUtils.sendGetRequest(urlForStopId);
-    Gson gson = new Gson();
+    String json;
+    try {
+      json = HttpUtils.sendGetRequest(urlForStopId);
+    } catch (IOException e) {
+      return null;
+    }
 
+    Gson gson = new Gson();
     return gson.fromJson(json, ArrivalAndDepartureResponse.class);
   }
 }

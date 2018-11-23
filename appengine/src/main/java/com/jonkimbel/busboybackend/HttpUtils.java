@@ -1,15 +1,20 @@
 package com.jonkimbel.busboybackend;
 
 import java.io.InputStreamReader;
+import java.io.IOException;
 import java.io.BufferedReader;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
-import javax.annotation.Nullable; // Needs entry in POM.
+import javax.annotation.Nullable;
 
 public class HttpUtils {
+  public final static int SC_BAD_REQUEST = 400;
+  public final static int SC_INTERNAL_SERVER_ERROR = 500;
+  public final static int SC_SERVICE_UNAVAILABLE = 503;
+
   /**
-   * Parses a URL query string into a map.
+   * Parses a URL query string into a map. All keys will be lower case.
    *
    * <p>Expected format: [?]key=value&key2=value2
    *
@@ -30,19 +35,19 @@ public class HttpUtils {
     String[] clauses = queryString.split("&");
     for (String clause : clauses) {
       int delimiter = clause.indexOf("=");
-      String key = delimiter == 0 ? "" : clause.substring(0, delimiter - 1);
+      String key = delimiter == 0
+          ? "" : clause.substring(0, delimiter).toLowerCase();
       if (!map.containsKey(key)) {
         String value = delimiter == clause.length() - 1 ? ""
-            : clause.substring(delimiter + 1, clause.length() - 1);
+            : clause.substring(delimiter + 1, clause.length());
         map.put(key, value);
       }
     }
+
+    return map;
   }
 
-  /**
-   *
-   */
-  public static String sendGetRequest(URL url) {
+  public static String sendGetRequest(URL url) throws IOException {
     BufferedReader responseReader =
         new BufferedReader(new InputStreamReader(url.openStream()));
     StringBuffer response = new StringBuffer();

@@ -23,18 +23,17 @@
   <groupId>com.jonkimbel.busboybackend</groupId>
   <artifactId>bus-boy</artifactId>
 
-  <!-- Parent POM defines common plugins and properties. -->
-  <parent>
-    <groupId>com.google.cloud.samples</groupId>
-    <artifactId>shared-configuration</artifactId>
-    <version>1.0.1</version>
-  </parent>
+  <repositories>
+    <repository>
+      <id>public.onebusaway.org</id>
+      <url>http://nexus.onebusaway.org/content/groups/public/</url>
+    </repository>
+  </repositories>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.compiler.target>1.8</maven.compiler.target>
     <maven.compiler.source>1.8</maven.compiler.source>
-    <!-- REQUIRED by appengine-maven-plugin plugin, if web.xml does not exist for your application -->
     <failOnMissingWebXml>false</failOnMissingWebXml>
 
     <appengine.app.version>1</appengine.app.version>
@@ -66,7 +65,12 @@
       <artifactId>onebusaway-api-core</artifactId>
       <version>1.1.19</version>
     </dependency>
-
+    <!-- For javax. -->
+    <dependency>
+      <groupId>com.google.code.findbugs</groupId>
+      <artifactId>jsr305</artifactId>
+      <version>3.0.0</version>
+    </dependency>
 
     <!-- Test Dependencies -->
     <dependency>
@@ -87,7 +91,6 @@
       <version>${appengine.target.version}</version>
       <scope>test</scope>
     </dependency>
-
     <dependency>
       <groupId>com.google.truth</groupId>
       <artifactId>truth</artifactId>
@@ -110,7 +113,6 @@
 
   <build>
     <outputDirectory>target/${project.artifactId}/WEB-INF/classes</outputDirectory>
-
     <plugins>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
