@@ -20,8 +20,10 @@ package com.jonkimbel.busboybackend;
 import com.google.gson.Gson;
 import com.jonkimbel.busboybackend.model.ArrivalAndDepartureResponse;
 import com.jonkimbel.busboybackend.network.NetworkUtils;
+import com.jonkimbel.busboybackend.proto.BusBoyResponse;
 import java.io.IOException;
 import java.net.MalformedURLException;
+import java.nio.charset.Charset;
 import java.util.Map;
 import javax.annotation.Nullable; // Needs entry in POM.
 import javax.inject.Inject;
@@ -73,6 +75,10 @@ public class BusBoyServlet extends HttpServlet {
       response.getWriter().println("Error sending request to OneBusAway.");
       return;
     }
+
+    BusBoyResponse proto = BusBoyResponse.newBuilder()
+        .setTime(data.getCurrentTime())
+        .build();
 
     response.getWriter().println("Hello busboy");
   }

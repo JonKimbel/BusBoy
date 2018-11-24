@@ -22,11 +22,6 @@ http://api.onebusaway.org/api/where/arrivals-and-departures-for-stop/1_26860.jso
 
 [Device docs](https://docs.particle.io/reference/device-os/firmware/boron/)
 
-``` bash
-particle compile boron --saveTo=out.bin
-particle flash --usb out.bin
-```
-
 ## LCD Wiring
 
 The screen used for testing is a [SunFounder I2C 2004 20x4 LCD](
