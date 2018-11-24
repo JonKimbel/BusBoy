@@ -1,4 +1,4 @@
-package com.jonkimbel.busboybackend;
+package com.jonkimbel.busboybackend.model;
 
 import org.onebusaway.api.model.transit.ArrivalAndDepartureV2Bean;
 

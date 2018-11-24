@@ -18,6 +18,8 @@
 package com.jonkimbel.busboybackend;
 
 import com.google.gson.Gson;
+import com.jonkimbel.busboybackend.model.ArrivalAndDepartureResponse;
+import com.jonkimbel.busboybackend.network.NetworkUtils;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.Map;
@@ -36,17 +38,15 @@ public class BusBoyServlet extends HttpServlet {
       // on actually using this app beyond testing.
       "/%s.json?key=TEST";
 
-  private final HttpUtils httpUtils;
+  private final NetworkUtils networkUtils;
 
   @Inject
-  public BusBoyServlet(HttpUtils httpUtils) {
-    this.httpUtils = httpUtils;
+  public BusBoyServlet(NetworkUtils networkUtils) {
+    this.networkUtils = networkUtils;
   }
 
   /**
-   * Serves HTTP requests to /busboy.
-   *
-   * <p>Request format: /busboy?stop=<ID>
+   * Serves HTTP requests to /.
    */
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -56,8 +56,8 @@ public class BusBoyServlet extends HttpServlet {
     String stopId = getStopIdFromQueryString(request.getQueryString());
 
     if (stopId == null) {
-      response.setStatus(HttpUtils.SC_BAD_REQUEST);
-      response.getWriter().println("Request format: /busboy?stop=<ID>");
+      response.setStatus(NetworkUtils.SC_BAD_REQUEST);
+      response.getWriter().println("Request format: <domain>/?stop=<ID>");
       return;
     }
 
@@ -65,11 +65,11 @@ public class BusBoyServlet extends HttpServlet {
     try {
       data = getDataForStopId(stopId);
     } catch (MalformedURLException e) {
-      response.setStatus(HttpUtils.SC_INTERNAL_SERVER_ERROR);
+      response.setStatus(NetworkUtils.SC_INTERNAL_SERVER_ERROR);
       response.getWriter().println("Error creating URL for OneBusAway.");
       return;
     } catch (IOException e) {
-      response.setStatus(HttpUtils.SC_SERVICE_UNAVAILABLE);
+      response.setStatus(NetworkUtils.SC_SERVICE_UNAVAILABLE);
       response.getWriter().println("Error sending request to OneBusAway.");
       return;
     }
@@ -79,14 +79,14 @@ public class BusBoyServlet extends HttpServlet {
 
   @Nullable
   private String getStopIdFromQueryString(String queryString) {
-    Map<String, String> map = httpUtils.parseQueryString(queryString);
+    Map<String, String> map = networkUtils.parseQueryString(queryString);
     return map.get(STOP_QUERY_PARAM);
   }
 
   private ArrivalAndDepartureResponse getDataForStopId(String stopId)
       throws MalformedURLException, IOException {
     String urlForStopId = String.format(OBA_URL_FORMAT_STRING, stopId);
-    String json = httpUtils.sendGetRequest(urlForStopId);
+    String json = networkUtils.sendGetRequest(urlForStopId);
 
     Gson gson = new Gson();
     return gson.fromJson(json, ArrivalAndDepartureResponse.class);

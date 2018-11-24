@@ -6,7 +6,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebServlet(name = "BusBoyServletWrapper", value = "/busboy")
+@WebServlet(name = "BusBoyServletWrapper", value = "/")
 public class BusBoyServletWrapper extends HttpServlet {
   private final BusBoyServlet wrappedServlet;
 

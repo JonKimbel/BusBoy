@@ -1,4 +1,4 @@
-package com.jonkimbel.busboybackend;
+package com.jonkimbel.busboybackend.network;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -9,7 +9,7 @@ import java.util.HashMap;
 import java.util.Map;
 import javax.annotation.Nullable;
 
-public class HttpUtils {
+public class NetworkUtils {
   public final static int SC_BAD_REQUEST = 400;
   public final static int SC_INTERNAL_SERVER_ERROR = 500;
   public final static int SC_SERVICE_UNAVAILABLE = 503;

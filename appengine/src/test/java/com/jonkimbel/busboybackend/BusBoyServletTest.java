@@ -22,6 +22,7 @@ import static org.mockito.Mockito.*;
 
 import com.google.appengine.tools.development.testing.LocalServiceTestHelper;
 import com.google.common.collect.ImmutableMap;
+import com.jonkimbel.busboybackend.network.NetworkUtils;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
@@ -50,7 +51,7 @@ public class BusBoyServletTest {
 
   @Mock private HttpServletRequest mockRequest;
   @Mock private HttpServletResponse mockResponse;
-  @Mock private HttpUtils mockHttpUtils;
+  @Mock private NetworkUtils mockNetworkUtils;
   private StringWriter responseWriter;
   private BusBoyServlet servletUnderTest;
 
@@ -67,7 +68,7 @@ public class BusBoyServletTest {
     responseWriter = new StringWriter();
     when(mockResponse.getWriter()).thenReturn(new PrintWriter(responseWriter));
 
-    servletUnderTest = new BusBoyServlet(mockHttpUtils);
+    servletUnderTest = new BusBoyServlet(mockNetworkUtils);
   }
 
   @After public void tearDown() {
@@ -80,13 +81,13 @@ public class BusBoyServletTest {
 
     verify(mockResponse).setStatus(400);
     assertThat(responseWriter.toString())
-        .contains("Request format: /busboy?stop=<ID>");
+        .contains("Request format: <domain>/?stop=<ID>");
   }
 
   @Test
   public void doGet_failedRequestToOneBusAway_returnsInternalServerError() throws Exception {
-    when(mockHttpUtils.parseQueryString(QUERY_STRING)).thenReturn(ImmutableMap.of("stop", "ID"));
-    when(mockHttpUtils.sendGetRequest(any())).thenThrow(MalformedURLException.class);
+    when(mockNetworkUtils.parseQueryString(QUERY_STRING)).thenReturn(ImmutableMap.of("stop", "ID"));
+    when(mockNetworkUtils.sendGetRequest(any())).thenThrow(MalformedURLException.class);
 
     servletUnderTest.doGet(mockRequest, mockResponse);
 
@@ -97,8 +98,8 @@ public class BusBoyServletTest {
 
   @Test
   public void doGet_failedRequestToOneBusAway_returnsServiceUnreachable() throws Exception {
-    when(mockHttpUtils.parseQueryString(QUERY_STRING)).thenReturn(ImmutableMap.of("stop", "ID"));
-    when(mockHttpUtils.sendGetRequest(any())).thenThrow(IOException.class);
+    when(mockNetworkUtils.parseQueryString(QUERY_STRING)).thenReturn(ImmutableMap.of("stop", "ID"));
+    when(mockNetworkUtils.sendGetRequest(any())).thenThrow(IOException.class);
 
     servletUnderTest.doGet(mockRequest, mockResponse);
 
@@ -109,8 +110,8 @@ public class BusBoyServletTest {
 
   @Test
   public void doGet() throws Exception {
-    when(mockHttpUtils.parseQueryString(QUERY_STRING)).thenReturn(ImmutableMap.of("stop", "ID"));
-    when(mockHttpUtils.sendGetRequest(any())).thenReturn(FAKE_JSON_RESPONSE);
+    when(mockNetworkUtils.parseQueryString(QUERY_STRING)).thenReturn(ImmutableMap.of("stop", "ID"));
+    when(mockNetworkUtils.sendGetRequest(any())).thenReturn(FAKE_JSON_RESPONSE);
 
     servletUnderTest.doGet(mockRequest, mockResponse);
 
