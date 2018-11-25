@@ -6,7 +6,7 @@ import org.onebusaway.api.model.transit.ArrivalAndDepartureV2Bean;
  * A POJO that matches the layout of OneBusAway API responses, for use with
  * GSON.
  *
- * <p>We need to do this instead of using
+ * <p>We need to use this class instead of using
  * {@link org.onebusaway.api.model.ResponseBean} directly because GSON cannot
  * deserialize into the generic {@code Object data} in ResponseBean.
  *

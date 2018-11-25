@@ -20,11 +20,14 @@ package com.jonkimbel.busboybackend;
 import com.google.gson.Gson;
 import com.jonkimbel.busboybackend.model.ArrivalAndDepartureResponse;
 import com.jonkimbel.busboybackend.network.NetworkUtils;
-import com.jonkimbel.busboybackend.proto.BusBoyResponse;
+import com.jonkimbel.busboybackend.proto.BusBoy;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.nio.charset.Charset;
+import java.time.Instant;
+import java.util.Date;
 import java.util.Map;
+import java.util.TimeZone;
 import javax.annotation.Nullable; // Needs entry in POM.
 import javax.inject.Inject;
 import javax.servlet.http.HttpServlet;
@@ -76,11 +79,14 @@ public class BusBoyServlet extends HttpServlet {
       return;
     }
 
-    BusBoyResponse proto = BusBoyResponse.newBuilder()
-        .setTime(data.getCurrentTime())
+    boolean inDaylightTime = TimeZone.getTimeZone("America/Los_Angeles").inDaylightTime(new Date());
+    BusBoy.Response proto = BusBoy.Response.newBuilder()
+        .setTime(BusBoy.DisplayedTime.newBuilder()
+            .setMsSinceEpoch(Instant.now().toEpochMilli())
+            .setDaylightSavingsTime(inDaylightTime))
         .build();
 
-    response.getWriter().println("Hello busboy");
+    proto.writeTo(response.getOutputStream());
   }
 
   @Nullable

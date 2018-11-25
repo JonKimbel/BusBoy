@@ -1,0 +1,100 @@
+syntax = "proto2";
+
+package busboy.api;
+
+option java_package = "com.jonkimbel.busboybackend.proto";
+
+message Response {
+  // The current time.
+  // Required.
+  optional DisplayedTime time = 1;
+
+  // Upcoming arrivals.
+  repeated Arrival arrivals = 2;
+
+  // Route information for upcoming arrivals.
+  repeated Route routes = 3;
+
+  // Special messages, e.g. for upcoming events near the stop. Interlaced
+  // between bus information.
+  repeated TemporaryMessage temporary_message = 4;
+
+  // Special styles, e.g. for city-wide events or season changes. Not applied
+  // to bus arrival times.
+  repeated TemporaryStyle temporary_style = 5;
+}
+
+message DisplayedTime {
+  // The current time in milliseconds since the epoch.
+  // Required.
+  optional uint64 ms_since_epoch = 1;
+
+  // Whether to use daylight savings time.
+  // Required.
+  optional bool daylight_savings_time = 2;
+}
+
+message Arrival {
+  // The index of the route this arrival corresponds to.
+  optional uint32 route_index = 1;
+
+  // Number of milliseconds to arrival.
+  optional uint32 ms_to_arrival = 2;
+
+  // Whether the arrival is predicted. The other option is for it just to be
+  // scheduled, and predicted arrivals are more accurate than scheduled
+  // arrivals.
+  optional bool predicted = 3;
+}
+
+message Route {
+  // Short name for the bus route, e.g. '40' or 'D Line.'
+  optional string short_name = 1;
+
+  // Headsign for the bus route, e.g. 'Northgate Fremont'
+  optional string headsign = 2;
+}
+
+message TemporaryMessage {
+  // The period during which this message should be shown.
+  // Required.
+  optional TimeFrame time_frame = 1;
+
+  // The message to show. Try to keep it to a max of four lines.
+  // Required.
+  repeated string message = 2;
+
+  // The color scheme to use for the message. Overrides any temporary style.
+  // Optional.
+  optional ColorScheme color_scheme_override = 3;
+}
+
+message TemporaryStyle {
+  // The period during which this style should be applied.
+  // Required.
+  optional TimeFrame time_frame = 1;
+
+  // The color scheme to use.
+  // Optional.
+  optional ColorScheme color_scheme_override = 2;
+}
+
+// A time frame during which non-standard behavior should be used. Values
+// reference the DisplayedTime.
+message TimeFrame {
+  // Required.
+  optional uint64 start_time_ms_since_epoch = 1;
+
+  // Required.
+  optional uint64 end_time_ms_since_epoch = 2;
+}
+
+enum ColorScheme {
+  SEAHAWKS = 0;
+  RAINBOW = 1;
+
+  SPRING = 2;
+  SUMMER = 3;
+  FALL = 4;
+  WINTER = 5;
+}

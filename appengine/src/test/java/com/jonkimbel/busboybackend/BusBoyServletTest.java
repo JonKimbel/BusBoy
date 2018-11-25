@@ -22,7 +22,11 @@ import static org.mockito.Mockito.*;
 
 import com.google.appengine.tools.development.testing.LocalServiceTestHelper;
 import com.google.common.collect.ImmutableMap;
+import com.google.protobuf.InvalidProtocolBufferException;
 import com.jonkimbel.busboybackend.network.NetworkUtils;
+import com.jonkimbel.busboybackend.proto.BusBoy;
+import com.jonkimbel.busboybackend.testing.FakeServletOutputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
@@ -44,7 +48,8 @@ import org.mockito.MockitoAnnotations;
 public class BusBoyServletTest {
   private static final String FAKE_URL = "fake.fk/busboy?stop=ID";
   private static final String QUERY_STRING = "stop=ID";
-  private static final String FAKE_JSON_RESPONSE = "{ \"code\": 200 }";
+  private static final String EXPECTED_OBA_URL =
+      "http://api.onebusaway.org/api/where/arrivals-and-departures-for-stop/ID.json?key=TEST";
 
   // Set up a helper so that the ApiProxy returns a valid environment for local testing.
   private final LocalServiceTestHelper helper = new LocalServiceTestHelper();
@@ -53,6 +58,7 @@ public class BusBoyServletTest {
   @Mock private HttpServletResponse mockResponse;
   @Mock private NetworkUtils mockNetworkUtils;
   private StringWriter responseWriter;
+  private FakeServletOutputStream responseStream;
   private BusBoyServlet servletUnderTest;
 
   @Before
@@ -67,6 +73,8 @@ public class BusBoyServletTest {
     // Set up a fake HTTP response.
     responseWriter = new StringWriter();
     when(mockResponse.getWriter()).thenReturn(new PrintWriter(responseWriter));
+    responseStream = new FakeServletOutputStream();
+    when(mockResponse.getOutputStream()).thenReturn(responseStream);
 
     servletUnderTest = new BusBoyServlet(mockNetworkUtils);
   }
@@ -87,7 +95,7 @@ public class BusBoyServletTest {
   @Test
   public void doGet_failedRequestToOneBusAway_returnsInternalServerError() throws Exception {
     when(mockNetworkUtils.parseQueryString(QUERY_STRING)).thenReturn(ImmutableMap.of("stop", "ID"));
-    when(mockNetworkUtils.sendGetRequest(any())).thenThrow(MalformedURLException.class);
+    when(mockNetworkUtils.sendGetRequest(EXPECTED_OBA_URL)).thenThrow(MalformedURLException.class);
 
     servletUnderTest.doGet(mockRequest, mockResponse);
 
@@ -99,24 +107,24 @@ public class BusBoyServletTest {
   @Test
   public void doGet_failedRequestToOneBusAway_returnsServiceUnreachable() throws Exception {
     when(mockNetworkUtils.parseQueryString(QUERY_STRING)).thenReturn(ImmutableMap.of("stop", "ID"));
-    when(mockNetworkUtils.sendGetRequest(any())).thenThrow(IOException.class);
+    when(mockNetworkUtils.sendGetRequest(EXPECTED_OBA_URL)).thenThrow(IOException.class);
 
     servletUnderTest.doGet(mockRequest, mockResponse);
 
-    // verify(mockResponse).setStatus(503);
+    verify(mockResponse).setStatus(503);
     assertThat(responseWriter.toString())
         .contains("Error sending request to OneBusAway.");
   }
 
-  @Test
-  public void doGet() throws Exception {
-    when(mockNetworkUtils.parseQueryString(QUERY_STRING)).thenReturn(ImmutableMap.of("stop", "ID"));
-    when(mockNetworkUtils.sendGetRequest(any())).thenReturn(FAKE_JSON_RESPONSE);
-
-    servletUnderTest.doGet(mockRequest, mockResponse);
-
-    // verify(mockResponse).setStatus(503);
-    assertThat(responseWriter.toString())
-        .contains("Hello busboy");
-  }
+  // @Test
+  // public void doGet() throws Exception {
+  //   when(mockNetworkUtils.parseQueryString(QUERY_STRING)).thenReturn(ImmutableMap.of("stop", "ID"));
+  //   when(mockNetworkUtils.sendGetRequest(EXPECTED_OBA_URL)).thenReturn("{ \"currentTime\": 42 }");
+  //
+  //   servletUnderTest.doGet(mockRequest, mockResponse);
+  //
+  //   BusBoy.Response responseData = BusBoy.Response
+  //       .parseFrom(responseStream.toByteArray());
+  //   assertThat(responseData.getTime()).isEqualTo(42);
+  // }
 }
