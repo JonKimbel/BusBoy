@@ -48,6 +48,13 @@ separately. I used a laptop power supply and an `L7805`.
 
 *   [HTTP response docs](https://www.w3.org/Protocols/rfc2616/rfc2616-sec6.html)
 
+### Features
+
+*   Sign uses very small amounts of data (TODO: determine KB per month)
+*   Firmware monitors the current draw of the bus stop sign to detect breakages
+
+### Client-server communication
+
 The responses from [the test API URL](
 http://api.onebusaway.org/api/where/arrivals-and-departures-for-stop/1_26860.json?key=TEST)
 are quite large in comparison to the responses from a custom frontend server:
