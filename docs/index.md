@@ -52,6 +52,7 @@ separately. I used a laptop power supply and an `L7805`.
 
 *   Sign uses very small amounts of data (TODO: determine KB per month)
 *   Firmware monitors the current draw of the bus stop sign to detect breakages
+    (TODO: implement)
 
 ### Client-server communication
 
