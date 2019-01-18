@@ -1,9 +1,10 @@
-
 #include <Wire.h>
+#include <pb_decode.h>
 #include "spark_wiring_string.h"
 #include "spark_wiring_tcpclient.h"
 #include "spark_wiring_usbserial.h"
 #include "LiquidCrystal_I2C.h"
+#include "bus-boy.pb.h"
 
 // Don't auto-connect to the Particle cloud. Speeds up testing.
 SYSTEM_MODE(SEMI_AUTOMATIC);
@@ -18,6 +19,26 @@ bool getResponse();
 
 void setup()
 {
+  //////////////////////////////////////////////////////////////////////////////
+  // scratch area - decode proto response from server
+
+  // Todo: get these from the response data.
+  uint8_t buffer[128];
+  size_t message_length = 64;
+
+  busboy_api_Response response = busboy_api_Response_init_default;
+  pb_istream_t stream = pb_istream_from_buffer(buffer, message_length);
+
+  bool status = pb_decode(&stream, busboy_api_Response_fields, &response);
+  if (!status) {
+    // Todo: handle errors.
+  } else {
+    // Todo: handle successful response.
+  }
+
+  // end scratch area
+  //////////////////////////////////////////////////////////////////////////////
+
   lcd.begin();
   lcd.backlight();
 
