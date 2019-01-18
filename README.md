@@ -9,17 +9,16 @@ See [the main docs](docs/index.md) for more info.
 
 ### API (backend + frontend)
 
-Install the nanopb version of `protoc` from
-[here](https://jpa.kapsi.fi/nanopb/download/) and then run the
-following commands from this directory.
+Download the latest stable release of nanopb from
+[here](https://jpa.kapsi.fi/nanopb/) and add the contents of generator-bin to
+your PATH, then run the following commands from this directory.
 
 ```
 protoc -I=api --java_out=appengine/src/main/java api/bus-boy.proto
-protoc -I=api --nanopb_out=boron/proto api/bus-boy.proto
+protoc -I=api --nanopb_out=boron api/bus-boy.proto
 ```
 
-NOTE: nanopb is used instead of Google's proto compiler because it supports
-embedded C environments.
+While you're on their site, consider donating to the nanopb developer :)
 
 ### AppEngine (backend)
 
@@ -40,7 +39,7 @@ https://github.com/GoogleCloudPlatform/appengine-try-java).
 
         gcloud components install app-engine-java
 
-#### Deploying to App Engine
+#### Running the backend locally
 
 To run the application locally, use the [Maven App Engine
 plugin](https://cloud.google.com/appengine/docs/java/tools/using-maven). Run the
@@ -51,6 +50,8 @@ mvn clean appengine:run -f appengine
 ```
 
 View the app at [localhost:8080](http://localhost:8080).
+
+#### Deploying to App Engine
 
 To deploy the app to App Engine, run the following from this directory:
 
@@ -65,9 +66,27 @@ the Google Cloud Console](https://console.cloud.google.com/appengine/versions).
 
 ### Particle Boron (frontend)
 
+#### Before you begin
 
+1.  Install the Particle CLI following the steps
+    [here](https://docs.particle.io/tutorials/developer-tools/cli/).
+1.  COMPLETELY OPTIONAL: Set up local build toolchain following
+    [these steps](https://docs.particle.io/tutorials/developer-tools/cli/#compile-and-flash-code-locally)
+
+#### Compiling & flashing
+
+To compile the device code, run the following from the boron/ directory:
 
 ```
 particle compile boron --saveTo=out.bin
+```
+
+NOTE: The "boron" in this command refers to the device model, the
+[Particle Boron](https://store.particle.io/products/boron-lte). It is NOT
+providing the name of the folder the code relies upon.
+
+To flash the compiled binary to a usb-connected device:
+
+```
 particle flash --usb out.bin
 ```
