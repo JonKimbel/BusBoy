@@ -365,7 +365,6 @@ public final class BusBoy {
       com.google.protobuf.GeneratedMessageV3 implements
       // @@protoc_insertion_point(message_implements:busboy.api.Response)
       ResponseOrBuilder {
-  private static final long serialVersionUID = 0L;
     // Use Response.newBuilder() to construct.
     private Response(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
       super(builder);
@@ -387,9 +386,6 @@ public final class BusBoy {
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       this();
-      if (extensionRegistry == null) {
-        throw new java.lang.NullPointerException();
-      }
       int mutable_bitField0_ = 0;
       com.google.protobuf.UnknownFieldSet.Builder unknownFields =
           com.google.protobuf.UnknownFieldSet.newBuilder();
@@ -401,6 +397,13 @@ public final class BusBoy {
             case 0:
               done = true;
               break;
+            default: {
+              if (!parseUnknownField(input, unknownFields,
+                                     extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
             case 10: {
               com.jonkimbel.busboybackend.proto.BusBoy.DisplayedTime.Builder subBuilder = null;
               if (((bitField0_ & 0x00000001) == 0x00000001)) {
@@ -450,13 +453,6 @@ public final class BusBoy {
                   input.readMessage(com.jonkimbel.busboybackend.proto.BusBoy.TemporaryStyle.PARSER, extensionRegistry));
               break;
             }
-            default: {
-              if (!parseUnknownField(
-                  input, unknownFields, extensionRegistry, tag)) {
-                done = true;
-              }
-              break;
-            }
           }
         }
       } catch (com.google.protobuf.InvalidProtocolBufferException e) {
@@ -486,7 +482,6 @@ public final class BusBoy {
       return com.jonkimbel.busboybackend.proto.BusBoy.internal_static_busboy_api_Response_descriptor;
     }
 
-    @java.lang.Override
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
         internalGetFieldAccessorTable() {
       return com.jonkimbel.busboybackend.proto.BusBoy.internal_static_busboy_api_Response_fieldAccessorTable
@@ -762,7 +757,6 @@ public final class BusBoy {
     }
 
     private byte memoizedIsInitialized = -1;
-    @java.lang.Override
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
       if (isInitialized == 1) return true;
@@ -772,7 +766,6 @@ public final class BusBoy {
       return true;
     }
 
-    @java.lang.Override
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
       if (((bitField0_ & 0x00000001) == 0x00000001)) {
@@ -793,7 +786,6 @@ public final class BusBoy {
       unknownFields.writeTo(output);
     }
 
-    @java.lang.Override
     public int getSerializedSize() {
       int size = memoizedSize;
       if (size != -1) return size;
@@ -824,6 +816,7 @@ public final class BusBoy {
       return size;
     }
 
+    private static final long serialVersionUID = 0L;
     @java.lang.Override
     public boolean equals(final java.lang.Object obj) {
       if (obj == this) {
@@ -858,7 +851,7 @@ public final class BusBoy {
         return memoizedHashCode;
       }
       int hash = 41;
-      hash = (19 * hash) + getDescriptor().hashCode();
+      hash = (19 * hash) + getDescriptorForType().hashCode();
       if (hasTime()) {
         hash = (37 * hash) + TIME_FIELD_NUMBER;
         hash = (53 * hash) + getTime().hashCode();
@@ -884,17 +877,6 @@ public final class BusBoy {
       return hash;
     }
 
-    public static com.jonkimbel.busboybackend.proto.BusBoy.Response parseFrom(
-        java.nio.ByteBuffer data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static com.jonkimbel.busboybackend.proto.BusBoy.Response parseFrom(
-        java.nio.ByteBuffer data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
     public static com.jonkimbel.busboybackend.proto.BusBoy.Response parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
@@ -954,7 +936,6 @@ public final class BusBoy {
           .parseWithIOException(PARSER, input, extensionRegistry);
     }
 
-    @java.lang.Override
     public Builder newBuilderForType() { return newBuilder(); }
     public static Builder newBuilder() {
       return DEFAULT_INSTANCE.toBuilder();
@@ -962,7 +943,6 @@ public final class BusBoy {
     public static Builder newBuilder(com.jonkimbel.busboybackend.proto.BusBoy.Response prototype) {
       return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
     }
-    @java.lang.Override
     public Builder toBuilder() {
       return this == DEFAULT_INSTANCE
           ? new Builder() : new Builder().mergeFrom(this);
@@ -986,7 +966,6 @@ public final class BusBoy {
         return com.jonkimbel.busboybackend.proto.BusBoy.internal_static_busboy_api_Response_descriptor;
       }
 
-      @java.lang.Override
       protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
           internalGetFieldAccessorTable() {
         return com.jonkimbel.busboybackend.proto.BusBoy.internal_static_busboy_api_Response_fieldAccessorTable
@@ -1014,7 +993,6 @@ public final class BusBoy {
           getTemporaryStyleFieldBuilder();
         }
       }
-      @java.lang.Override
       public Builder clear() {
         super.clear();
         if (timeBuilder_ == null) {
@@ -1050,18 +1028,15 @@ public final class BusBoy {
         return this;
       }
 
-      @java.lang.Override
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
         return com.jonkimbel.busboybackend.proto.BusBoy.internal_static_busboy_api_Response_descriptor;
       }
 
-      @java.lang.Override
       public com.jonkimbel.busboybackend.proto.BusBoy.Response getDefaultInstanceForType() {
         return com.jonkimbel.busboybackend.proto.BusBoy.Response.getDefaultInstance();
       }
 
-      @java.lang.Override
       public com.jonkimbel.busboybackend.proto.BusBoy.Response build() {
         com.jonkimbel.busboybackend.proto.BusBoy.Response result = buildPartial();
         if (!result.isInitialized()) {
@@ -1070,7 +1045,6 @@ public final class BusBoy {
         return result;
       }
 
-      @java.lang.Override
       public com.jonkimbel.busboybackend.proto.BusBoy.Response buildPartial() {
         com.jonkimbel.busboybackend.proto.BusBoy.Response result = new com.jonkimbel.busboybackend.proto.BusBoy.Response(this);
         int from_bitField0_ = bitField0_;
@@ -1124,39 +1098,32 @@ public final class BusBoy {
         return result;
       }
 
-      @java.lang.Override
       public Builder clone() {
         return (Builder) super.clone();
       }
-      @java.lang.Override
       public Builder setField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
+          Object value) {
         return (Builder) super.setField(field, value);
       }
-      @java.lang.Override
       public Builder clearField(
           com.google.protobuf.Descriptors.FieldDescriptor field) {
         return (Builder) super.clearField(field);
       }
-      @java.lang.Override
       public Builder clearOneof(
           com.google.protobuf.Descriptors.OneofDescriptor oneof) {
         return (Builder) super.clearOneof(oneof);
       }
-      @java.lang.Override
       public Builder setRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
-          int index, java.lang.Object value) {
+          int index, Object value) {
         return (Builder) super.setRepeatedField(field, index, value);
       }
-      @java.lang.Override
       public Builder addRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
+          Object value) {
         return (Builder) super.addRepeatedField(field, value);
       }
-      @java.lang.Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
         if (other instanceof com.jonkimbel.busboybackend.proto.BusBoy.Response) {
           return mergeFrom((com.jonkimbel.busboybackend.proto.BusBoy.Response)other);
@@ -1280,12 +1247,10 @@ public final class BusBoy {
         return this;
       }
 
-      @java.lang.Override
       public final boolean isInitialized() {
         return true;
       }
 
-      @java.lang.Override
       public Builder mergeFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -2751,13 +2716,11 @@ public final class BusBoy {
         }
         return temporaryStyleBuilder_;
       }
-      @java.lang.Override
       public final Builder setUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
         return super.setUnknownFields(unknownFields);
       }
 
-      @java.lang.Override
       public final Builder mergeUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
         return super.mergeUnknownFields(unknownFields);
@@ -2779,12 +2742,11 @@ public final class BusBoy {
 
     @java.lang.Deprecated public static final com.google.protobuf.Parser<Response>
         PARSER = new com.google.protobuf.AbstractParser<Response>() {
-      @java.lang.Override
       public Response parsePartialFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws com.google.protobuf.InvalidProtocolBufferException {
-        return new Response(input, extensionRegistry);
+          return new Response(input, extensionRegistry);
       }
     };
 
@@ -2797,7 +2759,6 @@ public final class BusBoy {
       return PARSER;
     }
 
-    @java.lang.Override
     public com.jonkimbel.busboybackend.proto.BusBoy.Response getDefaultInstanceForType() {
       return DEFAULT_INSTANCE;
     }
@@ -2853,7 +2814,6 @@ public final class BusBoy {
       com.google.protobuf.GeneratedMessageV3 implements
       // @@protoc_insertion_point(message_implements:busboy.api.DisplayedTime)
       DisplayedTimeOrBuilder {
-  private static final long serialVersionUID = 0L;
     // Use DisplayedTime.newBuilder() to construct.
     private DisplayedTime(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
       super(builder);
@@ -2873,9 +2833,6 @@ public final class BusBoy {
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       this();
-      if (extensionRegistry == null) {
-        throw new java.lang.NullPointerException();
-      }
       int mutable_bitField0_ = 0;
       com.google.protobuf.UnknownFieldSet.Builder unknownFields =
           com.google.protobuf.UnknownFieldSet.newBuilder();
@@ -2887,6 +2844,13 @@ public final class BusBoy {
             case 0:
               done = true;
               break;
+            default: {
+              if (!parseUnknownField(input, unknownFields,
+                                     extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
             case 8: {
               bitField0_ |= 0x00000001;
               msSinceEpoch_ = input.readUInt64();
@@ -2895,13 +2859,6 @@ public final class BusBoy {
             case 16: {
               bitField0_ |= 0x00000002;
               daylightSavingsTime_ = input.readBool();
-              break;
-            }
-            default: {
-              if (!parseUnknownField(
-                  input, unknownFields, extensionRegistry, tag)) {
-                done = true;
-              }
               break;
             }
           }
@@ -2921,7 +2878,6 @@ public final class BusBoy {
       return com.jonkimbel.busboybackend.proto.BusBoy.internal_static_busboy_api_DisplayedTime_descriptor;
     }
 
-    @java.lang.Override
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
         internalGetFieldAccessorTable() {
       return com.jonkimbel.busboybackend.proto.BusBoy.internal_static_busboy_api_DisplayedTime_fieldAccessorTable
@@ -2981,7 +2937,6 @@ public final class BusBoy {
     }
 
     private byte memoizedIsInitialized = -1;
-    @java.lang.Override
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
       if (isInitialized == 1) return true;
@@ -2991,7 +2946,6 @@ public final class BusBoy {
       return true;
     }
 
-    @java.lang.Override
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
       if (((bitField0_ & 0x00000001) == 0x00000001)) {
@@ -3003,7 +2957,6 @@ public final class BusBoy {
       unknownFields.writeTo(output);
     }
 
-    @java.lang.Override
     public int getSerializedSize() {
       int size = memoizedSize;
       if (size != -1) return size;
@@ -3022,6 +2975,7 @@ public final class BusBoy {
       return size;
     }
 
+    private static final long serialVersionUID = 0L;
     @java.lang.Override
     public boolean equals(final java.lang.Object obj) {
       if (obj == this) {
@@ -3053,7 +3007,7 @@ public final class BusBoy {
         return memoizedHashCode;
       }
       int hash = 41;
-      hash = (19 * hash) + getDescriptor().hashCode();
+      hash = (19 * hash) + getDescriptorForType().hashCode();
       if (hasMsSinceEpoch()) {
         hash = (37 * hash) + MS_SINCE_EPOCH_FIELD_NUMBER;
         hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
@@ -3069,17 +3023,6 @@ public final class BusBoy {
       return hash;
     }
 
-    public static com.jonkimbel.busboybackend.proto.BusBoy.DisplayedTime parseFrom(
-        java.nio.ByteBuffer data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static com.jonkimbel.busboybackend.proto.BusBoy.DisplayedTime parseFrom(
-        java.nio.ByteBuffer data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
     public static com.jonkimbel.busboybackend.proto.BusBoy.DisplayedTime parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
@@ -3139,7 +3082,6 @@ public final class BusBoy {
           .parseWithIOException(PARSER, input, extensionRegistry);
     }
 
-    @java.lang.Override
     public Builder newBuilderForType() { return newBuilder(); }
     public static Builder newBuilder() {
       return DEFAULT_INSTANCE.toBuilder();
@@ -3147,7 +3089,6 @@ public final class BusBoy {
     public static Builder newBuilder(com.jonkimbel.busboybackend.proto.BusBoy.DisplayedTime prototype) {
       return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
     }
-    @java.lang.Override
     public Builder toBuilder() {
       return this == DEFAULT_INSTANCE
           ? new Builder() : new Builder().mergeFrom(this);
@@ -3171,7 +3112,6 @@ public final class BusBoy {
         return com.jonkimbel.busboybackend.proto.BusBoy.internal_static_busboy_api_DisplayedTime_descriptor;
       }
 
-      @java.lang.Override
       protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
           internalGetFieldAccessorTable() {
         return com.jonkimbel.busboybackend.proto.BusBoy.internal_static_busboy_api_DisplayedTime_fieldAccessorTable
@@ -3194,7 +3134,6 @@ public final class BusBoy {
                 .alwaysUseFieldBuilders) {
         }
       }
-      @java.lang.Override
       public Builder clear() {
         super.clear();
         msSinceEpoch_ = 0L;
@@ -3204,18 +3143,15 @@ public final class BusBoy {
         return this;
       }
 
-      @java.lang.Override
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
         return com.jonkimbel.busboybackend.proto.BusBoy.internal_static_busboy_api_DisplayedTime_descriptor;
       }
 
-      @java.lang.Override
       public com.jonkimbel.busboybackend.proto.BusBoy.DisplayedTime getDefaultInstanceForType() {
         return com.jonkimbel.busboybackend.proto.BusBoy.DisplayedTime.getDefaultInstance();
       }
 
-      @java.lang.Override
       public com.jonkimbel.busboybackend.proto.BusBoy.DisplayedTime build() {
         com.jonkimbel.busboybackend.proto.BusBoy.DisplayedTime result = buildPartial();
         if (!result.isInitialized()) {
@@ -3224,7 +3160,6 @@ public final class BusBoy {
         return result;
       }
 
-      @java.lang.Override
       public com.jonkimbel.busboybackend.proto.BusBoy.DisplayedTime buildPartial() {
         com.jonkimbel.busboybackend.proto.BusBoy.DisplayedTime result = new com.jonkimbel.busboybackend.proto.BusBoy.DisplayedTime(this);
         int from_bitField0_ = bitField0_;
@@ -3242,39 +3177,32 @@ public final class BusBoy {
         return result;
       }
 
-      @java.lang.Override
       public Builder clone() {
         return (Builder) super.clone();
       }
-      @java.lang.Override
       public Builder setField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
+          Object value) {
         return (Builder) super.setField(field, value);
       }
-      @java.lang.Override
       public Builder clearField(
           com.google.protobuf.Descriptors.FieldDescriptor field) {
         return (Builder) super.clearField(field);
       }
-      @java.lang.Override
       public Builder clearOneof(
           com.google.protobuf.Descriptors.OneofDescriptor oneof) {
         return (Builder) super.clearOneof(oneof);
       }
-      @java.lang.Override
       public Builder setRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
-          int index, java.lang.Object value) {
+          int index, Object value) {
         return (Builder) super.setRepeatedField(field, index, value);
       }
-      @java.lang.Override
       public Builder addRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
+          Object value) {
         return (Builder) super.addRepeatedField(field, value);
       }
-      @java.lang.Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
         if (other instanceof com.jonkimbel.busboybackend.proto.BusBoy.DisplayedTime) {
           return mergeFrom((com.jonkimbel.busboybackend.proto.BusBoy.DisplayedTime)other);
@@ -3297,12 +3225,10 @@ public final class BusBoy {
         return this;
       }
 
-      @java.lang.Override
       public final boolean isInitialized() {
         return true;
       }
 
-      @java.lang.Override
       public Builder mergeFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -3425,13 +3351,11 @@ public final class BusBoy {
         onChanged();
         return this;
       }
-      @java.lang.Override
       public final Builder setUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
         return super.setUnknownFields(unknownFields);
       }
 
-      @java.lang.Override
       public final Builder mergeUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
         return super.mergeUnknownFields(unknownFields);
@@ -3453,12 +3377,11 @@ public final class BusBoy {
 
     @java.lang.Deprecated public static final com.google.protobuf.Parser<DisplayedTime>
         PARSER = new com.google.protobuf.AbstractParser<DisplayedTime>() {
-      @java.lang.Override
       public DisplayedTime parsePartialFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws com.google.protobuf.InvalidProtocolBufferException {
-        return new DisplayedTime(input, extensionRegistry);
+          return new DisplayedTime(input, extensionRegistry);
       }
     };
 
@@ -3471,7 +3394,6 @@ public final class BusBoy {
       return PARSER;
     }
 
-    @java.lang.Override
     public com.jonkimbel.busboybackend.proto.BusBoy.DisplayedTime getDefaultInstanceForType() {
       return DEFAULT_INSTANCE;
     }
@@ -3544,7 +3466,6 @@ public final class BusBoy {
       com.google.protobuf.GeneratedMessageV3 implements
       // @@protoc_insertion_point(message_implements:busboy.api.Arrival)
       ArrivalOrBuilder {
-  private static final long serialVersionUID = 0L;
     // Use Arrival.newBuilder() to construct.
     private Arrival(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
       super(builder);
@@ -3565,9 +3486,6 @@ public final class BusBoy {
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       this();
-      if (extensionRegistry == null) {
-        throw new java.lang.NullPointerException();
-      }
       int mutable_bitField0_ = 0;
       com.google.protobuf.UnknownFieldSet.Builder unknownFields =
           com.google.protobuf.UnknownFieldSet.newBuilder();
@@ -3579,6 +3497,13 @@ public final class BusBoy {
             case 0:
               done = true;
               break;
+            default: {
+              if (!parseUnknownField(input, unknownFields,
+                                     extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
             case 8: {
               bitField0_ |= 0x00000001;
               routeIndex_ = input.readUInt32();
@@ -3592,13 +3517,6 @@ public final class BusBoy {
             case 24: {
               bitField0_ |= 0x00000004;
               predicted_ = input.readBool();
-              break;
-            }
-            default: {
-              if (!parseUnknownField(
-                  input, unknownFields, extensionRegistry, tag)) {
-                done = true;
-              }
               break;
             }
           }
@@ -3618,7 +3536,6 @@ public final class BusBoy {
       return com.jonkimbel.busboybackend.proto.BusBoy.internal_static_busboy_api_Arrival_descriptor;
     }
 
-    @java.lang.Override
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
         internalGetFieldAccessorTable() {
       return com.jonkimbel.busboybackend.proto.BusBoy.internal_static_busboy_api_Arrival_fieldAccessorTable
@@ -3701,7 +3618,6 @@ public final class BusBoy {
     }
 
     private byte memoizedIsInitialized = -1;
-    @java.lang.Override
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
       if (isInitialized == 1) return true;
@@ -3711,7 +3627,6 @@ public final class BusBoy {
       return true;
     }
 
-    @java.lang.Override
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
       if (((bitField0_ & 0x00000001) == 0x00000001)) {
@@ -3726,7 +3641,6 @@ public final class BusBoy {
       unknownFields.writeTo(output);
     }
 
-    @java.lang.Override
     public int getSerializedSize() {
       int size = memoizedSize;
       if (size != -1) return size;
@@ -3749,6 +3663,7 @@ public final class BusBoy {
       return size;
     }
 
+    private static final long serialVersionUID = 0L;
     @java.lang.Override
     public boolean equals(final java.lang.Object obj) {
       if (obj == this) {
@@ -3785,7 +3700,7 @@ public final class BusBoy {
         return memoizedHashCode;
       }
       int hash = 41;
-      hash = (19 * hash) + getDescriptor().hashCode();
+      hash = (19 * hash) + getDescriptorForType().hashCode();
       if (hasRouteIndex()) {
         hash = (37 * hash) + ROUTE_INDEX_FIELD_NUMBER;
         hash = (53 * hash) + getRouteIndex();
@@ -3804,17 +3719,6 @@ public final class BusBoy {
       return hash;
     }
 
-    public static com.jonkimbel.busboybackend.proto.BusBoy.Arrival parseFrom(
-        java.nio.ByteBuffer data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static com.jonkimbel.busboybackend.proto.BusBoy.Arrival parseFrom(
-        java.nio.ByteBuffer data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
     public static com.jonkimbel.busboybackend.proto.BusBoy.Arrival parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
@@ -3874,7 +3778,6 @@ public final class BusBoy {
           .parseWithIOException(PARSER, input, extensionRegistry);
     }
 
-    @java.lang.Override
     public Builder newBuilderForType() { return newBuilder(); }
     public static Builder newBuilder() {
       return DEFAULT_INSTANCE.toBuilder();
@@ -3882,7 +3785,6 @@ public final class BusBoy {
     public static Builder newBuilder(com.jonkimbel.busboybackend.proto.BusBoy.Arrival prototype) {
       return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
     }
-    @java.lang.Override
     public Builder toBuilder() {
       return this == DEFAULT_INSTANCE
           ? new Builder() : new Builder().mergeFrom(this);
@@ -3906,7 +3808,6 @@ public final class BusBoy {
         return com.jonkimbel.busboybackend.proto.BusBoy.internal_static_busboy_api_Arrival_descriptor;
       }
 
-      @java.lang.Override
       protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
           internalGetFieldAccessorTable() {
         return com.jonkimbel.busboybackend.proto.BusBoy.internal_static_busboy_api_Arrival_fieldAccessorTable
@@ -3929,7 +3830,6 @@ public final class BusBoy {
                 .alwaysUseFieldBuilders) {
         }
       }
-      @java.lang.Override
       public Builder clear() {
         super.clear();
         routeIndex_ = 0;
@@ -3941,18 +3841,15 @@ public final class BusBoy {
         return this;
       }
 
-      @java.lang.Override
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
         return com.jonkimbel.busboybackend.proto.BusBoy.internal_static_busboy_api_Arrival_descriptor;
       }
 
-      @java.lang.Override
       public com.jonkimbel.busboybackend.proto.BusBoy.Arrival getDefaultInstanceForType() {
         return com.jonkimbel.busboybackend.proto.BusBoy.Arrival.getDefaultInstance();
       }
 
-      @java.lang.Override
       public com.jonkimbel.busboybackend.proto.BusBoy.Arrival build() {
         com.jonkimbel.busboybackend.proto.BusBoy.Arrival result = buildPartial();
         if (!result.isInitialized()) {
@@ -3961,7 +3858,6 @@ public final class BusBoy {
         return result;
       }
 
-      @java.lang.Override
       public com.jonkimbel.busboybackend.proto.BusBoy.Arrival buildPartial() {
         com.jonkimbel.busboybackend.proto.BusBoy.Arrival result = new com.jonkimbel.busboybackend.proto.BusBoy.Arrival(this);
         int from_bitField0_ = bitField0_;
@@ -3983,39 +3879,32 @@ public final class BusBoy {
         return result;
       }
 
-      @java.lang.Override
       public Builder clone() {
         return (Builder) super.clone();
       }
-      @java.lang.Override
       public Builder setField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
+          Object value) {
         return (Builder) super.setField(field, value);
       }
-      @java.lang.Override
       public Builder clearField(
           com.google.protobuf.Descriptors.FieldDescriptor field) {
         return (Builder) super.clearField(field);
       }
-      @java.lang.Override
       public Builder clearOneof(
           com.google.protobuf.Descriptors.OneofDescriptor oneof) {
         return (Builder) super.clearOneof(oneof);
       }
-      @java.lang.Override
       public Builder setRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
-          int index, java.lang.Object value) {
+          int index, Object value) {
         return (Builder) super.setRepeatedField(field, index, value);
       }
-      @java.lang.Override
       public Builder addRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
+          Object value) {
         return (Builder) super.addRepeatedField(field, value);
       }
-      @java.lang.Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
         if (other instanceof com.jonkimbel.busboybackend.proto.BusBoy.Arrival) {
           return mergeFrom((com.jonkimbel.busboybackend.proto.BusBoy.Arrival)other);
@@ -4041,12 +3930,10 @@ public final class BusBoy {
         return this;
       }
 
-      @java.lang.Override
       public final boolean isInitialized() {
         return true;
       }
 
-      @java.lang.Override
       public Builder mergeFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -4217,13 +4104,11 @@ public final class BusBoy {
         onChanged();
         return this;
       }
-      @java.lang.Override
       public final Builder setUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
         return super.setUnknownFields(unknownFields);
       }
 
-      @java.lang.Override
       public final Builder mergeUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
         return super.mergeUnknownFields(unknownFields);
@@ -4245,12 +4130,11 @@ public final class BusBoy {
 
     @java.lang.Deprecated public static final com.google.protobuf.Parser<Arrival>
         PARSER = new com.google.protobuf.AbstractParser<Arrival>() {
-      @java.lang.Override
       public Arrival parsePartialFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws com.google.protobuf.InvalidProtocolBufferException {
-        return new Arrival(input, extensionRegistry);
+          return new Arrival(input, extensionRegistry);
       }
     };
 
@@ -4263,7 +4147,6 @@ public final class BusBoy {
       return PARSER;
     }
 
-    @java.lang.Override
     public com.jonkimbel.busboybackend.proto.BusBoy.Arrival getDefaultInstanceForType() {
       return DEFAULT_INSTANCE;
     }
@@ -4333,7 +4216,6 @@ public final class BusBoy {
       com.google.protobuf.GeneratedMessageV3 implements
       // @@protoc_insertion_point(message_implements:busboy.api.Route)
       RouteOrBuilder {
-  private static final long serialVersionUID = 0L;
     // Use Route.newBuilder() to construct.
     private Route(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
       super(builder);
@@ -4353,9 +4235,6 @@ public final class BusBoy {
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       this();
-      if (extensionRegistry == null) {
-        throw new java.lang.NullPointerException();
-      }
       int mutable_bitField0_ = 0;
       com.google.protobuf.UnknownFieldSet.Builder unknownFields =
           com.google.protobuf.UnknownFieldSet.newBuilder();
@@ -4367,6 +4246,13 @@ public final class BusBoy {
             case 0:
               done = true;
               break;
+            default: {
+              if (!parseUnknownField(input, unknownFields,
+                                     extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
             case 10: {
               com.google.protobuf.ByteString bs = input.readBytes();
               bitField0_ |= 0x00000001;
@@ -4377,13 +4263,6 @@ public final class BusBoy {
               com.google.protobuf.ByteString bs = input.readBytes();
               bitField0_ |= 0x00000002;
               headsign_ = bs;
-              break;
-            }
-            default: {
-              if (!parseUnknownField(
-                  input, unknownFields, extensionRegistry, tag)) {
-                done = true;
-              }
               break;
             }
           }
@@ -4403,7 +4282,6 @@ public final class BusBoy {
       return com.jonkimbel.busboybackend.proto.BusBoy.internal_static_busboy_api_Route_descriptor;
     }
 
-    @java.lang.Override
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
         internalGetFieldAccessorTable() {
       return com.jonkimbel.busboybackend.proto.BusBoy.internal_static_busboy_api_Route_fieldAccessorTable
@@ -4521,7 +4399,6 @@ public final class BusBoy {
     }
 
     private byte memoizedIsInitialized = -1;
-    @java.lang.Override
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
       if (isInitialized == 1) return true;
@@ -4531,7 +4408,6 @@ public final class BusBoy {
       return true;
     }
 
-    @java.lang.Override
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
       if (((bitField0_ & 0x00000001) == 0x00000001)) {
@@ -4543,7 +4419,6 @@ public final class BusBoy {
       unknownFields.writeTo(output);
     }
 
-    @java.lang.Override
     public int getSerializedSize() {
       int size = memoizedSize;
       if (size != -1) return size;
@@ -4560,6 +4435,7 @@ public final class BusBoy {
       return size;
     }
 
+    private static final long serialVersionUID = 0L;
     @java.lang.Override
     public boolean equals(final java.lang.Object obj) {
       if (obj == this) {
@@ -4591,7 +4467,7 @@ public final class BusBoy {
         return memoizedHashCode;
       }
       int hash = 41;
-      hash = (19 * hash) + getDescriptor().hashCode();
+      hash = (19 * hash) + getDescriptorForType().hashCode();
       if (hasShortName()) {
         hash = (37 * hash) + SHORT_NAME_FIELD_NUMBER;
         hash = (53 * hash) + getShortName().hashCode();
@@ -4605,17 +4481,6 @@ public final class BusBoy {
       return hash;
     }
 
-    public static com.jonkimbel.busboybackend.proto.BusBoy.Route parseFrom(
-        java.nio.ByteBuffer data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static com.jonkimbel.busboybackend.proto.BusBoy.Route parseFrom(
-        java.nio.ByteBuffer data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
     public static com.jonkimbel.busboybackend.proto.BusBoy.Route parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
@@ -4675,7 +4540,6 @@ public final class BusBoy {
           .parseWithIOException(PARSER, input, extensionRegistry);
     }
 
-    @java.lang.Override
     public Builder newBuilderForType() { return newBuilder(); }
     public static Builder newBuilder() {
       return DEFAULT_INSTANCE.toBuilder();
@@ -4683,7 +4547,6 @@ public final class BusBoy {
     public static Builder newBuilder(com.jonkimbel.busboybackend.proto.BusBoy.Route prototype) {
       return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
     }
-    @java.lang.Override
     public Builder toBuilder() {
       return this == DEFAULT_INSTANCE
           ? new Builder() : new Builder().mergeFrom(this);
@@ -4707,7 +4570,6 @@ public final class BusBoy {
         return com.jonkimbel.busboybackend.proto.BusBoy.internal_static_busboy_api_Route_descriptor;
       }
 
-      @java.lang.Override
       protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
           internalGetFieldAccessorTable() {
         return com.jonkimbel.busboybackend.proto.BusBoy.internal_static_busboy_api_Route_fieldAccessorTable
@@ -4730,7 +4592,6 @@ public final class BusBoy {
                 .alwaysUseFieldBuilders) {
         }
       }
-      @java.lang.Override
       public Builder clear() {
         super.clear();
         shortName_ = "";
@@ -4740,18 +4601,15 @@ public final class BusBoy {
         return this;
       }
 
-      @java.lang.Override
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
         return com.jonkimbel.busboybackend.proto.BusBoy.internal_static_busboy_api_Route_descriptor;
       }
 
-      @java.lang.Override
       public com.jonkimbel.busboybackend.proto.BusBoy.Route getDefaultInstanceForType() {
         return com.jonkimbel.busboybackend.proto.BusBoy.Route.getDefaultInstance();
       }
 
-      @java.lang.Override
       public com.jonkimbel.busboybackend.proto.BusBoy.Route build() {
         com.jonkimbel.busboybackend.proto.BusBoy.Route result = buildPartial();
         if (!result.isInitialized()) {
@@ -4760,7 +4618,6 @@ public final class BusBoy {
         return result;
       }
 
-      @java.lang.Override
       public com.jonkimbel.busboybackend.proto.BusBoy.Route buildPartial() {
         com.jonkimbel.busboybackend.proto.BusBoy.Route result = new com.jonkimbel.busboybackend.proto.BusBoy.Route(this);
         int from_bitField0_ = bitField0_;
@@ -4778,39 +4635,32 @@ public final class BusBoy {
         return result;
       }
 
-      @java.lang.Override
       public Builder clone() {
         return (Builder) super.clone();
       }
-      @java.lang.Override
       public Builder setField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
+          Object value) {
         return (Builder) super.setField(field, value);
       }
-      @java.lang.Override
       public Builder clearField(
           com.google.protobuf.Descriptors.FieldDescriptor field) {
         return (Builder) super.clearField(field);
       }
-      @java.lang.Override
       public Builder clearOneof(
           com.google.protobuf.Descriptors.OneofDescriptor oneof) {
         return (Builder) super.clearOneof(oneof);
       }
-      @java.lang.Override
       public Builder setRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
-          int index, java.lang.Object value) {
+          int index, Object value) {
         return (Builder) super.setRepeatedField(field, index, value);
       }
-      @java.lang.Override
       public Builder addRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
+          Object value) {
         return (Builder) super.addRepeatedField(field, value);
       }
-      @java.lang.Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
         if (other instanceof com.jonkimbel.busboybackend.proto.BusBoy.Route) {
           return mergeFrom((com.jonkimbel.busboybackend.proto.BusBoy.Route)other);
@@ -4837,12 +4687,10 @@ public final class BusBoy {
         return this;
       }
 
-      @java.lang.Override
       public final boolean isInitialized() {
         return true;
       }
 
-      @java.lang.Override
       public Builder mergeFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -5061,13 +4909,11 @@ public final class BusBoy {
         onChanged();
         return this;
       }
-      @java.lang.Override
       public final Builder setUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
         return super.setUnknownFields(unknownFields);
       }
 
-      @java.lang.Override
       public final Builder mergeUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
         return super.mergeUnknownFields(unknownFields);
@@ -5089,12 +4935,11 @@ public final class BusBoy {
 
     @java.lang.Deprecated public static final com.google.protobuf.Parser<Route>
         PARSER = new com.google.protobuf.AbstractParser<Route>() {
-      @java.lang.Override
       public Route parsePartialFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws com.google.protobuf.InvalidProtocolBufferException {
-        return new Route(input, extensionRegistry);
+          return new Route(input, extensionRegistry);
       }
     };
 
@@ -5107,7 +4952,6 @@ public final class BusBoy {
       return PARSER;
     }
 
-    @java.lang.Override
     public com.jonkimbel.busboybackend.proto.BusBoy.Route getDefaultInstanceForType() {
       return DEFAULT_INSTANCE;
     }
@@ -5211,7 +5055,6 @@ public final class BusBoy {
       com.google.protobuf.GeneratedMessageV3 implements
       // @@protoc_insertion_point(message_implements:busboy.api.TemporaryMessage)
       TemporaryMessageOrBuilder {
-  private static final long serialVersionUID = 0L;
     // Use TemporaryMessage.newBuilder() to construct.
     private TemporaryMessage(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
       super(builder);
@@ -5231,9 +5074,6 @@ public final class BusBoy {
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       this();
-      if (extensionRegistry == null) {
-        throw new java.lang.NullPointerException();
-      }
       int mutable_bitField0_ = 0;
       com.google.protobuf.UnknownFieldSet.Builder unknownFields =
           com.google.protobuf.UnknownFieldSet.newBuilder();
@@ -5245,6 +5085,13 @@ public final class BusBoy {
             case 0:
               done = true;
               break;
+            default: {
+              if (!parseUnknownField(input, unknownFields,
+                                     extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
             case 10: {
               com.jonkimbel.busboybackend.proto.BusBoy.TimeFrame.Builder subBuilder = null;
               if (((bitField0_ & 0x00000001) == 0x00000001)) {
@@ -5269,20 +5116,12 @@ public final class BusBoy {
             }
             case 24: {
               int rawValue = input.readEnum();
-                @SuppressWarnings("deprecation")
               com.jonkimbel.busboybackend.proto.BusBoy.ColorScheme value = com.jonkimbel.busboybackend.proto.BusBoy.ColorScheme.valueOf(rawValue);
               if (value == null) {
                 unknownFields.mergeVarintField(3, rawValue);
               } else {
                 bitField0_ |= 0x00000002;
                 colorSchemeOverride_ = rawValue;
-              }
-              break;
-            }
-            default: {
-              if (!parseUnknownField(
-                  input, unknownFields, extensionRegistry, tag)) {
-                done = true;
               }
               break;
             }
@@ -5306,7 +5145,6 @@ public final class BusBoy {
       return com.jonkimbel.busboybackend.proto.BusBoy.internal_static_busboy_api_TemporaryMessage_descriptor;
     }
 
-    @java.lang.Override
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
         internalGetFieldAccessorTable() {
       return com.jonkimbel.busboybackend.proto.BusBoy.internal_static_busboy_api_TemporaryMessage_fieldAccessorTable
@@ -5422,13 +5260,11 @@ public final class BusBoy {
      * <code>optional .busboy.api.ColorScheme color_scheme_override = 3;</code>
      */
     public com.jonkimbel.busboybackend.proto.BusBoy.ColorScheme getColorSchemeOverride() {
-      @SuppressWarnings("deprecation")
       com.jonkimbel.busboybackend.proto.BusBoy.ColorScheme result = com.jonkimbel.busboybackend.proto.BusBoy.ColorScheme.valueOf(colorSchemeOverride_);
       return result == null ? com.jonkimbel.busboybackend.proto.BusBoy.ColorScheme.SEAHAWKS : result;
     }
 
     private byte memoizedIsInitialized = -1;
-    @java.lang.Override
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
       if (isInitialized == 1) return true;
@@ -5438,7 +5274,6 @@ public final class BusBoy {
       return true;
     }
 
-    @java.lang.Override
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
       if (((bitField0_ & 0x00000001) == 0x00000001)) {
@@ -5453,7 +5288,6 @@ public final class BusBoy {
       unknownFields.writeTo(output);
     }
 
-    @java.lang.Override
     public int getSerializedSize() {
       int size = memoizedSize;
       if (size != -1) return size;
@@ -5480,6 +5314,7 @@ public final class BusBoy {
       return size;
     }
 
+    private static final long serialVersionUID = 0L;
     @java.lang.Override
     public boolean equals(final java.lang.Object obj) {
       if (obj == this) {
@@ -5512,7 +5347,7 @@ public final class BusBoy {
         return memoizedHashCode;
       }
       int hash = 41;
-      hash = (19 * hash) + getDescriptor().hashCode();
+      hash = (19 * hash) + getDescriptorForType().hashCode();
       if (hasTimeFrame()) {
         hash = (37 * hash) + TIME_FRAME_FIELD_NUMBER;
         hash = (53 * hash) + getTimeFrame().hashCode();
@@ -5530,17 +5365,6 @@ public final class BusBoy {
       return hash;
     }
 
-    public static com.jonkimbel.busboybackend.proto.BusBoy.TemporaryMessage parseFrom(
-        java.nio.ByteBuffer data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static com.jonkimbel.busboybackend.proto.BusBoy.TemporaryMessage parseFrom(
-        java.nio.ByteBuffer data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
     public static com.jonkimbel.busboybackend.proto.BusBoy.TemporaryMessage parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
@@ -5600,7 +5424,6 @@ public final class BusBoy {
           .parseWithIOException(PARSER, input, extensionRegistry);
     }
 
-    @java.lang.Override
     public Builder newBuilderForType() { return newBuilder(); }
     public static Builder newBuilder() {
       return DEFAULT_INSTANCE.toBuilder();
@@ -5608,7 +5431,6 @@ public final class BusBoy {
     public static Builder newBuilder(com.jonkimbel.busboybackend.proto.BusBoy.TemporaryMessage prototype) {
       return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
     }
-    @java.lang.Override
     public Builder toBuilder() {
       return this == DEFAULT_INSTANCE
           ? new Builder() : new Builder().mergeFrom(this);
@@ -5632,7 +5454,6 @@ public final class BusBoy {
         return com.jonkimbel.busboybackend.proto.BusBoy.internal_static_busboy_api_TemporaryMessage_descriptor;
       }
 
-      @java.lang.Override
       protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
           internalGetFieldAccessorTable() {
         return com.jonkimbel.busboybackend.proto.BusBoy.internal_static_busboy_api_TemporaryMessage_fieldAccessorTable
@@ -5656,7 +5477,6 @@ public final class BusBoy {
           getTimeFrameFieldBuilder();
         }
       }
-      @java.lang.Override
       public Builder clear() {
         super.clear();
         if (timeFrameBuilder_ == null) {
@@ -5672,18 +5492,15 @@ public final class BusBoy {
         return this;
       }
 
-      @java.lang.Override
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
         return com.jonkimbel.busboybackend.proto.BusBoy.internal_static_busboy_api_TemporaryMessage_descriptor;
       }
 
-      @java.lang.Override
       public com.jonkimbel.busboybackend.proto.BusBoy.TemporaryMessage getDefaultInstanceForType() {
         return com.jonkimbel.busboybackend.proto.BusBoy.TemporaryMessage.getDefaultInstance();
       }
 
-      @java.lang.Override
       public com.jonkimbel.busboybackend.proto.BusBoy.TemporaryMessage build() {
         com.jonkimbel.busboybackend.proto.BusBoy.TemporaryMessage result = buildPartial();
         if (!result.isInitialized()) {
@@ -5692,7 +5509,6 @@ public final class BusBoy {
         return result;
       }
 
-      @java.lang.Override
       public com.jonkimbel.busboybackend.proto.BusBoy.TemporaryMessage buildPartial() {
         com.jonkimbel.busboybackend.proto.BusBoy.TemporaryMessage result = new com.jonkimbel.busboybackend.proto.BusBoy.TemporaryMessage(this);
         int from_bitField0_ = bitField0_;
@@ -5719,39 +5535,32 @@ public final class BusBoy {
         return result;
       }
 
-      @java.lang.Override
       public Builder clone() {
         return (Builder) super.clone();
       }
-      @java.lang.Override
       public Builder setField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
+          Object value) {
         return (Builder) super.setField(field, value);
       }
-      @java.lang.Override
       public Builder clearField(
           com.google.protobuf.Descriptors.FieldDescriptor field) {
         return (Builder) super.clearField(field);
       }
-      @java.lang.Override
       public Builder clearOneof(
           com.google.protobuf.Descriptors.OneofDescriptor oneof) {
         return (Builder) super.clearOneof(oneof);
       }
-      @java.lang.Override
       public Builder setRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
-          int index, java.lang.Object value) {
+          int index, Object value) {
         return (Builder) super.setRepeatedField(field, index, value);
       }
-      @java.lang.Override
       public Builder addRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
+          Object value) {
         return (Builder) super.addRepeatedField(field, value);
       }
-      @java.lang.Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
         if (other instanceof com.jonkimbel.busboybackend.proto.BusBoy.TemporaryMessage) {
           return mergeFrom((com.jonkimbel.busboybackend.proto.BusBoy.TemporaryMessage)other);
@@ -5784,12 +5593,10 @@ public final class BusBoy {
         return this;
       }
 
-      @java.lang.Override
       public final boolean isInitialized() {
         return true;
       }
 
-      @java.lang.Override
       public Builder mergeFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -6131,7 +5938,6 @@ public final class BusBoy {
        * <code>optional .busboy.api.ColorScheme color_scheme_override = 3;</code>
        */
       public com.jonkimbel.busboybackend.proto.BusBoy.ColorScheme getColorSchemeOverride() {
-        @SuppressWarnings("deprecation")
         com.jonkimbel.busboybackend.proto.BusBoy.ColorScheme result = com.jonkimbel.busboybackend.proto.BusBoy.ColorScheme.valueOf(colorSchemeOverride_);
         return result == null ? com.jonkimbel.busboybackend.proto.BusBoy.ColorScheme.SEAHAWKS : result;
       }
@@ -6166,13 +5972,11 @@ public final class BusBoy {
         onChanged();
         return this;
       }
-      @java.lang.Override
       public final Builder setUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
         return super.setUnknownFields(unknownFields);
       }
 
-      @java.lang.Override
       public final Builder mergeUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
         return super.mergeUnknownFields(unknownFields);
@@ -6194,12 +5998,11 @@ public final class BusBoy {
 
     @java.lang.Deprecated public static final com.google.protobuf.Parser<TemporaryMessage>
         PARSER = new com.google.protobuf.AbstractParser<TemporaryMessage>() {
-      @java.lang.Override
       public TemporaryMessage parsePartialFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws com.google.protobuf.InvalidProtocolBufferException {
-        return new TemporaryMessage(input, extensionRegistry);
+          return new TemporaryMessage(input, extensionRegistry);
       }
     };
 
@@ -6212,7 +6015,6 @@ public final class BusBoy {
       return PARSER;
     }
 
-    @java.lang.Override
     public com.jonkimbel.busboybackend.proto.BusBoy.TemporaryMessage getDefaultInstanceForType() {
       return DEFAULT_INSTANCE;
     }
@@ -6277,7 +6079,6 @@ public final class BusBoy {
       com.google.protobuf.GeneratedMessageV3 implements
       // @@protoc_insertion_point(message_implements:busboy.api.TemporaryStyle)
       TemporaryStyleOrBuilder {
-  private static final long serialVersionUID = 0L;
     // Use TemporaryStyle.newBuilder() to construct.
     private TemporaryStyle(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
       super(builder);
@@ -6296,9 +6097,6 @@ public final class BusBoy {
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       this();
-      if (extensionRegistry == null) {
-        throw new java.lang.NullPointerException();
-      }
       int mutable_bitField0_ = 0;
       com.google.protobuf.UnknownFieldSet.Builder unknownFields =
           com.google.protobuf.UnknownFieldSet.newBuilder();
@@ -6310,6 +6108,13 @@ public final class BusBoy {
             case 0:
               done = true;
               break;
+            default: {
+              if (!parseUnknownField(input, unknownFields,
+                                     extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
             case 10: {
               com.jonkimbel.busboybackend.proto.BusBoy.TimeFrame.Builder subBuilder = null;
               if (((bitField0_ & 0x00000001) == 0x00000001)) {
@@ -6325,20 +6130,12 @@ public final class BusBoy {
             }
             case 16: {
               int rawValue = input.readEnum();
-                @SuppressWarnings("deprecation")
               com.jonkimbel.busboybackend.proto.BusBoy.ColorScheme value = com.jonkimbel.busboybackend.proto.BusBoy.ColorScheme.valueOf(rawValue);
               if (value == null) {
                 unknownFields.mergeVarintField(2, rawValue);
               } else {
                 bitField0_ |= 0x00000002;
                 colorSchemeOverride_ = rawValue;
-              }
-              break;
-            }
-            default: {
-              if (!parseUnknownField(
-                  input, unknownFields, extensionRegistry, tag)) {
-                done = true;
               }
               break;
             }
@@ -6359,7 +6156,6 @@ public final class BusBoy {
       return com.jonkimbel.busboybackend.proto.BusBoy.internal_static_busboy_api_TemporaryStyle_descriptor;
     }
 
-    @java.lang.Override
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
         internalGetFieldAccessorTable() {
       return com.jonkimbel.busboybackend.proto.BusBoy.internal_static_busboy_api_TemporaryStyle_fieldAccessorTable
@@ -6426,13 +6222,11 @@ public final class BusBoy {
      * <code>optional .busboy.api.ColorScheme color_scheme_override = 2;</code>
      */
     public com.jonkimbel.busboybackend.proto.BusBoy.ColorScheme getColorSchemeOverride() {
-      @SuppressWarnings("deprecation")
       com.jonkimbel.busboybackend.proto.BusBoy.ColorScheme result = com.jonkimbel.busboybackend.proto.BusBoy.ColorScheme.valueOf(colorSchemeOverride_);
       return result == null ? com.jonkimbel.busboybackend.proto.BusBoy.ColorScheme.SEAHAWKS : result;
     }
 
     private byte memoizedIsInitialized = -1;
-    @java.lang.Override
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
       if (isInitialized == 1) return true;
@@ -6442,7 +6236,6 @@ public final class BusBoy {
       return true;
     }
 
-    @java.lang.Override
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
       if (((bitField0_ & 0x00000001) == 0x00000001)) {
@@ -6454,7 +6247,6 @@ public final class BusBoy {
       unknownFields.writeTo(output);
     }
 
-    @java.lang.Override
     public int getSerializedSize() {
       int size = memoizedSize;
       if (size != -1) return size;
@@ -6473,6 +6265,7 @@ public final class BusBoy {
       return size;
     }
 
+    private static final long serialVersionUID = 0L;
     @java.lang.Override
     public boolean equals(final java.lang.Object obj) {
       if (obj == this) {
@@ -6503,7 +6296,7 @@ public final class BusBoy {
         return memoizedHashCode;
       }
       int hash = 41;
-      hash = (19 * hash) + getDescriptor().hashCode();
+      hash = (19 * hash) + getDescriptorForType().hashCode();
       if (hasTimeFrame()) {
         hash = (37 * hash) + TIME_FRAME_FIELD_NUMBER;
         hash = (53 * hash) + getTimeFrame().hashCode();
@@ -6517,17 +6310,6 @@ public final class BusBoy {
       return hash;
     }
 
-    public static com.jonkimbel.busboybackend.proto.BusBoy.TemporaryStyle parseFrom(
-        java.nio.ByteBuffer data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static com.jonkimbel.busboybackend.proto.BusBoy.TemporaryStyle parseFrom(
-        java.nio.ByteBuffer data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
     public static com.jonkimbel.busboybackend.proto.BusBoy.TemporaryStyle parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
@@ -6587,7 +6369,6 @@ public final class BusBoy {
           .parseWithIOException(PARSER, input, extensionRegistry);
     }
 
-    @java.lang.Override
     public Builder newBuilderForType() { return newBuilder(); }
     public static Builder newBuilder() {
       return DEFAULT_INSTANCE.toBuilder();
@@ -6595,7 +6376,6 @@ public final class BusBoy {
     public static Builder newBuilder(com.jonkimbel.busboybackend.proto.BusBoy.TemporaryStyle prototype) {
       return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
     }
-    @java.lang.Override
     public Builder toBuilder() {
       return this == DEFAULT_INSTANCE
           ? new Builder() : new Builder().mergeFrom(this);
@@ -6619,7 +6399,6 @@ public final class BusBoy {
         return com.jonkimbel.busboybackend.proto.BusBoy.internal_static_busboy_api_TemporaryStyle_descriptor;
       }
 
-      @java.lang.Override
       protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
           internalGetFieldAccessorTable() {
         return com.jonkimbel.busboybackend.proto.BusBoy.internal_static_busboy_api_TemporaryStyle_fieldAccessorTable
@@ -6643,7 +6422,6 @@ public final class BusBoy {
           getTimeFrameFieldBuilder();
         }
       }
-      @java.lang.Override
       public Builder clear() {
         super.clear();
         if (timeFrameBuilder_ == null) {
@@ -6657,18 +6435,15 @@ public final class BusBoy {
         return this;
       }
 
-      @java.lang.Override
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
         return com.jonkimbel.busboybackend.proto.BusBoy.internal_static_busboy_api_TemporaryStyle_descriptor;
       }
 
-      @java.lang.Override
       public com.jonkimbel.busboybackend.proto.BusBoy.TemporaryStyle getDefaultInstanceForType() {
         return com.jonkimbel.busboybackend.proto.BusBoy.TemporaryStyle.getDefaultInstance();
       }
 
-      @java.lang.Override
       public com.jonkimbel.busboybackend.proto.BusBoy.TemporaryStyle build() {
         com.jonkimbel.busboybackend.proto.BusBoy.TemporaryStyle result = buildPartial();
         if (!result.isInitialized()) {
@@ -6677,7 +6452,6 @@ public final class BusBoy {
         return result;
       }
 
-      @java.lang.Override
       public com.jonkimbel.busboybackend.proto.BusBoy.TemporaryStyle buildPartial() {
         com.jonkimbel.busboybackend.proto.BusBoy.TemporaryStyle result = new com.jonkimbel.busboybackend.proto.BusBoy.TemporaryStyle(this);
         int from_bitField0_ = bitField0_;
@@ -6699,39 +6473,32 @@ public final class BusBoy {
         return result;
       }
 
-      @java.lang.Override
       public Builder clone() {
         return (Builder) super.clone();
       }
-      @java.lang.Override
       public Builder setField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
+          Object value) {
         return (Builder) super.setField(field, value);
       }
-      @java.lang.Override
       public Builder clearField(
           com.google.protobuf.Descriptors.FieldDescriptor field) {
         return (Builder) super.clearField(field);
       }
-      @java.lang.Override
       public Builder clearOneof(
           com.google.protobuf.Descriptors.OneofDescriptor oneof) {
         return (Builder) super.clearOneof(oneof);
       }
-      @java.lang.Override
       public Builder setRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
-          int index, java.lang.Object value) {
+          int index, Object value) {
         return (Builder) super.setRepeatedField(field, index, value);
       }
-      @java.lang.Override
       public Builder addRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
+          Object value) {
         return (Builder) super.addRepeatedField(field, value);
       }
-      @java.lang.Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
         if (other instanceof com.jonkimbel.busboybackend.proto.BusBoy.TemporaryStyle) {
           return mergeFrom((com.jonkimbel.busboybackend.proto.BusBoy.TemporaryStyle)other);
@@ -6754,12 +6521,10 @@ public final class BusBoy {
         return this;
       }
 
-      @java.lang.Override
       public final boolean isInitialized() {
         return true;
       }
 
-      @java.lang.Override
       public Builder mergeFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -6963,7 +6728,6 @@ public final class BusBoy {
        * <code>optional .busboy.api.ColorScheme color_scheme_override = 2;</code>
        */
       public com.jonkimbel.busboybackend.proto.BusBoy.ColorScheme getColorSchemeOverride() {
-        @SuppressWarnings("deprecation")
         com.jonkimbel.busboybackend.proto.BusBoy.ColorScheme result = com.jonkimbel.busboybackend.proto.BusBoy.ColorScheme.valueOf(colorSchemeOverride_);
         return result == null ? com.jonkimbel.busboybackend.proto.BusBoy.ColorScheme.SEAHAWKS : result;
       }
@@ -6998,13 +6762,11 @@ public final class BusBoy {
         onChanged();
         return this;
       }
-      @java.lang.Override
       public final Builder setUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
         return super.setUnknownFields(unknownFields);
       }
 
-      @java.lang.Override
       public final Builder mergeUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
         return super.mergeUnknownFields(unknownFields);
@@ -7026,12 +6788,11 @@ public final class BusBoy {
 
     @java.lang.Deprecated public static final com.google.protobuf.Parser<TemporaryStyle>
         PARSER = new com.google.protobuf.AbstractParser<TemporaryStyle>() {
-      @java.lang.Override
       public TemporaryStyle parsePartialFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws com.google.protobuf.InvalidProtocolBufferException {
-        return new TemporaryStyle(input, extensionRegistry);
+          return new TemporaryStyle(input, extensionRegistry);
       }
     };
 
@@ -7044,7 +6805,6 @@ public final class BusBoy {
       return PARSER;
     }
 
-    @java.lang.Override
     public com.jonkimbel.busboybackend.proto.BusBoy.TemporaryStyle getDefaultInstanceForType() {
       return DEFAULT_INSTANCE;
     }
@@ -7101,7 +6861,6 @@ public final class BusBoy {
       com.google.protobuf.GeneratedMessageV3 implements
       // @@protoc_insertion_point(message_implements:busboy.api.TimeFrame)
       TimeFrameOrBuilder {
-  private static final long serialVersionUID = 0L;
     // Use TimeFrame.newBuilder() to construct.
     private TimeFrame(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
       super(builder);
@@ -7121,9 +6880,6 @@ public final class BusBoy {
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       this();
-      if (extensionRegistry == null) {
-        throw new java.lang.NullPointerException();
-      }
       int mutable_bitField0_ = 0;
       com.google.protobuf.UnknownFieldSet.Builder unknownFields =
           com.google.protobuf.UnknownFieldSet.newBuilder();
@@ -7135,6 +6891,13 @@ public final class BusBoy {
             case 0:
               done = true;
               break;
+            default: {
+              if (!parseUnknownField(input, unknownFields,
+                                     extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
             case 8: {
               bitField0_ |= 0x00000001;
               startTimeMsSinceEpoch_ = input.readUInt64();
@@ -7143,13 +6906,6 @@ public final class BusBoy {
             case 16: {
               bitField0_ |= 0x00000002;
               endTimeMsSinceEpoch_ = input.readUInt64();
-              break;
-            }
-            default: {
-              if (!parseUnknownField(
-                  input, unknownFields, extensionRegistry, tag)) {
-                done = true;
-              }
               break;
             }
           }
@@ -7169,7 +6925,6 @@ public final class BusBoy {
       return com.jonkimbel.busboybackend.proto.BusBoy.internal_static_busboy_api_TimeFrame_descriptor;
     }
 
-    @java.lang.Override
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
         internalGetFieldAccessorTable() {
       return com.jonkimbel.busboybackend.proto.BusBoy.internal_static_busboy_api_TimeFrame_fieldAccessorTable
@@ -7225,7 +6980,6 @@ public final class BusBoy {
     }
 
     private byte memoizedIsInitialized = -1;
-    @java.lang.Override
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
       if (isInitialized == 1) return true;
@@ -7235,7 +6989,6 @@ public final class BusBoy {
       return true;
     }
 
-    @java.lang.Override
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
       if (((bitField0_ & 0x00000001) == 0x00000001)) {
@@ -7247,7 +7000,6 @@ public final class BusBoy {
       unknownFields.writeTo(output);
     }
 
-    @java.lang.Override
     public int getSerializedSize() {
       int size = memoizedSize;
       if (size != -1) return size;
@@ -7266,6 +7018,7 @@ public final class BusBoy {
       return size;
     }
 
+    private static final long serialVersionUID = 0L;
     @java.lang.Override
     public boolean equals(final java.lang.Object obj) {
       if (obj == this) {
@@ -7297,7 +7050,7 @@ public final class BusBoy {
         return memoizedHashCode;
       }
       int hash = 41;
-      hash = (19 * hash) + getDescriptor().hashCode();
+      hash = (19 * hash) + getDescriptorForType().hashCode();
       if (hasStartTimeMsSinceEpoch()) {
         hash = (37 * hash) + START_TIME_MS_SINCE_EPOCH_FIELD_NUMBER;
         hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
@@ -7313,17 +7066,6 @@ public final class BusBoy {
       return hash;
     }
 
-    public static com.jonkimbel.busboybackend.proto.BusBoy.TimeFrame parseFrom(
-        java.nio.ByteBuffer data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static com.jonkimbel.busboybackend.proto.BusBoy.TimeFrame parseFrom(
-        java.nio.ByteBuffer data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
     public static com.jonkimbel.busboybackend.proto.BusBoy.TimeFrame parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
@@ -7383,7 +7125,6 @@ public final class BusBoy {
           .parseWithIOException(PARSER, input, extensionRegistry);
     }
 
-    @java.lang.Override
     public Builder newBuilderForType() { return newBuilder(); }
     public static Builder newBuilder() {
       return DEFAULT_INSTANCE.toBuilder();
@@ -7391,7 +7132,6 @@ public final class BusBoy {
     public static Builder newBuilder(com.jonkimbel.busboybackend.proto.BusBoy.TimeFrame prototype) {
       return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
     }
-    @java.lang.Override
     public Builder toBuilder() {
       return this == DEFAULT_INSTANCE
           ? new Builder() : new Builder().mergeFrom(this);
@@ -7420,7 +7160,6 @@ public final class BusBoy {
         return com.jonkimbel.busboybackend.proto.BusBoy.internal_static_busboy_api_TimeFrame_descriptor;
       }
 
-      @java.lang.Override
       protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
           internalGetFieldAccessorTable() {
         return com.jonkimbel.busboybackend.proto.BusBoy.internal_static_busboy_api_TimeFrame_fieldAccessorTable
@@ -7443,7 +7182,6 @@ public final class BusBoy {
                 .alwaysUseFieldBuilders) {
         }
       }
-      @java.lang.Override
       public Builder clear() {
         super.clear();
         startTimeMsSinceEpoch_ = 0L;
@@ -7453,18 +7191,15 @@ public final class BusBoy {
         return this;
       }
 
-      @java.lang.Override
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
         return com.jonkimbel.busboybackend.proto.BusBoy.internal_static_busboy_api_TimeFrame_descriptor;
       }
 
-      @java.lang.Override
       public com.jonkimbel.busboybackend.proto.BusBoy.TimeFrame getDefaultInstanceForType() {
         return com.jonkimbel.busboybackend.proto.BusBoy.TimeFrame.getDefaultInstance();
       }
 
-      @java.lang.Override
       public com.jonkimbel.busboybackend.proto.BusBoy.TimeFrame build() {
         com.jonkimbel.busboybackend.proto.BusBoy.TimeFrame result = buildPartial();
         if (!result.isInitialized()) {
@@ -7473,7 +7208,6 @@ public final class BusBoy {
         return result;
       }
 
-      @java.lang.Override
       public com.jonkimbel.busboybackend.proto.BusBoy.TimeFrame buildPartial() {
         com.jonkimbel.busboybackend.proto.BusBoy.TimeFrame result = new com.jonkimbel.busboybackend.proto.BusBoy.TimeFrame(this);
         int from_bitField0_ = bitField0_;
@@ -7491,39 +7225,32 @@ public final class BusBoy {
         return result;
       }
 
-      @java.lang.Override
       public Builder clone() {
         return (Builder) super.clone();
       }
-      @java.lang.Override
       public Builder setField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
+          Object value) {
         return (Builder) super.setField(field, value);
       }
-      @java.lang.Override
       public Builder clearField(
           com.google.protobuf.Descriptors.FieldDescriptor field) {
         return (Builder) super.clearField(field);
       }
-      @java.lang.Override
       public Builder clearOneof(
           com.google.protobuf.Descriptors.OneofDescriptor oneof) {
         return (Builder) super.clearOneof(oneof);
       }
-      @java.lang.Override
       public Builder setRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
-          int index, java.lang.Object value) {
+          int index, Object value) {
         return (Builder) super.setRepeatedField(field, index, value);
       }
-      @java.lang.Override
       public Builder addRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
+          Object value) {
         return (Builder) super.addRepeatedField(field, value);
       }
-      @java.lang.Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
         if (other instanceof com.jonkimbel.busboybackend.proto.BusBoy.TimeFrame) {
           return mergeFrom((com.jonkimbel.busboybackend.proto.BusBoy.TimeFrame)other);
@@ -7546,12 +7273,10 @@ public final class BusBoy {
         return this;
       }
 
-      @java.lang.Override
       public final boolean isInitialized() {
         return true;
       }
 
-      @java.lang.Override
       public Builder mergeFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -7666,13 +7391,11 @@ public final class BusBoy {
         onChanged();
         return this;
       }
-      @java.lang.Override
       public final Builder setUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
         return super.setUnknownFields(unknownFields);
       }
 
-      @java.lang.Override
       public final Builder mergeUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
         return super.mergeUnknownFields(unknownFields);
@@ -7694,12 +7417,11 @@ public final class BusBoy {
 
     @java.lang.Deprecated public static final com.google.protobuf.Parser<TimeFrame>
         PARSER = new com.google.protobuf.AbstractParser<TimeFrame>() {
-      @java.lang.Override
       public TimeFrame parsePartialFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws com.google.protobuf.InvalidProtocolBufferException {
-        return new TimeFrame(input, extensionRegistry);
+          return new TimeFrame(input, extensionRegistry);
       }
     };
 
@@ -7712,7 +7434,6 @@ public final class BusBoy {
       return PARSER;
     }
 
-    @java.lang.Override
     public com.jonkimbel.busboybackend.proto.BusBoy.TimeFrame getDefaultInstanceForType() {
       return DEFAULT_INSTANCE;
     }
@@ -7772,7 +7493,7 @@ public final class BusBoy {
       "busboy.api.TemporaryStyle\"F\n\rDisplayedTi" +
       "me\022\026\n\016ms_since_epoch\030\001 \001(\004\022\035\n\025daylight_s" +
       "avings_time\030\002 \001(\010\"H\n\007Arrival\022\023\n\013route_in" +
-      "dex\030\001 \001(\r\022\025\n\rms_to_arrival\030\002 \001(\r\022\021\n\tpred" +
+      "dex\030\001 \001(\r\022\025\n\rms_to_arrival\030\002 \001(\r\022\021\n\tpred",
       "icted\030\003 \001(\010\"-\n\005Route\022\022\n\nshort_name\030\001 \001(\t" +
       "\022\020\n\010headsign\030\002 \001(\t\"\206\001\n\020TemporaryMessage\022" +
       ")\n\ntime_frame\030\001 \001(\0132\025.busboy.api.TimeFra" +
@@ -7782,7 +7503,7 @@ public final class BusBoy {
       "oy.api.TimeFrame\0226\n\025color_scheme_overrid" +
       "e\030\002 \001(\0162\027.busboy.api.ColorScheme\"O\n\tTime" +
       "Frame\022!\n\031start_time_ms_since_epoch\030\001 \001(\004" +
-      "\022\037\n\027end_time_ms_since_epoch\030\002 \001(\004*V\n\013Col" +
+      "\022\037\n\027end_time_ms_since_epoch\030\002 \001(\004*V\n\013Col",
       "orScheme\022\014\n\010SEAHAWKS\020\000\022\013\n\007RAINBOW\020\001\022\n\n\006S" +
       "PRING\020\002\022\n\n\006SUMMER\020\003\022\010\n\004FALL\020\004\022\n\n\006WINTER\020" +
       "\005B#\n!com.jonkimbel.busboybackend.proto"

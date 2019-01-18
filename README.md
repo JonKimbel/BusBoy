@@ -9,14 +9,17 @@ See [the main docs](docs/index.md) for more info.
 
 ### API (backend + frontend)
 
-Install `protoc` from
-[here](https://github.com/protocolbuffers/protobuf/releases) and then run the
+Install the nanopb version of `protoc` from
+[here](https://jpa.kapsi.fi/nanopb/download/) and then run the
 following commands from this directory.
 
 ```
-protoc -I=api --java_out=appengine/src/main/java api/server-response.proto
-protoc -I=api --cpp_out=boron/proto api/server-response.proto
+protoc -I=api --java_out=appengine/src/main/java api/bus-boy.proto
+protoc -I=api --nanopb_out=boron/proto api/bus-boy.proto
 ```
+
+NOTE: nanopb is used instead of Google's proto compiler because it supports
+embedded C environments.
 
 ### AppEngine (backend)
 
