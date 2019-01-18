@@ -7,6 +7,7 @@
 #include "bus-boy.pb.h"
 
 // Don't auto-connect to the Particle cloud. Speeds up testing.
+// TODO: remove before deployment so firmware can be updated in the field.
 SYSTEM_MODE(SEMI_AUTOMATIC);
 
 TCPClient client;
