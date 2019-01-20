@@ -1,6 +1,7 @@
 package com.jonkimbel.busboybackend;
 
 import com.jonkimbel.busboybackend.network.NetworkUtils;
+import com.jonkimbel.busboybackend.time.TimeUtils;
 import dagger.Module;
 import dagger.Provides;
 
@@ -8,5 +9,9 @@ import dagger.Provides;
 class ServletModule {
   @Provides static NetworkUtils provideNetworkUtils() {
     return new NetworkUtils();
+  }
+
+  @Provides static TimeUtils provideTimeUtils() {
+    return new TimeUtils();
   }
 }

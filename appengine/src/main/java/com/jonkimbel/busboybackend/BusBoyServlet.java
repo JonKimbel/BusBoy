@@ -21,13 +21,13 @@ import com.google.gson.Gson;
 import com.jonkimbel.busboybackend.model.ArrivalAndDepartureResponse;
 import com.jonkimbel.busboybackend.network.NetworkUtils;
 import com.jonkimbel.busboybackend.proto.BusBoy;
+import com.jonkimbel.busboybackend.time.TimeUtils;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.nio.charset.Charset;
-import java.time.Instant;
-import java.util.Date;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
-import java.util.TimeZone;
 import javax.annotation.Nullable; // TODO: Needs entry in POM.
 import javax.inject.Inject;
 import javax.servlet.http.HttpServlet;
@@ -46,10 +46,12 @@ public class BusBoyServlet extends HttpServlet {
       "?key=TEST";
 
   private final NetworkUtils networkUtils;
+  private final TimeUtils timeUtils;
 
   @Inject
-  public BusBoyServlet(NetworkUtils networkUtils) {
+  public BusBoyServlet(NetworkUtils networkUtils, TimeUtils timeUtils) {
     this.networkUtils = networkUtils;
+    this.timeUtils = timeUtils;
   }
 
   /**
@@ -81,14 +83,44 @@ public class BusBoyServlet extends HttpServlet {
       return;
     }
 
-    boolean inDaylightTime = TimeZone.getTimeZone("America/Los_Angeles").inDaylightTime(new Date());
-    BusBoy.Response proto = BusBoy.Response.newBuilder()
+    BusBoy.Response.Builder protoBuilder = BusBoy.Response.newBuilder()
         .setTime(BusBoy.DisplayedTime.newBuilder()
-            .setMsSinceEpoch(Instant.now().toEpochMilli())
-            .setDaylightSavingsTime(inDaylightTime))
-        .build();
+            .setMsSinceEpoch(timeUtils.msSinceEpoch())
+            .setDaylightSavingsTime(timeUtils.isCaInDaylightTime()));
 
-    proto.writeTo(response.getOutputStream());
+    if (data != null) {
+      List<BusBoy.Route> routes = new ArrayList<>();
+      for (ArrivalAndDepartureV2Bean arrival : data.getArrivals()) {
+        long arrivalTime = arrival.hasPredictedArrivalTime() ?
+            arrival.getPredictedArrivalTime() :
+            arrival.getScheduledArrivalTime();
+
+        long msToArrival = arrivalTime - timeUtils.msSinceEpoch();
+
+        if (msToArrival >= 0) {
+          BusBoy.Route route = BusBoy.Route.newBuilder()
+            .setShortName(arrival.getRouteShortName())
+            // Headsign is the most expensive part of the response, if something
+            // needs to go to save on data this is it.
+            .setHeadsign(arrival.getTripHeadsign())
+            .build();
+          if (!routes.contains(route)) {
+            protoBuilder.addRoute(route);
+            routes.add(route);
+          }
+
+          int msToArrivalInt = (msToArrival > Integer.MAX_VALUE) ?
+              Integer.MAX_VALUE : (int) msToArrival;
+
+          protoBuilder.addArrival(BusBoy.Arrival.newBuilder()
+              .setRouteIndex(routes.indexOf(route))
+              .setMsToArrival(msToArrivalInt)
+              .setPredicted(arrival.hasPredictedArrivalTime()));
+        }
+      }
+    }
+
+    protoBuilder.build().writeTo(response.getOutputStream());
   }
 
   @Nullable

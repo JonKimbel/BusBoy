@@ -18,19 +18,26 @@
 package com.jonkimbel.busboybackend;
 
 import static com.google.common.truth.Truth.assertThat;
+import static com.google.common.truth.extensions.proto.ProtoTruth.assertThat;
 import static org.mockito.Mockito.*;
 
 import com.google.appengine.tools.development.testing.LocalServiceTestHelper;
 import com.google.common.collect.ImmutableMap;
 import com.google.protobuf.InvalidProtocolBufferException;
+import com.google.protobuf.TextFormat;
 import com.jonkimbel.busboybackend.network.NetworkUtils;
 import com.jonkimbel.busboybackend.proto.BusBoy;
 import com.jonkimbel.busboybackend.testing.FakeServletOutputStream;
+import com.jonkimbel.busboybackend.time.TimeUtils;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.net.MalformedURLException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.Arrays;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.junit.After;
@@ -49,14 +56,17 @@ public class BusBoyServletTest {
   private static final String FAKE_URL = "fake.fk/busboy?stop=ID";
   private static final String QUERY_STRING = "stop=ID";
   private static final String EXPECTED_OBA_URL =
-      "http://api.onebusaway.org/api/where/arrivals-and-departures-for-stop/ID.json?key=TEST";
+      "http://api.onebusaway.org/api/where/arrivals-and-departures-for-stop/" +
+      "ID.json?key=TEST";
 
-  // Set up a helper so that the ApiProxy returns a valid environment for local testing.
+  // Set up a helper so that the ApiProxy returns a valid environment for local
+  // testing.
   private final LocalServiceTestHelper helper = new LocalServiceTestHelper();
 
   @Mock private HttpServletRequest mockRequest;
   @Mock private HttpServletResponse mockResponse;
   @Mock private NetworkUtils mockNetworkUtils;
+  @Mock private TimeUtils mockTimeUtils;
   private StringWriter responseWriter;
   private FakeServletOutputStream responseStream;
   private BusBoyServlet servletUnderTest;
@@ -76,7 +86,12 @@ public class BusBoyServletTest {
     responseStream = new FakeServletOutputStream();
     when(mockResponse.getOutputStream()).thenReturn(responseStream);
 
-    servletUnderTest = new BusBoyServlet(mockNetworkUtils);
+    // Set up fake time. These values are referenced by the expected responses
+    // in the testdata directory.
+    when(mockTimeUtils.isCaInDaylightTime()).thenReturn(false);
+    when(mockTimeUtils.msSinceEpoch()).thenReturn(42L);
+
+    servletUnderTest = new BusBoyServlet(mockNetworkUtils, mockTimeUtils);
   }
 
   @After public void tearDown() {
@@ -93,9 +108,12 @@ public class BusBoyServletTest {
   }
 
   @Test
-  public void doGet_failedRequestToOneBusAway_returnsInternalServerError() throws Exception {
-    when(mockNetworkUtils.parseQueryString(QUERY_STRING)).thenReturn(ImmutableMap.of("stop", "ID"));
-    when(mockNetworkUtils.sendGetRequest(EXPECTED_OBA_URL)).thenThrow(MalformedURLException.class);
+  public void doGet_failedRequestToOneBusAway_returnsInternalServerError()
+      throws Exception {
+    when(mockNetworkUtils.parseQueryString(QUERY_STRING)).thenReturn(
+        ImmutableMap.of("stop", "ID"));
+    when(mockNetworkUtils.sendGetRequest(EXPECTED_OBA_URL)).thenThrow(
+        MalformedURLException.class);
 
     servletUnderTest.doGet(mockRequest, mockResponse);
 
@@ -105,9 +123,12 @@ public class BusBoyServletTest {
   }
 
   @Test
-  public void doGet_failedRequestToOneBusAway_returnsServiceUnreachable() throws Exception {
-    when(mockNetworkUtils.parseQueryString(QUERY_STRING)).thenReturn(ImmutableMap.of("stop", "ID"));
-    when(mockNetworkUtils.sendGetRequest(EXPECTED_OBA_URL)).thenThrow(IOException.class);
+  public void doGet_failedRequestToOneBusAway_returnsServiceUnreachable()
+      throws Exception {
+    when(mockNetworkUtils.parseQueryString(QUERY_STRING)).thenReturn(
+        ImmutableMap.of("stop", "ID"));
+    when(mockNetworkUtils.sendGetRequest(EXPECTED_OBA_URL)).thenThrow(
+        IOException.class);
 
     servletUnderTest.doGet(mockRequest, mockResponse);
 
@@ -116,15 +137,54 @@ public class BusBoyServletTest {
         .contains("Error sending request to OneBusAway.");
   }
 
+  @Test
+  public void doGet_time() throws Exception {
+    testResponse(/* testFileName = */ "time");
+  }
+
+  // TODO: write more test cases to differentiate failure types.
   // @Test
-  // public void doGet() throws Exception {
-  //   when(mockNetworkUtils.parseQueryString(QUERY_STRING)).thenReturn(ImmutableMap.of("stop", "ID"));
-  //   when(mockNetworkUtils.sendGetRequest(EXPECTED_OBA_URL)).thenReturn("{ \"currentTime\": 42 }");
-  //
-  //   servletUnderTest.doGet(mockRequest, mockResponse);
-  //
-  //   BusBoy.Response responseData = BusBoy.Response
-  //       .parseFrom(responseStream.toByteArray());
-  //   assertThat(responseData.getTime()).isEqualTo(42);
+  // public void doGet_arrival() throws Exception {
+  //   testResponse(
+  //       /* testFileName = */ "arrival"
+  //       /* ignoringFields = */ 0);
   // }
+
+  @Test
+  public void doGet_fullResponse() throws Exception {
+    // This test uses real data so we need a real-ish timestamp.
+    when(mockTimeUtils.msSinceEpoch()).thenReturn(1542949430000L);
+
+    testResponse(/* testFileName = */ "full-response");
+  }
+
+  private void testResponse(String testFileName, Integer... ignoringFields)
+      throws Exception {
+    when(mockNetworkUtils.parseQueryString(QUERY_STRING)).thenReturn(
+        ImmutableMap.of("stop", "ID"));
+    when(mockNetworkUtils.sendGetRequest(EXPECTED_OBA_URL)).thenReturn(
+        readFile("test-oba-response/" + testFileName + ".xml"));
+
+    servletUnderTest.doGet(mockRequest, mockResponse);
+
+    BusBoy.Response responseData = BusBoy.Response
+        .parseFrom(responseStream.toByteArray());
+    assertThat(responseData)
+        .ignoringFields(Arrays.asList(ignoringFields))
+        .isEqualTo(readProto("expected-response/" + testFileName + ".textpb"));
+  }
+
+  private String readFile(String dataFilePath) throws Exception {
+    byte[] encodedContents = Files.readAllBytes(Paths.get(
+        "src/test/java/com/jonkimbel/busboybackend/testdata/" + dataFilePath));
+    return new String(encodedContents, StandardCharsets.UTF_8);
+  }
+
+  private BusBoy.Response readProto(String dataFilePath)
+      throws Exception {
+    String fileString = readFile(dataFilePath);
+    BusBoy.Response.Builder protoBuilder = BusBoy.Response.newBuilder();
+    TextFormat.merge(fileString, protoBuilder);
+    return protoBuilder.build();
+  }
 }

@@ -1,0 +1,36 @@
+time {
+  ms_since_epoch:
+  daylight_savings_time: true/false
+}
+
+// repeated
+arrival {
+  route_index:
+  ms_to_arrival:
+  predicted: true/false
+}
+
+// repeated
+route {
+  short_name: ""
+  headsign: ""
+}
+
+// repeated
+temporary_message {
+  time_frame {
+    start_time_ms_since_epoch:
+    end_time_ms_since_epoch:
+  }
+  message: ""
+  color_scheme_override: SEAHAWKS/RAINBOW/SPRING/SUMMER/FALL/WINTER
+}
+
+// repeated
+temporary_style {
+  time_frame {
+    start_time_ms_since_epoch:
+    end_time_ms_since_epoch:
+  }
+  color_scheme_override: SEAHAWKS/RAINBOW/SPRING/SUMMER/FALL/WINTER
+}

@@ -1,0 +1,55 @@
+time {
+  ms_since_epoch: 1542949430000
+  daylight_savings_time: false
+}
+
+arrival {
+  route_index: 0
+  ms_to_arrival: 8000
+  predicted: true
+}
+
+arrival {
+  route_index: 1
+  ms_to_arrival: 383000
+  predicted: true
+}
+
+arrival {
+  route_index: 2
+  ms_to_arrival: 528000
+  predicted: true
+}
+
+arrival {
+  route_index: 0
+  ms_to_arrival: 790000
+  predicted: false
+}
+
+arrival {
+  route_index: 1
+  ms_to_arrival: 1570000
+  predicted: false
+}
+
+arrival {
+  route_index: 0
+  ms_to_arrival: 1690000
+  predicted: false
+}
+
+route {
+  short_name: "62"
+  headsign: "Sand Point East Green Lake"
+}
+
+route {
+  short_name: "40"
+  headsign: "Northgate Fremont"
+}
+
+route {
+  short_name: "32"
+  headsign: "University District Fremont"
+}

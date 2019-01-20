@@ -1,5 +1,6 @@
 package com.jonkimbel.busboybackend.model;
 
+import javax.annotation.Nullable; // TODO: Needs entry in POM.
 import org.onebusaway.api.model.transit.ArrivalAndDepartureV2Bean;
 
 /**
@@ -15,7 +16,7 @@ import org.onebusaway.api.model.transit.ArrivalAndDepartureV2Bean;
 public class ArrivalAndDepartureResponse {
   private int code;
   // Skipped field: long currentTime;
-  private Data data;
+  @Nullable private Data data;
   // Skipped field: String text;
   // Skipped field: int version;
 
@@ -24,15 +25,19 @@ public class ArrivalAndDepartureResponse {
   }
 
   public ArrivalAndDepartureV2Bean[] getArrivals() {
+    if (data == null || data.entry == null ||
+        data.entry.arrivalsAndDepartures == null) {
+      return new ArrivalAndDepartureV2Bean[0];
+    }
     return data.entry.arrivalsAndDepartures;
   }
 
   public static class Data {
-    Entry entry;
+    @Nullable Entry entry;
     // Skipped field: Object references;
 
     public static class Entry {
-      ArrivalAndDepartureV2Bean[] arrivalsAndDepartures;
+      @Nullable ArrivalAndDepartureV2Bean[] arrivalsAndDepartures;
       // Skipped field: Object[] nearbyStopIds;
       // Skipped field: Object[] situationIds;
       // Skipped field: Object[] stopId;

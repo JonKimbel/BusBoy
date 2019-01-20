@@ -10,6 +10,9 @@ message Response {
   optional DisplayedTime time = 1;
 
   // Upcoming arrivals.
+  // If arrivals are present, the client should overwrite its data with this.
+  // If no arrivals are provided, the client should decrement the arrival times
+  // from the last update by the elapsed time.
   repeated Arrival arrival = 2;
 
   // Route information for upcoming arrivals.
