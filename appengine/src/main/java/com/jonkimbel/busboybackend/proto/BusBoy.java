@@ -177,43 +177,43 @@ public final class BusBoy {
      * Upcoming arrivals.
      * </pre>
      *
-     * <code>repeated .busboy.api.Arrival arrivals = 2;</code>
+     * <code>repeated .busboy.api.Arrival arrival = 2;</code>
      */
     java.util.List<com.jonkimbel.busboybackend.proto.BusBoy.Arrival> 
-        getArrivalsList();
+        getArrivalList();
     /**
      * <pre>
      * Upcoming arrivals.
      * </pre>
      *
-     * <code>repeated .busboy.api.Arrival arrivals = 2;</code>
+     * <code>repeated .busboy.api.Arrival arrival = 2;</code>
      */
-    com.jonkimbel.busboybackend.proto.BusBoy.Arrival getArrivals(int index);
+    com.jonkimbel.busboybackend.proto.BusBoy.Arrival getArrival(int index);
     /**
      * <pre>
      * Upcoming arrivals.
      * </pre>
      *
-     * <code>repeated .busboy.api.Arrival arrivals = 2;</code>
+     * <code>repeated .busboy.api.Arrival arrival = 2;</code>
      */
-    int getArrivalsCount();
+    int getArrivalCount();
     /**
      * <pre>
      * Upcoming arrivals.
      * </pre>
      *
-     * <code>repeated .busboy.api.Arrival arrivals = 2;</code>
+     * <code>repeated .busboy.api.Arrival arrival = 2;</code>
      */
     java.util.List<? extends com.jonkimbel.busboybackend.proto.BusBoy.ArrivalOrBuilder> 
-        getArrivalsOrBuilderList();
+        getArrivalOrBuilderList();
     /**
      * <pre>
      * Upcoming arrivals.
      * </pre>
      *
-     * <code>repeated .busboy.api.Arrival arrivals = 2;</code>
+     * <code>repeated .busboy.api.Arrival arrival = 2;</code>
      */
-    com.jonkimbel.busboybackend.proto.BusBoy.ArrivalOrBuilder getArrivalsOrBuilder(
+    com.jonkimbel.busboybackend.proto.BusBoy.ArrivalOrBuilder getArrivalOrBuilder(
         int index);
 
     /**
@@ -221,43 +221,43 @@ public final class BusBoy {
      * Route information for upcoming arrivals.
      * </pre>
      *
-     * <code>repeated .busboy.api.Route routes = 3;</code>
+     * <code>repeated .busboy.api.Route route = 3;</code>
      */
     java.util.List<com.jonkimbel.busboybackend.proto.BusBoy.Route> 
-        getRoutesList();
+        getRouteList();
     /**
      * <pre>
      * Route information for upcoming arrivals.
      * </pre>
      *
-     * <code>repeated .busboy.api.Route routes = 3;</code>
+     * <code>repeated .busboy.api.Route route = 3;</code>
      */
-    com.jonkimbel.busboybackend.proto.BusBoy.Route getRoutes(int index);
+    com.jonkimbel.busboybackend.proto.BusBoy.Route getRoute(int index);
     /**
      * <pre>
      * Route information for upcoming arrivals.
      * </pre>
      *
-     * <code>repeated .busboy.api.Route routes = 3;</code>
+     * <code>repeated .busboy.api.Route route = 3;</code>
      */
-    int getRoutesCount();
+    int getRouteCount();
     /**
      * <pre>
      * Route information for upcoming arrivals.
      * </pre>
      *
-     * <code>repeated .busboy.api.Route routes = 3;</code>
+     * <code>repeated .busboy.api.Route route = 3;</code>
      */
     java.util.List<? extends com.jonkimbel.busboybackend.proto.BusBoy.RouteOrBuilder> 
-        getRoutesOrBuilderList();
+        getRouteOrBuilderList();
     /**
      * <pre>
      * Route information for upcoming arrivals.
      * </pre>
      *
-     * <code>repeated .busboy.api.Route routes = 3;</code>
+     * <code>repeated .busboy.api.Route route = 3;</code>
      */
-    com.jonkimbel.busboybackend.proto.BusBoy.RouteOrBuilder getRoutesOrBuilder(
+    com.jonkimbel.busboybackend.proto.BusBoy.RouteOrBuilder getRouteOrBuilder(
         int index);
 
     /**
@@ -370,8 +370,8 @@ public final class BusBoy {
       super(builder);
     }
     private Response() {
-      arrivals_ = java.util.Collections.emptyList();
-      routes_ = java.util.Collections.emptyList();
+      arrival_ = java.util.Collections.emptyList();
+      route_ = java.util.Collections.emptyList();
       temporaryMessage_ = java.util.Collections.emptyList();
       temporaryStyle_ = java.util.Collections.emptyList();
     }
@@ -419,19 +419,19 @@ public final class BusBoy {
             }
             case 18: {
               if (!((mutable_bitField0_ & 0x00000002) == 0x00000002)) {
-                arrivals_ = new java.util.ArrayList<com.jonkimbel.busboybackend.proto.BusBoy.Arrival>();
+                arrival_ = new java.util.ArrayList<com.jonkimbel.busboybackend.proto.BusBoy.Arrival>();
                 mutable_bitField0_ |= 0x00000002;
               }
-              arrivals_.add(
+              arrival_.add(
                   input.readMessage(com.jonkimbel.busboybackend.proto.BusBoy.Arrival.PARSER, extensionRegistry));
               break;
             }
             case 26: {
               if (!((mutable_bitField0_ & 0x00000004) == 0x00000004)) {
-                routes_ = new java.util.ArrayList<com.jonkimbel.busboybackend.proto.BusBoy.Route>();
+                route_ = new java.util.ArrayList<com.jonkimbel.busboybackend.proto.BusBoy.Route>();
                 mutable_bitField0_ |= 0x00000004;
               }
-              routes_.add(
+              route_.add(
                   input.readMessage(com.jonkimbel.busboybackend.proto.BusBoy.Route.PARSER, extensionRegistry));
               break;
             }
@@ -462,10 +462,10 @@ public final class BusBoy {
             e).setUnfinishedMessage(this);
       } finally {
         if (((mutable_bitField0_ & 0x00000002) == 0x00000002)) {
-          arrivals_ = java.util.Collections.unmodifiableList(arrivals_);
+          arrival_ = java.util.Collections.unmodifiableList(arrival_);
         }
         if (((mutable_bitField0_ & 0x00000004) == 0x00000004)) {
-          routes_ = java.util.Collections.unmodifiableList(routes_);
+          route_ = java.util.Collections.unmodifiableList(route_);
         }
         if (((mutable_bitField0_ & 0x00000008) == 0x00000008)) {
           temporaryMessage_ = java.util.Collections.unmodifiableList(temporaryMessage_);
@@ -526,114 +526,114 @@ public final class BusBoy {
       return time_ == null ? com.jonkimbel.busboybackend.proto.BusBoy.DisplayedTime.getDefaultInstance() : time_;
     }
 
-    public static final int ARRIVALS_FIELD_NUMBER = 2;
-    private java.util.List<com.jonkimbel.busboybackend.proto.BusBoy.Arrival> arrivals_;
+    public static final int ARRIVAL_FIELD_NUMBER = 2;
+    private java.util.List<com.jonkimbel.busboybackend.proto.BusBoy.Arrival> arrival_;
     /**
      * <pre>
      * Upcoming arrivals.
      * </pre>
      *
-     * <code>repeated .busboy.api.Arrival arrivals = 2;</code>
+     * <code>repeated .busboy.api.Arrival arrival = 2;</code>
      */
-    public java.util.List<com.jonkimbel.busboybackend.proto.BusBoy.Arrival> getArrivalsList() {
-      return arrivals_;
+    public java.util.List<com.jonkimbel.busboybackend.proto.BusBoy.Arrival> getArrivalList() {
+      return arrival_;
     }
     /**
      * <pre>
      * Upcoming arrivals.
      * </pre>
      *
-     * <code>repeated .busboy.api.Arrival arrivals = 2;</code>
+     * <code>repeated .busboy.api.Arrival arrival = 2;</code>
      */
     public java.util.List<? extends com.jonkimbel.busboybackend.proto.BusBoy.ArrivalOrBuilder> 
-        getArrivalsOrBuilderList() {
-      return arrivals_;
+        getArrivalOrBuilderList() {
+      return arrival_;
     }
     /**
      * <pre>
      * Upcoming arrivals.
      * </pre>
      *
-     * <code>repeated .busboy.api.Arrival arrivals = 2;</code>
+     * <code>repeated .busboy.api.Arrival arrival = 2;</code>
      */
-    public int getArrivalsCount() {
-      return arrivals_.size();
+    public int getArrivalCount() {
+      return arrival_.size();
     }
     /**
      * <pre>
      * Upcoming arrivals.
      * </pre>
      *
-     * <code>repeated .busboy.api.Arrival arrivals = 2;</code>
+     * <code>repeated .busboy.api.Arrival arrival = 2;</code>
      */
-    public com.jonkimbel.busboybackend.proto.BusBoy.Arrival getArrivals(int index) {
-      return arrivals_.get(index);
+    public com.jonkimbel.busboybackend.proto.BusBoy.Arrival getArrival(int index) {
+      return arrival_.get(index);
     }
     /**
      * <pre>
      * Upcoming arrivals.
      * </pre>
      *
-     * <code>repeated .busboy.api.Arrival arrivals = 2;</code>
+     * <code>repeated .busboy.api.Arrival arrival = 2;</code>
      */
-    public com.jonkimbel.busboybackend.proto.BusBoy.ArrivalOrBuilder getArrivalsOrBuilder(
+    public com.jonkimbel.busboybackend.proto.BusBoy.ArrivalOrBuilder getArrivalOrBuilder(
         int index) {
-      return arrivals_.get(index);
+      return arrival_.get(index);
     }
 
-    public static final int ROUTES_FIELD_NUMBER = 3;
-    private java.util.List<com.jonkimbel.busboybackend.proto.BusBoy.Route> routes_;
+    public static final int ROUTE_FIELD_NUMBER = 3;
+    private java.util.List<com.jonkimbel.busboybackend.proto.BusBoy.Route> route_;
     /**
      * <pre>
      * Route information for upcoming arrivals.
      * </pre>
      *
-     * <code>repeated .busboy.api.Route routes = 3;</code>
+     * <code>repeated .busboy.api.Route route = 3;</code>
      */
-    public java.util.List<com.jonkimbel.busboybackend.proto.BusBoy.Route> getRoutesList() {
-      return routes_;
+    public java.util.List<com.jonkimbel.busboybackend.proto.BusBoy.Route> getRouteList() {
+      return route_;
     }
     /**
      * <pre>
      * Route information for upcoming arrivals.
      * </pre>
      *
-     * <code>repeated .busboy.api.Route routes = 3;</code>
+     * <code>repeated .busboy.api.Route route = 3;</code>
      */
     public java.util.List<? extends com.jonkimbel.busboybackend.proto.BusBoy.RouteOrBuilder> 
-        getRoutesOrBuilderList() {
-      return routes_;
+        getRouteOrBuilderList() {
+      return route_;
     }
     /**
      * <pre>
      * Route information for upcoming arrivals.
      * </pre>
      *
-     * <code>repeated .busboy.api.Route routes = 3;</code>
+     * <code>repeated .busboy.api.Route route = 3;</code>
      */
-    public int getRoutesCount() {
-      return routes_.size();
+    public int getRouteCount() {
+      return route_.size();
     }
     /**
      * <pre>
      * Route information for upcoming arrivals.
      * </pre>
      *
-     * <code>repeated .busboy.api.Route routes = 3;</code>
+     * <code>repeated .busboy.api.Route route = 3;</code>
      */
-    public com.jonkimbel.busboybackend.proto.BusBoy.Route getRoutes(int index) {
-      return routes_.get(index);
+    public com.jonkimbel.busboybackend.proto.BusBoy.Route getRoute(int index) {
+      return route_.get(index);
     }
     /**
      * <pre>
      * Route information for upcoming arrivals.
      * </pre>
      *
-     * <code>repeated .busboy.api.Route routes = 3;</code>
+     * <code>repeated .busboy.api.Route route = 3;</code>
      */
-    public com.jonkimbel.busboybackend.proto.BusBoy.RouteOrBuilder getRoutesOrBuilder(
+    public com.jonkimbel.busboybackend.proto.BusBoy.RouteOrBuilder getRouteOrBuilder(
         int index) {
-      return routes_.get(index);
+      return route_.get(index);
     }
 
     public static final int TEMPORARY_MESSAGE_FIELD_NUMBER = 4;
@@ -771,11 +771,11 @@ public final class BusBoy {
       if (((bitField0_ & 0x00000001) == 0x00000001)) {
         output.writeMessage(1, getTime());
       }
-      for (int i = 0; i < arrivals_.size(); i++) {
-        output.writeMessage(2, arrivals_.get(i));
+      for (int i = 0; i < arrival_.size(); i++) {
+        output.writeMessage(2, arrival_.get(i));
       }
-      for (int i = 0; i < routes_.size(); i++) {
-        output.writeMessage(3, routes_.get(i));
+      for (int i = 0; i < route_.size(); i++) {
+        output.writeMessage(3, route_.get(i));
       }
       for (int i = 0; i < temporaryMessage_.size(); i++) {
         output.writeMessage(4, temporaryMessage_.get(i));
@@ -795,13 +795,13 @@ public final class BusBoy {
         size += com.google.protobuf.CodedOutputStream
           .computeMessageSize(1, getTime());
       }
-      for (int i = 0; i < arrivals_.size(); i++) {
+      for (int i = 0; i < arrival_.size(); i++) {
         size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(2, arrivals_.get(i));
+          .computeMessageSize(2, arrival_.get(i));
       }
-      for (int i = 0; i < routes_.size(); i++) {
+      for (int i = 0; i < route_.size(); i++) {
         size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(3, routes_.get(i));
+          .computeMessageSize(3, route_.get(i));
       }
       for (int i = 0; i < temporaryMessage_.size(); i++) {
         size += com.google.protobuf.CodedOutputStream
@@ -833,10 +833,10 @@ public final class BusBoy {
         result = result && getTime()
             .equals(other.getTime());
       }
-      result = result && getArrivalsList()
-          .equals(other.getArrivalsList());
-      result = result && getRoutesList()
-          .equals(other.getRoutesList());
+      result = result && getArrivalList()
+          .equals(other.getArrivalList());
+      result = result && getRouteList()
+          .equals(other.getRouteList());
       result = result && getTemporaryMessageList()
           .equals(other.getTemporaryMessageList());
       result = result && getTemporaryStyleList()
@@ -856,13 +856,13 @@ public final class BusBoy {
         hash = (37 * hash) + TIME_FIELD_NUMBER;
         hash = (53 * hash) + getTime().hashCode();
       }
-      if (getArrivalsCount() > 0) {
-        hash = (37 * hash) + ARRIVALS_FIELD_NUMBER;
-        hash = (53 * hash) + getArrivalsList().hashCode();
+      if (getArrivalCount() > 0) {
+        hash = (37 * hash) + ARRIVAL_FIELD_NUMBER;
+        hash = (53 * hash) + getArrivalList().hashCode();
       }
-      if (getRoutesCount() > 0) {
-        hash = (37 * hash) + ROUTES_FIELD_NUMBER;
-        hash = (53 * hash) + getRoutesList().hashCode();
+      if (getRouteCount() > 0) {
+        hash = (37 * hash) + ROUTE_FIELD_NUMBER;
+        hash = (53 * hash) + getRouteList().hashCode();
       }
       if (getTemporaryMessageCount() > 0) {
         hash = (37 * hash) + TEMPORARY_MESSAGE_FIELD_NUMBER;
@@ -987,8 +987,8 @@ public final class BusBoy {
         if (com.google.protobuf.GeneratedMessageV3
                 .alwaysUseFieldBuilders) {
           getTimeFieldBuilder();
-          getArrivalsFieldBuilder();
-          getRoutesFieldBuilder();
+          getArrivalFieldBuilder();
+          getRouteFieldBuilder();
           getTemporaryMessageFieldBuilder();
           getTemporaryStyleFieldBuilder();
         }
@@ -1001,17 +1001,17 @@ public final class BusBoy {
           timeBuilder_.clear();
         }
         bitField0_ = (bitField0_ & ~0x00000001);
-        if (arrivalsBuilder_ == null) {
-          arrivals_ = java.util.Collections.emptyList();
+        if (arrivalBuilder_ == null) {
+          arrival_ = java.util.Collections.emptyList();
           bitField0_ = (bitField0_ & ~0x00000002);
         } else {
-          arrivalsBuilder_.clear();
+          arrivalBuilder_.clear();
         }
-        if (routesBuilder_ == null) {
-          routes_ = java.util.Collections.emptyList();
+        if (routeBuilder_ == null) {
+          route_ = java.util.Collections.emptyList();
           bitField0_ = (bitField0_ & ~0x00000004);
         } else {
-          routesBuilder_.clear();
+          routeBuilder_.clear();
         }
         if (temporaryMessageBuilder_ == null) {
           temporaryMessage_ = java.util.Collections.emptyList();
@@ -1057,23 +1057,23 @@ public final class BusBoy {
         } else {
           result.time_ = timeBuilder_.build();
         }
-        if (arrivalsBuilder_ == null) {
+        if (arrivalBuilder_ == null) {
           if (((bitField0_ & 0x00000002) == 0x00000002)) {
-            arrivals_ = java.util.Collections.unmodifiableList(arrivals_);
+            arrival_ = java.util.Collections.unmodifiableList(arrival_);
             bitField0_ = (bitField0_ & ~0x00000002);
           }
-          result.arrivals_ = arrivals_;
+          result.arrival_ = arrival_;
         } else {
-          result.arrivals_ = arrivalsBuilder_.build();
+          result.arrival_ = arrivalBuilder_.build();
         }
-        if (routesBuilder_ == null) {
+        if (routeBuilder_ == null) {
           if (((bitField0_ & 0x00000004) == 0x00000004)) {
-            routes_ = java.util.Collections.unmodifiableList(routes_);
+            route_ = java.util.Collections.unmodifiableList(route_);
             bitField0_ = (bitField0_ & ~0x00000004);
           }
-          result.routes_ = routes_;
+          result.route_ = route_;
         } else {
-          result.routes_ = routesBuilder_.build();
+          result.route_ = routeBuilder_.build();
         }
         if (temporaryMessageBuilder_ == null) {
           if (((bitField0_ & 0x00000008) == 0x00000008)) {
@@ -1138,55 +1138,55 @@ public final class BusBoy {
         if (other.hasTime()) {
           mergeTime(other.getTime());
         }
-        if (arrivalsBuilder_ == null) {
-          if (!other.arrivals_.isEmpty()) {
-            if (arrivals_.isEmpty()) {
-              arrivals_ = other.arrivals_;
+        if (arrivalBuilder_ == null) {
+          if (!other.arrival_.isEmpty()) {
+            if (arrival_.isEmpty()) {
+              arrival_ = other.arrival_;
               bitField0_ = (bitField0_ & ~0x00000002);
             } else {
-              ensureArrivalsIsMutable();
-              arrivals_.addAll(other.arrivals_);
+              ensureArrivalIsMutable();
+              arrival_.addAll(other.arrival_);
             }
             onChanged();
           }
         } else {
-          if (!other.arrivals_.isEmpty()) {
-            if (arrivalsBuilder_.isEmpty()) {
-              arrivalsBuilder_.dispose();
-              arrivalsBuilder_ = null;
-              arrivals_ = other.arrivals_;
+          if (!other.arrival_.isEmpty()) {
+            if (arrivalBuilder_.isEmpty()) {
+              arrivalBuilder_.dispose();
+              arrivalBuilder_ = null;
+              arrival_ = other.arrival_;
               bitField0_ = (bitField0_ & ~0x00000002);
-              arrivalsBuilder_ = 
+              arrivalBuilder_ = 
                 com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders ?
-                   getArrivalsFieldBuilder() : null;
+                   getArrivalFieldBuilder() : null;
             } else {
-              arrivalsBuilder_.addAllMessages(other.arrivals_);
+              arrivalBuilder_.addAllMessages(other.arrival_);
             }
           }
         }
-        if (routesBuilder_ == null) {
-          if (!other.routes_.isEmpty()) {
-            if (routes_.isEmpty()) {
-              routes_ = other.routes_;
+        if (routeBuilder_ == null) {
+          if (!other.route_.isEmpty()) {
+            if (route_.isEmpty()) {
+              route_ = other.route_;
               bitField0_ = (bitField0_ & ~0x00000004);
             } else {
-              ensureRoutesIsMutable();
-              routes_.addAll(other.routes_);
+              ensureRouteIsMutable();
+              route_.addAll(other.route_);
             }
             onChanged();
           }
         } else {
-          if (!other.routes_.isEmpty()) {
-            if (routesBuilder_.isEmpty()) {
-              routesBuilder_.dispose();
-              routesBuilder_ = null;
-              routes_ = other.routes_;
+          if (!other.route_.isEmpty()) {
+            if (routeBuilder_.isEmpty()) {
+              routeBuilder_.dispose();
+              routeBuilder_ = null;
+              route_ = other.route_;
               bitField0_ = (bitField0_ & ~0x00000004);
-              routesBuilder_ = 
+              routeBuilder_ = 
                 com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders ?
-                   getRoutesFieldBuilder() : null;
+                   getRouteFieldBuilder() : null;
             } else {
-              routesBuilder_.addAllMessages(other.routes_);
+              routeBuilder_.addAllMessages(other.route_);
             }
           }
         }
@@ -1433,30 +1433,30 @@ public final class BusBoy {
         return timeBuilder_;
       }
 
-      private java.util.List<com.jonkimbel.busboybackend.proto.BusBoy.Arrival> arrivals_ =
+      private java.util.List<com.jonkimbel.busboybackend.proto.BusBoy.Arrival> arrival_ =
         java.util.Collections.emptyList();
-      private void ensureArrivalsIsMutable() {
+      private void ensureArrivalIsMutable() {
         if (!((bitField0_ & 0x00000002) == 0x00000002)) {
-          arrivals_ = new java.util.ArrayList<com.jonkimbel.busboybackend.proto.BusBoy.Arrival>(arrivals_);
+          arrival_ = new java.util.ArrayList<com.jonkimbel.busboybackend.proto.BusBoy.Arrival>(arrival_);
           bitField0_ |= 0x00000002;
          }
       }
 
       private com.google.protobuf.RepeatedFieldBuilderV3<
-          com.jonkimbel.busboybackend.proto.BusBoy.Arrival, com.jonkimbel.busboybackend.proto.BusBoy.Arrival.Builder, com.jonkimbel.busboybackend.proto.BusBoy.ArrivalOrBuilder> arrivalsBuilder_;
+          com.jonkimbel.busboybackend.proto.BusBoy.Arrival, com.jonkimbel.busboybackend.proto.BusBoy.Arrival.Builder, com.jonkimbel.busboybackend.proto.BusBoy.ArrivalOrBuilder> arrivalBuilder_;
 
       /**
        * <pre>
        * Upcoming arrivals.
        * </pre>
        *
-       * <code>repeated .busboy.api.Arrival arrivals = 2;</code>
+       * <code>repeated .busboy.api.Arrival arrival = 2;</code>
        */
-      public java.util.List<com.jonkimbel.busboybackend.proto.BusBoy.Arrival> getArrivalsList() {
-        if (arrivalsBuilder_ == null) {
-          return java.util.Collections.unmodifiableList(arrivals_);
+      public java.util.List<com.jonkimbel.busboybackend.proto.BusBoy.Arrival> getArrivalList() {
+        if (arrivalBuilder_ == null) {
+          return java.util.Collections.unmodifiableList(arrival_);
         } else {
-          return arrivalsBuilder_.getMessageList();
+          return arrivalBuilder_.getMessageList();
         }
       }
       /**
@@ -1464,13 +1464,13 @@ public final class BusBoy {
        * Upcoming arrivals.
        * </pre>
        *
-       * <code>repeated .busboy.api.Arrival arrivals = 2;</code>
+       * <code>repeated .busboy.api.Arrival arrival = 2;</code>
        */
-      public int getArrivalsCount() {
-        if (arrivalsBuilder_ == null) {
-          return arrivals_.size();
+      public int getArrivalCount() {
+        if (arrivalBuilder_ == null) {
+          return arrival_.size();
         } else {
-          return arrivalsBuilder_.getCount();
+          return arrivalBuilder_.getCount();
         }
       }
       /**
@@ -1478,13 +1478,13 @@ public final class BusBoy {
        * Upcoming arrivals.
        * </pre>
        *
-       * <code>repeated .busboy.api.Arrival arrivals = 2;</code>
+       * <code>repeated .busboy.api.Arrival arrival = 2;</code>
        */
-      public com.jonkimbel.busboybackend.proto.BusBoy.Arrival getArrivals(int index) {
-        if (arrivalsBuilder_ == null) {
-          return arrivals_.get(index);
+      public com.jonkimbel.busboybackend.proto.BusBoy.Arrival getArrival(int index) {
+        if (arrivalBuilder_ == null) {
+          return arrival_.get(index);
         } else {
-          return arrivalsBuilder_.getMessage(index);
+          return arrivalBuilder_.getMessage(index);
         }
       }
       /**
@@ -1492,19 +1492,19 @@ public final class BusBoy {
        * Upcoming arrivals.
        * </pre>
        *
-       * <code>repeated .busboy.api.Arrival arrivals = 2;</code>
+       * <code>repeated .busboy.api.Arrival arrival = 2;</code>
        */
-      public Builder setArrivals(
+      public Builder setArrival(
           int index, com.jonkimbel.busboybackend.proto.BusBoy.Arrival value) {
-        if (arrivalsBuilder_ == null) {
+        if (arrivalBuilder_ == null) {
           if (value == null) {
             throw new NullPointerException();
           }
-          ensureArrivalsIsMutable();
-          arrivals_.set(index, value);
+          ensureArrivalIsMutable();
+          arrival_.set(index, value);
           onChanged();
         } else {
-          arrivalsBuilder_.setMessage(index, value);
+          arrivalBuilder_.setMessage(index, value);
         }
         return this;
       }
@@ -1513,16 +1513,16 @@ public final class BusBoy {
        * Upcoming arrivals.
        * </pre>
        *
-       * <code>repeated .busboy.api.Arrival arrivals = 2;</code>
+       * <code>repeated .busboy.api.Arrival arrival = 2;</code>
        */
-      public Builder setArrivals(
+      public Builder setArrival(
           int index, com.jonkimbel.busboybackend.proto.BusBoy.Arrival.Builder builderForValue) {
-        if (arrivalsBuilder_ == null) {
-          ensureArrivalsIsMutable();
-          arrivals_.set(index, builderForValue.build());
+        if (arrivalBuilder_ == null) {
+          ensureArrivalIsMutable();
+          arrival_.set(index, builderForValue.build());
           onChanged();
         } else {
-          arrivalsBuilder_.setMessage(index, builderForValue.build());
+          arrivalBuilder_.setMessage(index, builderForValue.build());
         }
         return this;
       }
@@ -1531,18 +1531,18 @@ public final class BusBoy {
        * Upcoming arrivals.
        * </pre>
        *
-       * <code>repeated .busboy.api.Arrival arrivals = 2;</code>
+       * <code>repeated .busboy.api.Arrival arrival = 2;</code>
        */
-      public Builder addArrivals(com.jonkimbel.busboybackend.proto.BusBoy.Arrival value) {
-        if (arrivalsBuilder_ == null) {
+      public Builder addArrival(com.jonkimbel.busboybackend.proto.BusBoy.Arrival value) {
+        if (arrivalBuilder_ == null) {
           if (value == null) {
             throw new NullPointerException();
           }
-          ensureArrivalsIsMutable();
-          arrivals_.add(value);
+          ensureArrivalIsMutable();
+          arrival_.add(value);
           onChanged();
         } else {
-          arrivalsBuilder_.addMessage(value);
+          arrivalBuilder_.addMessage(value);
         }
         return this;
       }
@@ -1551,19 +1551,19 @@ public final class BusBoy {
        * Upcoming arrivals.
        * </pre>
        *
-       * <code>repeated .busboy.api.Arrival arrivals = 2;</code>
+       * <code>repeated .busboy.api.Arrival arrival = 2;</code>
        */
-      public Builder addArrivals(
+      public Builder addArrival(
           int index, com.jonkimbel.busboybackend.proto.BusBoy.Arrival value) {
-        if (arrivalsBuilder_ == null) {
+        if (arrivalBuilder_ == null) {
           if (value == null) {
             throw new NullPointerException();
           }
-          ensureArrivalsIsMutable();
-          arrivals_.add(index, value);
+          ensureArrivalIsMutable();
+          arrival_.add(index, value);
           onChanged();
         } else {
-          arrivalsBuilder_.addMessage(index, value);
+          arrivalBuilder_.addMessage(index, value);
         }
         return this;
       }
@@ -1572,16 +1572,16 @@ public final class BusBoy {
        * Upcoming arrivals.
        * </pre>
        *
-       * <code>repeated .busboy.api.Arrival arrivals = 2;</code>
+       * <code>repeated .busboy.api.Arrival arrival = 2;</code>
        */
-      public Builder addArrivals(
+      public Builder addArrival(
           com.jonkimbel.busboybackend.proto.BusBoy.Arrival.Builder builderForValue) {
-        if (arrivalsBuilder_ == null) {
-          ensureArrivalsIsMutable();
-          arrivals_.add(builderForValue.build());
+        if (arrivalBuilder_ == null) {
+          ensureArrivalIsMutable();
+          arrival_.add(builderForValue.build());
           onChanged();
         } else {
-          arrivalsBuilder_.addMessage(builderForValue.build());
+          arrivalBuilder_.addMessage(builderForValue.build());
         }
         return this;
       }
@@ -1590,16 +1590,16 @@ public final class BusBoy {
        * Upcoming arrivals.
        * </pre>
        *
-       * <code>repeated .busboy.api.Arrival arrivals = 2;</code>
+       * <code>repeated .busboy.api.Arrival arrival = 2;</code>
        */
-      public Builder addArrivals(
+      public Builder addArrival(
           int index, com.jonkimbel.busboybackend.proto.BusBoy.Arrival.Builder builderForValue) {
-        if (arrivalsBuilder_ == null) {
-          ensureArrivalsIsMutable();
-          arrivals_.add(index, builderForValue.build());
+        if (arrivalBuilder_ == null) {
+          ensureArrivalIsMutable();
+          arrival_.add(index, builderForValue.build());
           onChanged();
         } else {
-          arrivalsBuilder_.addMessage(index, builderForValue.build());
+          arrivalBuilder_.addMessage(index, builderForValue.build());
         }
         return this;
       }
@@ -1608,17 +1608,17 @@ public final class BusBoy {
        * Upcoming arrivals.
        * </pre>
        *
-       * <code>repeated .busboy.api.Arrival arrivals = 2;</code>
+       * <code>repeated .busboy.api.Arrival arrival = 2;</code>
        */
-      public Builder addAllArrivals(
+      public Builder addAllArrival(
           java.lang.Iterable<? extends com.jonkimbel.busboybackend.proto.BusBoy.Arrival> values) {
-        if (arrivalsBuilder_ == null) {
-          ensureArrivalsIsMutable();
+        if (arrivalBuilder_ == null) {
+          ensureArrivalIsMutable();
           com.google.protobuf.AbstractMessageLite.Builder.addAll(
-              values, arrivals_);
+              values, arrival_);
           onChanged();
         } else {
-          arrivalsBuilder_.addAllMessages(values);
+          arrivalBuilder_.addAllMessages(values);
         }
         return this;
       }
@@ -1627,15 +1627,15 @@ public final class BusBoy {
        * Upcoming arrivals.
        * </pre>
        *
-       * <code>repeated .busboy.api.Arrival arrivals = 2;</code>
+       * <code>repeated .busboy.api.Arrival arrival = 2;</code>
        */
-      public Builder clearArrivals() {
-        if (arrivalsBuilder_ == null) {
-          arrivals_ = java.util.Collections.emptyList();
+      public Builder clearArrival() {
+        if (arrivalBuilder_ == null) {
+          arrival_ = java.util.Collections.emptyList();
           bitField0_ = (bitField0_ & ~0x00000002);
           onChanged();
         } else {
-          arrivalsBuilder_.clear();
+          arrivalBuilder_.clear();
         }
         return this;
       }
@@ -1644,15 +1644,15 @@ public final class BusBoy {
        * Upcoming arrivals.
        * </pre>
        *
-       * <code>repeated .busboy.api.Arrival arrivals = 2;</code>
+       * <code>repeated .busboy.api.Arrival arrival = 2;</code>
        */
-      public Builder removeArrivals(int index) {
-        if (arrivalsBuilder_ == null) {
-          ensureArrivalsIsMutable();
-          arrivals_.remove(index);
+      public Builder removeArrival(int index) {
+        if (arrivalBuilder_ == null) {
+          ensureArrivalIsMutable();
+          arrival_.remove(index);
           onChanged();
         } else {
-          arrivalsBuilder_.remove(index);
+          arrivalBuilder_.remove(index);
         }
         return this;
       }
@@ -1661,24 +1661,24 @@ public final class BusBoy {
        * Upcoming arrivals.
        * </pre>
        *
-       * <code>repeated .busboy.api.Arrival arrivals = 2;</code>
+       * <code>repeated .busboy.api.Arrival arrival = 2;</code>
        */
-      public com.jonkimbel.busboybackend.proto.BusBoy.Arrival.Builder getArrivalsBuilder(
+      public com.jonkimbel.busboybackend.proto.BusBoy.Arrival.Builder getArrivalBuilder(
           int index) {
-        return getArrivalsFieldBuilder().getBuilder(index);
+        return getArrivalFieldBuilder().getBuilder(index);
       }
       /**
        * <pre>
        * Upcoming arrivals.
        * </pre>
        *
-       * <code>repeated .busboy.api.Arrival arrivals = 2;</code>
+       * <code>repeated .busboy.api.Arrival arrival = 2;</code>
        */
-      public com.jonkimbel.busboybackend.proto.BusBoy.ArrivalOrBuilder getArrivalsOrBuilder(
+      public com.jonkimbel.busboybackend.proto.BusBoy.ArrivalOrBuilder getArrivalOrBuilder(
           int index) {
-        if (arrivalsBuilder_ == null) {
-          return arrivals_.get(index);  } else {
-          return arrivalsBuilder_.getMessageOrBuilder(index);
+        if (arrivalBuilder_ == null) {
+          return arrival_.get(index);  } else {
+          return arrivalBuilder_.getMessageOrBuilder(index);
         }
       }
       /**
@@ -1686,14 +1686,14 @@ public final class BusBoy {
        * Upcoming arrivals.
        * </pre>
        *
-       * <code>repeated .busboy.api.Arrival arrivals = 2;</code>
+       * <code>repeated .busboy.api.Arrival arrival = 2;</code>
        */
       public java.util.List<? extends com.jonkimbel.busboybackend.proto.BusBoy.ArrivalOrBuilder> 
-           getArrivalsOrBuilderList() {
-        if (arrivalsBuilder_ != null) {
-          return arrivalsBuilder_.getMessageOrBuilderList();
+           getArrivalOrBuilderList() {
+        if (arrivalBuilder_ != null) {
+          return arrivalBuilder_.getMessageOrBuilderList();
         } else {
-          return java.util.Collections.unmodifiableList(arrivals_);
+          return java.util.Collections.unmodifiableList(arrival_);
         }
       }
       /**
@@ -1701,10 +1701,10 @@ public final class BusBoy {
        * Upcoming arrivals.
        * </pre>
        *
-       * <code>repeated .busboy.api.Arrival arrivals = 2;</code>
+       * <code>repeated .busboy.api.Arrival arrival = 2;</code>
        */
-      public com.jonkimbel.busboybackend.proto.BusBoy.Arrival.Builder addArrivalsBuilder() {
-        return getArrivalsFieldBuilder().addBuilder(
+      public com.jonkimbel.busboybackend.proto.BusBoy.Arrival.Builder addArrivalBuilder() {
+        return getArrivalFieldBuilder().addBuilder(
             com.jonkimbel.busboybackend.proto.BusBoy.Arrival.getDefaultInstance());
       }
       /**
@@ -1712,11 +1712,11 @@ public final class BusBoy {
        * Upcoming arrivals.
        * </pre>
        *
-       * <code>repeated .busboy.api.Arrival arrivals = 2;</code>
+       * <code>repeated .busboy.api.Arrival arrival = 2;</code>
        */
-      public com.jonkimbel.busboybackend.proto.BusBoy.Arrival.Builder addArrivalsBuilder(
+      public com.jonkimbel.busboybackend.proto.BusBoy.Arrival.Builder addArrivalBuilder(
           int index) {
-        return getArrivalsFieldBuilder().addBuilder(
+        return getArrivalFieldBuilder().addBuilder(
             index, com.jonkimbel.busboybackend.proto.BusBoy.Arrival.getDefaultInstance());
       }
       /**
@@ -1724,51 +1724,51 @@ public final class BusBoy {
        * Upcoming arrivals.
        * </pre>
        *
-       * <code>repeated .busboy.api.Arrival arrivals = 2;</code>
+       * <code>repeated .busboy.api.Arrival arrival = 2;</code>
        */
       public java.util.List<com.jonkimbel.busboybackend.proto.BusBoy.Arrival.Builder> 
-           getArrivalsBuilderList() {
-        return getArrivalsFieldBuilder().getBuilderList();
+           getArrivalBuilderList() {
+        return getArrivalFieldBuilder().getBuilderList();
       }
       private com.google.protobuf.RepeatedFieldBuilderV3<
           com.jonkimbel.busboybackend.proto.BusBoy.Arrival, com.jonkimbel.busboybackend.proto.BusBoy.Arrival.Builder, com.jonkimbel.busboybackend.proto.BusBoy.ArrivalOrBuilder> 
-          getArrivalsFieldBuilder() {
-        if (arrivalsBuilder_ == null) {
-          arrivalsBuilder_ = new com.google.protobuf.RepeatedFieldBuilderV3<
+          getArrivalFieldBuilder() {
+        if (arrivalBuilder_ == null) {
+          arrivalBuilder_ = new com.google.protobuf.RepeatedFieldBuilderV3<
               com.jonkimbel.busboybackend.proto.BusBoy.Arrival, com.jonkimbel.busboybackend.proto.BusBoy.Arrival.Builder, com.jonkimbel.busboybackend.proto.BusBoy.ArrivalOrBuilder>(
-                  arrivals_,
+                  arrival_,
                   ((bitField0_ & 0x00000002) == 0x00000002),
                   getParentForChildren(),
                   isClean());
-          arrivals_ = null;
+          arrival_ = null;
         }
-        return arrivalsBuilder_;
+        return arrivalBuilder_;
       }
 
-      private java.util.List<com.jonkimbel.busboybackend.proto.BusBoy.Route> routes_ =
+      private java.util.List<com.jonkimbel.busboybackend.proto.BusBoy.Route> route_ =
         java.util.Collections.emptyList();
-      private void ensureRoutesIsMutable() {
+      private void ensureRouteIsMutable() {
         if (!((bitField0_ & 0x00000004) == 0x00000004)) {
-          routes_ = new java.util.ArrayList<com.jonkimbel.busboybackend.proto.BusBoy.Route>(routes_);
+          route_ = new java.util.ArrayList<com.jonkimbel.busboybackend.proto.BusBoy.Route>(route_);
           bitField0_ |= 0x00000004;
          }
       }
 
       private com.google.protobuf.RepeatedFieldBuilderV3<
-          com.jonkimbel.busboybackend.proto.BusBoy.Route, com.jonkimbel.busboybackend.proto.BusBoy.Route.Builder, com.jonkimbel.busboybackend.proto.BusBoy.RouteOrBuilder> routesBuilder_;
+          com.jonkimbel.busboybackend.proto.BusBoy.Route, com.jonkimbel.busboybackend.proto.BusBoy.Route.Builder, com.jonkimbel.busboybackend.proto.BusBoy.RouteOrBuilder> routeBuilder_;
 
       /**
        * <pre>
        * Route information for upcoming arrivals.
        * </pre>
        *
-       * <code>repeated .busboy.api.Route routes = 3;</code>
+       * <code>repeated .busboy.api.Route route = 3;</code>
        */
-      public java.util.List<com.jonkimbel.busboybackend.proto.BusBoy.Route> getRoutesList() {
-        if (routesBuilder_ == null) {
-          return java.util.Collections.unmodifiableList(routes_);
+      public java.util.List<com.jonkimbel.busboybackend.proto.BusBoy.Route> getRouteList() {
+        if (routeBuilder_ == null) {
+          return java.util.Collections.unmodifiableList(route_);
         } else {
-          return routesBuilder_.getMessageList();
+          return routeBuilder_.getMessageList();
         }
       }
       /**
@@ -1776,13 +1776,13 @@ public final class BusBoy {
        * Route information for upcoming arrivals.
        * </pre>
        *
-       * <code>repeated .busboy.api.Route routes = 3;</code>
+       * <code>repeated .busboy.api.Route route = 3;</code>
        */
-      public int getRoutesCount() {
-        if (routesBuilder_ == null) {
-          return routes_.size();
+      public int getRouteCount() {
+        if (routeBuilder_ == null) {
+          return route_.size();
         } else {
-          return routesBuilder_.getCount();
+          return routeBuilder_.getCount();
         }
       }
       /**
@@ -1790,13 +1790,13 @@ public final class BusBoy {
        * Route information for upcoming arrivals.
        * </pre>
        *
-       * <code>repeated .busboy.api.Route routes = 3;</code>
+       * <code>repeated .busboy.api.Route route = 3;</code>
        */
-      public com.jonkimbel.busboybackend.proto.BusBoy.Route getRoutes(int index) {
-        if (routesBuilder_ == null) {
-          return routes_.get(index);
+      public com.jonkimbel.busboybackend.proto.BusBoy.Route getRoute(int index) {
+        if (routeBuilder_ == null) {
+          return route_.get(index);
         } else {
-          return routesBuilder_.getMessage(index);
+          return routeBuilder_.getMessage(index);
         }
       }
       /**
@@ -1804,19 +1804,19 @@ public final class BusBoy {
        * Route information for upcoming arrivals.
        * </pre>
        *
-       * <code>repeated .busboy.api.Route routes = 3;</code>
+       * <code>repeated .busboy.api.Route route = 3;</code>
        */
-      public Builder setRoutes(
+      public Builder setRoute(
           int index, com.jonkimbel.busboybackend.proto.BusBoy.Route value) {
-        if (routesBuilder_ == null) {
+        if (routeBuilder_ == null) {
           if (value == null) {
             throw new NullPointerException();
           }
-          ensureRoutesIsMutable();
-          routes_.set(index, value);
+          ensureRouteIsMutable();
+          route_.set(index, value);
           onChanged();
         } else {
-          routesBuilder_.setMessage(index, value);
+          routeBuilder_.setMessage(index, value);
         }
         return this;
       }
@@ -1825,16 +1825,16 @@ public final class BusBoy {
        * Route information for upcoming arrivals.
        * </pre>
        *
-       * <code>repeated .busboy.api.Route routes = 3;</code>
+       * <code>repeated .busboy.api.Route route = 3;</code>
        */
-      public Builder setRoutes(
+      public Builder setRoute(
           int index, com.jonkimbel.busboybackend.proto.BusBoy.Route.Builder builderForValue) {
-        if (routesBuilder_ == null) {
-          ensureRoutesIsMutable();
-          routes_.set(index, builderForValue.build());
+        if (routeBuilder_ == null) {
+          ensureRouteIsMutable();
+          route_.set(index, builderForValue.build());
           onChanged();
         } else {
-          routesBuilder_.setMessage(index, builderForValue.build());
+          routeBuilder_.setMessage(index, builderForValue.build());
         }
         return this;
       }
@@ -1843,18 +1843,18 @@ public final class BusBoy {
        * Route information for upcoming arrivals.
        * </pre>
        *
-       * <code>repeated .busboy.api.Route routes = 3;</code>
+       * <code>repeated .busboy.api.Route route = 3;</code>
        */
-      public Builder addRoutes(com.jonkimbel.busboybackend.proto.BusBoy.Route value) {
-        if (routesBuilder_ == null) {
+      public Builder addRoute(com.jonkimbel.busboybackend.proto.BusBoy.Route value) {
+        if (routeBuilder_ == null) {
           if (value == null) {
             throw new NullPointerException();
           }
-          ensureRoutesIsMutable();
-          routes_.add(value);
+          ensureRouteIsMutable();
+          route_.add(value);
           onChanged();
         } else {
-          routesBuilder_.addMessage(value);
+          routeBuilder_.addMessage(value);
         }
         return this;
       }
@@ -1863,19 +1863,19 @@ public final class BusBoy {
        * Route information for upcoming arrivals.
        * </pre>
        *
-       * <code>repeated .busboy.api.Route routes = 3;</code>
+       * <code>repeated .busboy.api.Route route = 3;</code>
        */
-      public Builder addRoutes(
+      public Builder addRoute(
           int index, com.jonkimbel.busboybackend.proto.BusBoy.Route value) {
-        if (routesBuilder_ == null) {
+        if (routeBuilder_ == null) {
           if (value == null) {
             throw new NullPointerException();
           }
-          ensureRoutesIsMutable();
-          routes_.add(index, value);
+          ensureRouteIsMutable();
+          route_.add(index, value);
           onChanged();
         } else {
-          routesBuilder_.addMessage(index, value);
+          routeBuilder_.addMessage(index, value);
         }
         return this;
       }
@@ -1884,16 +1884,16 @@ public final class BusBoy {
        * Route information for upcoming arrivals.
        * </pre>
        *
-       * <code>repeated .busboy.api.Route routes = 3;</code>
+       * <code>repeated .busboy.api.Route route = 3;</code>
        */
-      public Builder addRoutes(
+      public Builder addRoute(
           com.jonkimbel.busboybackend.proto.BusBoy.Route.Builder builderForValue) {
-        if (routesBuilder_ == null) {
-          ensureRoutesIsMutable();
-          routes_.add(builderForValue.build());
+        if (routeBuilder_ == null) {
+          ensureRouteIsMutable();
+          route_.add(builderForValue.build());
           onChanged();
         } else {
-          routesBuilder_.addMessage(builderForValue.build());
+          routeBuilder_.addMessage(builderForValue.build());
         }
         return this;
       }
@@ -1902,16 +1902,16 @@ public final class BusBoy {
        * Route information for upcoming arrivals.
        * </pre>
        *
-       * <code>repeated .busboy.api.Route routes = 3;</code>
+       * <code>repeated .busboy.api.Route route = 3;</code>
        */
-      public Builder addRoutes(
+      public Builder addRoute(
           int index, com.jonkimbel.busboybackend.proto.BusBoy.Route.Builder builderForValue) {
-        if (routesBuilder_ == null) {
-          ensureRoutesIsMutable();
-          routes_.add(index, builderForValue.build());
+        if (routeBuilder_ == null) {
+          ensureRouteIsMutable();
+          route_.add(index, builderForValue.build());
           onChanged();
         } else {
-          routesBuilder_.addMessage(index, builderForValue.build());
+          routeBuilder_.addMessage(index, builderForValue.build());
         }
         return this;
       }
@@ -1920,17 +1920,17 @@ public final class BusBoy {
        * Route information for upcoming arrivals.
        * </pre>
        *
-       * <code>repeated .busboy.api.Route routes = 3;</code>
+       * <code>repeated .busboy.api.Route route = 3;</code>
        */
-      public Builder addAllRoutes(
+      public Builder addAllRoute(
           java.lang.Iterable<? extends com.jonkimbel.busboybackend.proto.BusBoy.Route> values) {
-        if (routesBuilder_ == null) {
-          ensureRoutesIsMutable();
+        if (routeBuilder_ == null) {
+          ensureRouteIsMutable();
           com.google.protobuf.AbstractMessageLite.Builder.addAll(
-              values, routes_);
+              values, route_);
           onChanged();
         } else {
-          routesBuilder_.addAllMessages(values);
+          routeBuilder_.addAllMessages(values);
         }
         return this;
       }
@@ -1939,15 +1939,15 @@ public final class BusBoy {
        * Route information for upcoming arrivals.
        * </pre>
        *
-       * <code>repeated .busboy.api.Route routes = 3;</code>
+       * <code>repeated .busboy.api.Route route = 3;</code>
        */
-      public Builder clearRoutes() {
-        if (routesBuilder_ == null) {
-          routes_ = java.util.Collections.emptyList();
+      public Builder clearRoute() {
+        if (routeBuilder_ == null) {
+          route_ = java.util.Collections.emptyList();
           bitField0_ = (bitField0_ & ~0x00000004);
           onChanged();
         } else {
-          routesBuilder_.clear();
+          routeBuilder_.clear();
         }
         return this;
       }
@@ -1956,15 +1956,15 @@ public final class BusBoy {
        * Route information for upcoming arrivals.
        * </pre>
        *
-       * <code>repeated .busboy.api.Route routes = 3;</code>
+       * <code>repeated .busboy.api.Route route = 3;</code>
        */
-      public Builder removeRoutes(int index) {
-        if (routesBuilder_ == null) {
-          ensureRoutesIsMutable();
-          routes_.remove(index);
+      public Builder removeRoute(int index) {
+        if (routeBuilder_ == null) {
+          ensureRouteIsMutable();
+          route_.remove(index);
           onChanged();
         } else {
-          routesBuilder_.remove(index);
+          routeBuilder_.remove(index);
         }
         return this;
       }
@@ -1973,24 +1973,24 @@ public final class BusBoy {
        * Route information for upcoming arrivals.
        * </pre>
        *
-       * <code>repeated .busboy.api.Route routes = 3;</code>
+       * <code>repeated .busboy.api.Route route = 3;</code>
        */
-      public com.jonkimbel.busboybackend.proto.BusBoy.Route.Builder getRoutesBuilder(
+      public com.jonkimbel.busboybackend.proto.BusBoy.Route.Builder getRouteBuilder(
           int index) {
-        return getRoutesFieldBuilder().getBuilder(index);
+        return getRouteFieldBuilder().getBuilder(index);
       }
       /**
        * <pre>
        * Route information for upcoming arrivals.
        * </pre>
        *
-       * <code>repeated .busboy.api.Route routes = 3;</code>
+       * <code>repeated .busboy.api.Route route = 3;</code>
        */
-      public com.jonkimbel.busboybackend.proto.BusBoy.RouteOrBuilder getRoutesOrBuilder(
+      public com.jonkimbel.busboybackend.proto.BusBoy.RouteOrBuilder getRouteOrBuilder(
           int index) {
-        if (routesBuilder_ == null) {
-          return routes_.get(index);  } else {
-          return routesBuilder_.getMessageOrBuilder(index);
+        if (routeBuilder_ == null) {
+          return route_.get(index);  } else {
+          return routeBuilder_.getMessageOrBuilder(index);
         }
       }
       /**
@@ -1998,14 +1998,14 @@ public final class BusBoy {
        * Route information for upcoming arrivals.
        * </pre>
        *
-       * <code>repeated .busboy.api.Route routes = 3;</code>
+       * <code>repeated .busboy.api.Route route = 3;</code>
        */
       public java.util.List<? extends com.jonkimbel.busboybackend.proto.BusBoy.RouteOrBuilder> 
-           getRoutesOrBuilderList() {
-        if (routesBuilder_ != null) {
-          return routesBuilder_.getMessageOrBuilderList();
+           getRouteOrBuilderList() {
+        if (routeBuilder_ != null) {
+          return routeBuilder_.getMessageOrBuilderList();
         } else {
-          return java.util.Collections.unmodifiableList(routes_);
+          return java.util.Collections.unmodifiableList(route_);
         }
       }
       /**
@@ -2013,10 +2013,10 @@ public final class BusBoy {
        * Route information for upcoming arrivals.
        * </pre>
        *
-       * <code>repeated .busboy.api.Route routes = 3;</code>
+       * <code>repeated .busboy.api.Route route = 3;</code>
        */
-      public com.jonkimbel.busboybackend.proto.BusBoy.Route.Builder addRoutesBuilder() {
-        return getRoutesFieldBuilder().addBuilder(
+      public com.jonkimbel.busboybackend.proto.BusBoy.Route.Builder addRouteBuilder() {
+        return getRouteFieldBuilder().addBuilder(
             com.jonkimbel.busboybackend.proto.BusBoy.Route.getDefaultInstance());
       }
       /**
@@ -2024,11 +2024,11 @@ public final class BusBoy {
        * Route information for upcoming arrivals.
        * </pre>
        *
-       * <code>repeated .busboy.api.Route routes = 3;</code>
+       * <code>repeated .busboy.api.Route route = 3;</code>
        */
-      public com.jonkimbel.busboybackend.proto.BusBoy.Route.Builder addRoutesBuilder(
+      public com.jonkimbel.busboybackend.proto.BusBoy.Route.Builder addRouteBuilder(
           int index) {
-        return getRoutesFieldBuilder().addBuilder(
+        return getRouteFieldBuilder().addBuilder(
             index, com.jonkimbel.busboybackend.proto.BusBoy.Route.getDefaultInstance());
       }
       /**
@@ -2036,25 +2036,25 @@ public final class BusBoy {
        * Route information for upcoming arrivals.
        * </pre>
        *
-       * <code>repeated .busboy.api.Route routes = 3;</code>
+       * <code>repeated .busboy.api.Route route = 3;</code>
        */
       public java.util.List<com.jonkimbel.busboybackend.proto.BusBoy.Route.Builder> 
-           getRoutesBuilderList() {
-        return getRoutesFieldBuilder().getBuilderList();
+           getRouteBuilderList() {
+        return getRouteFieldBuilder().getBuilderList();
       }
       private com.google.protobuf.RepeatedFieldBuilderV3<
           com.jonkimbel.busboybackend.proto.BusBoy.Route, com.jonkimbel.busboybackend.proto.BusBoy.Route.Builder, com.jonkimbel.busboybackend.proto.BusBoy.RouteOrBuilder> 
-          getRoutesFieldBuilder() {
-        if (routesBuilder_ == null) {
-          routesBuilder_ = new com.google.protobuf.RepeatedFieldBuilderV3<
+          getRouteFieldBuilder() {
+        if (routeBuilder_ == null) {
+          routeBuilder_ = new com.google.protobuf.RepeatedFieldBuilderV3<
               com.jonkimbel.busboybackend.proto.BusBoy.Route, com.jonkimbel.busboybackend.proto.BusBoy.Route.Builder, com.jonkimbel.busboybackend.proto.BusBoy.RouteOrBuilder>(
-                  routes_,
+                  route_,
                   ((bitField0_ & 0x00000004) == 0x00000004),
                   getParentForChildren(),
                   isClean());
-          routes_ = null;
+          route_ = null;
         }
-        return routesBuilder_;
+        return routeBuilder_;
       }
 
       private java.util.List<com.jonkimbel.busboybackend.proto.BusBoy.TemporaryMessage> temporaryMessage_ =
@@ -7484,29 +7484,29 @@ public final class BusBoy {
       descriptor;
   static {
     java.lang.String[] descriptorData = {
-      "\n\rbus-boy.proto\022\nbusboy.api\"\353\001\n\010Response" +
+      "\n\rbus-boy.proto\022\nbusboy.api\"\351\001\n\010Response" +
       "\022\'\n\004time\030\001 \001(\0132\031.busboy.api.DisplayedTim" +
-      "e\022%\n\010arrivals\030\002 \003(\0132\023.busboy.api.Arrival" +
-      "\022!\n\006routes\030\003 \003(\0132\021.busboy.api.Route\0227\n\021t" +
-      "emporary_message\030\004 \003(\0132\034.busboy.api.Temp" +
-      "oraryMessage\0223\n\017temporary_style\030\005 \003(\0132\032." +
-      "busboy.api.TemporaryStyle\"F\n\rDisplayedTi" +
-      "me\022\026\n\016ms_since_epoch\030\001 \001(\004\022\035\n\025daylight_s" +
-      "avings_time\030\002 \001(\010\"H\n\007Arrival\022\023\n\013route_in" +
-      "dex\030\001 \001(\r\022\025\n\rms_to_arrival\030\002 \001(\r\022\021\n\tpred",
-      "icted\030\003 \001(\010\"-\n\005Route\022\022\n\nshort_name\030\001 \001(\t" +
-      "\022\020\n\010headsign\030\002 \001(\t\"\206\001\n\020TemporaryMessage\022" +
-      ")\n\ntime_frame\030\001 \001(\0132\025.busboy.api.TimeFra" +
-      "me\022\017\n\007message\030\002 \003(\t\0226\n\025color_scheme_over" +
-      "ride\030\003 \001(\0162\027.busboy.api.ColorScheme\"s\n\016T" +
-      "emporaryStyle\022)\n\ntime_frame\030\001 \001(\0132\025.busb" +
-      "oy.api.TimeFrame\0226\n\025color_scheme_overrid" +
-      "e\030\002 \001(\0162\027.busboy.api.ColorScheme\"O\n\tTime" +
-      "Frame\022!\n\031start_time_ms_since_epoch\030\001 \001(\004" +
-      "\022\037\n\027end_time_ms_since_epoch\030\002 \001(\004*V\n\013Col",
-      "orScheme\022\014\n\010SEAHAWKS\020\000\022\013\n\007RAINBOW\020\001\022\n\n\006S" +
-      "PRING\020\002\022\n\n\006SUMMER\020\003\022\010\n\004FALL\020\004\022\n\n\006WINTER\020" +
-      "\005B#\n!com.jonkimbel.busboybackend.proto"
+      "e\022$\n\007arrival\030\002 \003(\0132\023.busboy.api.Arrival\022" +
+      " \n\005route\030\003 \003(\0132\021.busboy.api.Route\0227\n\021tem" +
+      "porary_message\030\004 \003(\0132\034.busboy.api.Tempor" +
+      "aryMessage\0223\n\017temporary_style\030\005 \003(\0132\032.bu" +
+      "sboy.api.TemporaryStyle\"F\n\rDisplayedTime" +
+      "\022\026\n\016ms_since_epoch\030\001 \001(\004\022\035\n\025daylight_sav" +
+      "ings_time\030\002 \001(\010\"H\n\007Arrival\022\023\n\013route_inde" +
+      "x\030\001 \001(\r\022\025\n\rms_to_arrival\030\002 \001(\r\022\021\n\tpredic",
+      "ted\030\003 \001(\010\"-\n\005Route\022\022\n\nshort_name\030\001 \001(\t\022\020" +
+      "\n\010headsign\030\002 \001(\t\"\206\001\n\020TemporaryMessage\022)\n" +
+      "\ntime_frame\030\001 \001(\0132\025.busboy.api.TimeFrame" +
+      "\022\017\n\007message\030\002 \003(\t\0226\n\025color_scheme_overri" +
+      "de\030\003 \001(\0162\027.busboy.api.ColorScheme\"s\n\016Tem" +
+      "poraryStyle\022)\n\ntime_frame\030\001 \001(\0132\025.busboy" +
+      ".api.TimeFrame\0226\n\025color_scheme_override\030" +
+      "\002 \001(\0162\027.busboy.api.ColorScheme\"O\n\tTimeFr" +
+      "ame\022!\n\031start_time_ms_since_epoch\030\001 \001(\004\022\037" +
+      "\n\027end_time_ms_since_epoch\030\002 \001(\004*V\n\013Color",
+      "Scheme\022\014\n\010SEAHAWKS\020\000\022\013\n\007RAINBOW\020\001\022\n\n\006SPR" +
+      "ING\020\002\022\n\n\006SUMMER\020\003\022\010\n\004FALL\020\004\022\n\n\006WINTER\020\005B" +
+      "#\n!com.jonkimbel.busboybackend.proto"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -7525,7 +7525,7 @@ public final class BusBoy {
     internal_static_busboy_api_Response_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_busboy_api_Response_descriptor,
-        new java.lang.String[] { "Time", "Arrivals", "Routes", "TemporaryMessage", "TemporaryStyle", });
+        new java.lang.String[] { "Time", "Arrival", "Route", "TemporaryMessage", "TemporaryStyle", });
     internal_static_busboy_api_DisplayedTime_descriptor =
       getDescriptor().getMessageTypes().get(1);
     internal_static_busboy_api_DisplayedTime_fieldAccessorTable = new

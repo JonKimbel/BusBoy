@@ -10,10 +10,10 @@ message Response {
   optional DisplayedTime time = 1;
 
   // Upcoming arrivals.
-  repeated Arrival arrivals = 2;
+  repeated Arrival arrival = 2;
 
   // Route information for upcoming arrivals.
-  repeated Route routes = 3;
+  repeated Route route = 3;
 
   // Special messages, e.g. for upcoming events near the stop. Interlaced
   // between bus information.

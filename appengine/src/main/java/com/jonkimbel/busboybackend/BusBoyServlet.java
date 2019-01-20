@@ -28,20 +28,22 @@ import java.time.Instant;
 import java.util.Date;
 import java.util.Map;
 import java.util.TimeZone;
-import javax.annotation.Nullable; // Needs entry in POM.
+import javax.annotation.Nullable; // TODO: Needs entry in POM.
 import javax.inject.Inject;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.onebusaway.api.model.transit.ArrivalAndDepartureV2Bean;
 
 public class BusBoyServlet extends HttpServlet {
   private final static String STOP_QUERY_PARAM = "stop";
 
   private final static String OBA_URL_FORMAT_STRING =
       "http://api.onebusaway.org/api/where/arrivals-and-departures-for-stop" +
+      "/%s.json" +
       // Email OBA_API_KEY@soundtransit.org to get a real key if you're planning
       // on actually using this app beyond testing.
-      "/%s.json?key=TEST";
+      "?key=TEST";
 
   private final NetworkUtils networkUtils;
 

@@ -14,32 +14,28 @@ import org.onebusaway.api.model.transit.ArrivalAndDepartureV2Bean;
  */
 public class ArrivalAndDepartureResponse {
   private int code;
-  private long currentTime;
-  private ArrivalAndDepartureV2Bean data;
-  private String text;
-  private int version;
+  // Skipped field: long currentTime;
+  private Data data;
+  // Skipped field: String text;
+  // Skipped field: int version;
 
-  /** No-args constructor required by GSON. */
-  public ArrivalAndDepartureResponse() { }
-
-  public int getCode() {
+  public int getStatusCode() {
     return code;
   }
 
-  public long getCurrentTime() {
-    return currentTime;
+  public ArrivalAndDepartureV2Bean[] getArrivals() {
+    return data.entry.arrivalsAndDepartures;
   }
 
-  public ArrivalAndDepartureV2Bean getData() {
-    return data;
-  }
+  public static class Data {
+    Entry entry;
+    // Skipped field: Object references;
 
-  public String getText() {
-    return text;
+    public static class Entry {
+      ArrivalAndDepartureV2Bean[] arrivalsAndDepartures;
+      // Skipped field: Object[] nearbyStopIds;
+      // Skipped field: Object[] situationIds;
+      // Skipped field: Object[] stopId;
+    }
   }
-
-  public int getVersion() {
-    return version;
-  }
-
 }
