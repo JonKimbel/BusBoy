@@ -5,6 +5,7 @@ import java.io.IOException;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.WriteListener;
 
+/** A fake output stream for use when testing {@code HttpServlet}s. */
 public class FakeServletOutputStream extends ServletOutputStream {
   private ByteArrayOutputStream baos = new ByteArrayOutputStream();
 

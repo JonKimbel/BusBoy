@@ -1,20 +1,3 @@
-/*
- * Copyright 2017 Google Inc.
- * Copyright 2018 Jon Kimbel.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- * http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package com.jonkimbel.busboybackend;
 
 import static com.google.common.truth.Truth.assertThat;
@@ -23,8 +6,10 @@ import static org.mockito.Mockito.*;
 
 import com.google.appengine.tools.development.testing.LocalServiceTestHelper;
 import com.google.common.collect.ImmutableMap;
+import com.google.gson.Gson;
 import com.google.protobuf.InvalidProtocolBufferException;
 import com.google.protobuf.TextFormat;
+import com.jonkimbel.busboybackend.model.ArrivalAndDepartureResponse;
 import com.jonkimbel.busboybackend.network.NetworkUtils;
 import com.jonkimbel.busboybackend.proto.BusBoy;
 import com.jonkimbel.busboybackend.testing.FakeServletOutputStream;
@@ -63,6 +48,8 @@ public class BusBoyServletTest {
   // testing.
   private final LocalServiceTestHelper helper = new LocalServiceTestHelper();
 
+  private final Gson gson = new Gson();
+
   @Mock private HttpServletRequest mockRequest;
   @Mock private HttpServletResponse mockResponse;
   @Mock private NetworkUtils mockNetworkUtils;
@@ -88,7 +75,7 @@ public class BusBoyServletTest {
 
     // Set up fake time. These values are referenced by the expected responses
     // in the testdata directory.
-    when(mockTimeUtils.isCaInDaylightTime()).thenReturn(false);
+    when(mockTimeUtils.isCaliInDaylightTime()).thenReturn(false);
     when(mockTimeUtils.msSinceEpoch()).thenReturn(42L);
 
     servletUnderTest = new BusBoyServlet(mockNetworkUtils, mockTimeUtils);
@@ -100,6 +87,8 @@ public class BusBoyServletTest {
 
   @Test
   public void doGet_badQueryString_returnsBadRequest() throws Exception {
+    when(mockRequest.getQueryString()).thenReturn("key=value");
+
     servletUnderTest.doGet(mockRequest, mockResponse);
 
     verify(mockResponse).setStatus(400);
@@ -110,9 +99,7 @@ public class BusBoyServletTest {
   @Test
   public void doGet_failedRequestToOneBusAway_returnsInternalServerError()
       throws Exception {
-    when(mockNetworkUtils.parseQueryString(QUERY_STRING)).thenReturn(
-        ImmutableMap.of("stop", "ID"));
-    when(mockNetworkUtils.sendGetRequest(EXPECTED_OBA_URL)).thenThrow(
+    when(mockNetworkUtils.getDataForStopId("ID")).thenThrow(
         MalformedURLException.class);
 
     servletUnderTest.doGet(mockRequest, mockResponse);
@@ -125,9 +112,7 @@ public class BusBoyServletTest {
   @Test
   public void doGet_failedRequestToOneBusAway_returnsServiceUnreachable()
       throws Exception {
-    when(mockNetworkUtils.parseQueryString(QUERY_STRING)).thenReturn(
-        ImmutableMap.of("stop", "ID"));
-    when(mockNetworkUtils.sendGetRequest(EXPECTED_OBA_URL)).thenThrow(
+    when(mockNetworkUtils.getDataForStopId("ID")).thenThrow(
         IOException.class);
 
     servletUnderTest.doGet(mockRequest, mockResponse);
@@ -160,10 +145,8 @@ public class BusBoyServletTest {
 
   private void testResponse(String testFileName, Integer... ignoringFields)
       throws Exception {
-    when(mockNetworkUtils.parseQueryString(QUERY_STRING)).thenReturn(
-        ImmutableMap.of("stop", "ID"));
-    when(mockNetworkUtils.sendGetRequest(EXPECTED_OBA_URL)).thenReturn(
-        readFile("test-oba-response/" + testFileName + ".xml"));
+    when(mockNetworkUtils.getDataForStopId("ID")).thenReturn(
+        readJson("test-oba-response/" + testFileName + ".json"));
 
     servletUnderTest.doGet(mockRequest, mockResponse);
 
@@ -174,10 +157,10 @@ public class BusBoyServletTest {
         .isEqualTo(readProto("expected-response/" + testFileName + ".textpb"));
   }
 
-  private String readFile(String dataFilePath) throws Exception {
-    byte[] encodedContents = Files.readAllBytes(Paths.get(
-        "src/test/java/com/jonkimbel/busboybackend/testdata/" + dataFilePath));
-    return new String(encodedContents, StandardCharsets.UTF_8);
+  private ArrivalAndDepartureResponse readJson(String dataFilePath)
+      throws Exception {
+    String fileString = readFile(dataFilePath);
+    return gson.fromJson(fileString, ArrivalAndDepartureResponse.class);
   }
 
   private BusBoy.Response readProto(String dataFilePath)
@@ -186,5 +169,11 @@ public class BusBoyServletTest {
     BusBoy.Response.Builder protoBuilder = BusBoy.Response.newBuilder();
     TextFormat.merge(fileString, protoBuilder);
     return protoBuilder.build();
+  }
+
+  private String readFile(String dataFilePath) throws Exception {
+    byte[] encodedContents = Files.readAllBytes(Paths.get(
+        "src/test/java/com/jonkimbel/busboybackend/testdata/" + dataFilePath));
+    return new String(encodedContents, StandardCharsets.UTF_8);
   }
 }

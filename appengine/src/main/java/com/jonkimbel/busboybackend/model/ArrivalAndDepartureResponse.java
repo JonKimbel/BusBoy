@@ -4,8 +4,8 @@ import javax.annotation.Nullable; // TODO: Needs entry in POM.
 import org.onebusaway.api.model.transit.ArrivalAndDepartureV2Bean;
 
 /**
- * A POJO that matches the layout of OneBusAway API responses, for use with
- * GSON.
+ * A Java object that matches the layout of OneBusAway API responses, for use
+ * with GSON.
  *
  * <p>We need to use this class instead of using
  * {@link org.onebusaway.api.model.ResponseBean} directly because GSON cannot

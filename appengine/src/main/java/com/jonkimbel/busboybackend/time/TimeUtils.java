@@ -9,10 +9,16 @@ import java.util.TimeZone;
  * for tests.
  */
 public class TimeUtils {
-  public boolean isCaInDaylightTime() {
-    return TimeZone.getTimeZone("America/Los_Angeles").inDaylightTime(new Date());
+  /** Returns true if California is currently in Daylight Savings Time. */
+  public boolean isCaliInDaylightTime() {
+    return TimeZone.getTimeZone("America/Los_Angeles")
+        .inDaylightTime(new Date());
   }
 
+  /**
+  * Returns the current time in milliseconds since the epoch, not adjusted for
+  * timezone.
+  */
   public long msSinceEpoch() {
     return Instant.now().toEpochMilli();
   }
