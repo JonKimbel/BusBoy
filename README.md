@@ -5,6 +5,14 @@ sign powered by the Particle Boron.
 
 See [the main docs](docs/index.md) for more info.
 
+## Setup
+
+Run the following from this directory to set up the pre-commit checks.
+
+```
+git config core.hooksPath hooks
+```
+
 ## Compiling
 
 ### API (backend + frontend)
