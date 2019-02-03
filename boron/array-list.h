@@ -24,7 +24,7 @@
 typedef struct {
   int _allocatedLength;
   int length;
-  uint8_t* data;
+  ARRAY_LIST_TYPE* data;
 } ArrayList;
 
 // Initialize an ArrayList with the given starting length. The starting length
@@ -35,7 +35,7 @@ bool al_init(ArrayList* arrayList, int initialLength);
 
 // Add an item to the end of an ArrayList, resizing if necessary.
 // Returns false if memory could not be allocated for the resize.
-bool al_add(ArrayList* arrayList, uint8_t* item);
+bool al_add(ArrayList* arrayList, ARRAY_LIST_TYPE* item);
 
 // Free the space used by an ArrayList. After this is called, al_init() must be
 // called before the ArrayList is used again.
