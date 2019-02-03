@@ -14,6 +14,9 @@
 
 #include <stdint.h>
 
+// Change this to change the datatype of the ArrayList.
+#define ARRAY_LIST_TYPE uint8_t
+
 // Note on C: typedef is only used here to avoid having to write
 // "struct arraylist" when defining instances of this struct. It's just a
 // shortcut, nothing more.
