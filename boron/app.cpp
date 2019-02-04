@@ -5,6 +5,7 @@
 #include "spark_wiring_usbserial.h"
 #include "LiquidCrystal_I2C.h"
 #include "bus-boy.pb.h"
+#include "array-list.h"
 
 // Don't auto-connect to the Particle cloud. Speeds up testing.
 // TODO: remove before deployment so firmware can be updated in the field.
@@ -14,28 +15,27 @@ TCPClient client;
 // Set the LCD address to 0x27 for a 20 char, 4 line display.
 LiquidCrystal_I2C lcd(0x27,20,4);
 
+ArrayList buffer;
+
 bool connect();
 void sendRequest();
 bool getResponse();
 
 void setup()
 {
-  //////////////////////////////////////////////////////////////////////////////
-  // scratch area - decode proto response from server
-
-  // Todo: get these from the response data.
-  uint8_t buffer[128];
-  size_t message_length = 64;
-
-  busboy_api_Response response = busboy_api_Response_init_default;
-  pb_istream_t stream = pb_istream_from_buffer(buffer, message_length);
-
-  bool status = pb_decode(&stream, busboy_api_Response_fields, &response);
-  if (!status) {
-    // Todo: handle errors.
-  } else {
-    // Todo: handle successful response.
-  }
+  al_init(&buffer, 10);
+  // //////////////////////////////////////////////////////////////////////////////
+  // // scratch area - decode proto response from server
+  //
+  // busboy_api_Response response = busboy_api_Response_init_default;
+  // pb_istream_t stream = pb_istream_from_buffer(buffer.data, buffer.length);
+  //
+  // bool status = pb_decode(&stream, busboy_api_Response_fields, &response);
+  // if (!status) {
+  //   // Todo: handle errors.
+  // } else {
+  //   // Todo: handle successful response.
+  // }
 
   // end scratch area
   //////////////////////////////////////////////////////////////////////////////
