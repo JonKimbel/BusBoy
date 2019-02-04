@@ -1,44 +1,30 @@
-#include <Wire.h>
+// #include <Wire.h>
 #include <pb_decode.h>
-#include "spark_wiring_string.h"
-#include "spark_wiring_tcpclient.h"
-#include "spark_wiring_usbserial.h"
+// #include "spark_wiring_string.h"
+// #include "spark_wiring_tcpclient.h"
+// #include "spark_wiring_usbserial.h"
 #include "LiquidCrystal_I2C.h"
 #include "bus-boy.pb.h"
 #include "array-list.h"
+#include "http-client.h"
 
 // Don't auto-connect to the Particle cloud. Speeds up testing.
 // TODO: remove before deployment so firmware can be updated in the field.
 SYSTEM_MODE(SEMI_AUTOMATIC);
 
-TCPClient client;
+bool decode_route(pb_istream_t *stream, const pb_field_t *field, void **arg);
+
 // Set the LCD address to 0x27 for a 20 char, 4 line display.
 LiquidCrystal_I2C lcd(0x27,20,4);
+HttpClient httpClient;
+ArrayList responseBuffer;
 
-ArrayList buffer;
-
-bool connect();
-void sendRequest();
-bool getResponse();
-
-void setup()
-{
-  al_init(&buffer, 10);
-  // //////////////////////////////////////////////////////////////////////////////
-  // // scratch area - decode proto response from server
-  //
-  // busboy_api_Response response = busboy_api_Response_init_default;
-  // pb_istream_t stream = pb_istream_from_buffer(buffer.data, buffer.length);
-  //
-  // bool status = pb_decode(&stream, busboy_api_Response_fields, &response);
-  // if (!status) {
-  //   // Todo: handle errors.
-  // } else {
-  //   // Todo: handle successful response.
-  // }
-
-  // end scratch area
-  //////////////////////////////////////////////////////////////////////////////
+void setup() {
+  http_init(
+      &httpClient,
+      "api.onebusaway.org",
+      "/api/where/arrivals-and-departures-for-stop/1_26860.json?key=TEST",
+      80);
 
   lcd.begin();
   lcd.backlight();
@@ -53,20 +39,38 @@ void setup()
 
   lcd.clear();
   lcd.print("connecting...");
-  if (connect()) {
-    lcd.clear();
-    lcd.print("connected");
-    sendRequest();
-
-    bool somethingReceived = getResponse();
-
-    if (!somethingReceived) {
-      lcd.clear();
-      lcd.print("nothing received");
-    }
-  } else {
+  if (!http_connect(&httpClient)) {
     lcd.clear();
     lcd.print("connection failed");
+  } else {
+    lcd.clear();
+    lcd.print("connected");
+    http_send_request(&httpClient);
+
+    Status status = http_get_response(&httpClient, &responseBuffer);
+
+    if (status != HTTP_STATUS_OK) {
+      lcd.clear();
+      lcd.print("http error: ");
+      lcd.print(status);
+    } else {
+      busboy_api_Response response = busboy_api_Response_init_default;
+      response.route.funcs.decode = &decode_route;  // pb_callback_t route;
+      // pb_callback_t arrival;
+      // pb_callback_t temporary_message;
+          // pb_callback_t message;
+      // pb_callback_t temporary_style;
+
+      pb_istream_t stream = pb_istream_from_buffer(
+          responseBuffer.data, responseBuffer.length);
+      bool status = pb_decode(&stream, busboy_api_Response_fields, &response);
+
+      if (!status) {
+        lcd.clear();
+        lcd.print("proto error");
+      }
+      // TODO: print to LCD in various callbacks?
+    }
   }
 
   for(;;);
@@ -74,99 +78,19 @@ void setup()
 
 void loop() { /* Not implemented. */ }
 
-bool connect() {
-  return client.connect("api.onebusaway.org", 80);
-}
+// pb_callback_t route;
+bool decode_route(pb_istream_t *stream, const pb_field_t *field, void **arg) {
+  // Submessages to register callbacks for when implementing:
+  // pb_callback_t short_name;
+  // pb_callback_t headsign;
 
-void sendRequest() {
-  client.println("GET /api/where/arrivals-and-departures-for-stop/1_26860.json?key=TEST HTTP/1.0");
-  client.println("Host: api.onebusaway.org");
-  client.println("Content-Length: 0");
-  client.println();
-}
+  // Example decode:
+  // See: https://github.com/nanopb/nanopb/blob/e21e78c67cbd6566fe9d8368eeaf3298ae22b75d/examples/network_server/client.c
+  // FileInfo fileinfo = {};
+  // if (!pb_decode(stream, FileInfo_fields, &fileinfo)) {
+  //   return false;
+  // }
+  // printf("%-10lld %s\n", (long long)fileinfo.inode, fileinfo.name);
 
-enum HeaderMajorSection {
-  STATUS_LINE = 0,
-  GENERAL_INFO = 1,
-};
-
-enum HeaderSection {
-  HTTP_VERSION = 0,
-  STATUS_CODE = 1,
-  REASON_PHRASE = 2,
-};
-
-bool getResponse() {
-  lcd.clear();
-
-  // See HTTP response docs: https://www.w3.org/Protocols/rfc2616/rfc2616-sec6.html
-  int headerMajorSection = 0;
-  int headerSection = 0;
-  uint8_t statusCode[] = "NNN";
-  int headerEndSequence = 0;
-
-  while(true) {
-    if (client.available()) {
-      char c = client.read();
-      // Look for CRLF to delimit sections of the header, and a double-CRLF to
-      // delimit the end of the header.
-      if (c == '\r' && headerEndSequence % 2 == 0) {
-        headerEndSequence++;
-      } else if (c == '\n' && headerEndSequence % 2 == 1) {
-        headerEndSequence++;
-      } else {
-        headerEndSequence = 0;
-      }
-
-      // Process sections of the header.
-      if (headerEndSequence == 2) {
-        if (headerMajorSection == STATUS_LINE) {
-          headerMajorSection++;
-        }
-        headerSection++;
-      } else if (headerEndSequence >= 4) {
-        break;
-      }
-
-      // Process sections of the status line, which are space-delimited.
-      if (c == ' ' && headerMajorSection == STATUS_LINE) {
-        headerSection++;
-        // Read status code.
-        if (headerSection == STATUS_CODE) {
-          client.read(statusCode, 3);
-        }
-      }
-    }
-
-    if (!client.connected()) {
-      lcd.print("Header error: ");
-      lcd.print(headerMajorSection);
-      lcd.print(" ");
-      lcd.print(headerSection);
-      return false;
-    }
-  }
-
-  // Process body.
-  int charsPrinted = 0;
-  int lcdRow = 0;
-
-  while(true) {
-    if (client.available()) {
-      char c = client.read();
-      if (charsPrinted < 80) {
-        if (charsPrinted % 20 == 0) {
-          lcd.setCursor(0, lcdRow);
-          lcdRow++;
-        }
-        lcd.print(c);
-        charsPrinted++;
-      }
-    }
-
-    if (!client.connected()) {
-      client.stop();
-      return charsPrinted > 0;
-    }
-  }
+  return false;
 }
