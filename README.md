@@ -93,10 +93,6 @@ NOTE: The "boron" in this command refers to the device model, the
 [Particle Boron](https://store.particle.io/products/boron-lte). It is NOT
 providing the name of the folder the code relies upon.
 
-WARNING: For some reason the Particle CLI *hates* .c files. If you add a .c file
-it will claim to upload it, then fail to find it during linking. Maybe this is
-indicative of some deeper misunderstanding of C vs C++ on my behalf.
-
 To flash the compiled binary to a usb-connected device:
 
 ```
