@@ -13,6 +13,7 @@
 #define ARRAY_LIST_INCLUDED
 
 #include <stdint.h>
+#include <stdbool.h>
 
 // Change this to change the datatype of the ArrayList.
 #define ARRAY_LIST_TYPE uint8_t
@@ -35,7 +36,7 @@ bool al_init(ArrayList* arrayList, int initialLength);
 
 // Add an item to the end of an ArrayList, resizing if necessary.
 // Returns false if memory could not be allocated for the resize.
-bool al_add(ArrayList* arrayList, ARRAY_LIST_TYPE* item);
+bool al_add(ArrayList* arrayList, ARRAY_LIST_TYPE item);
 
 // Free the space used by an ArrayList. After this is called, al_init() must be
 // called before the ArrayList is used again.
