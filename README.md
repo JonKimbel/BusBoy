@@ -95,6 +95,9 @@ providing the name of the folder the code relies upon.
 
 To flash the compiled binary to a usb-connected device:
 
-```
-particle flash --usb out.bin
-```
+1.  Hold down the MODE and RESET buttons.
+1.  Release the RESET button. The LED should flash purple.
+1.  Once the LED flashes yellow, release the MODE button.
+1.  Run this flash command:
+
+        particle flash --usb out.bin
