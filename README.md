@@ -67,6 +67,9 @@ To deploy the app to App Engine, run the following from this directory:
 mvn clean appengine:deploy -f appengine
 ```
 
+You **may** need to run `gcloud auth login` before the deploy target will work
+correctly.
+
 After the deploy finishes, you can view your application at
 `https://YOUR_PROJECT.appspot.com`, where `YOUR_PROJECT` is your Google Cloud
 project ID. You can see the new version deployed on the [App Engine section of
