@@ -5,6 +5,9 @@
 # Built binaries for flashing onto devices
 *.bin
 
+# Personal domain info that we don't want on github
+backend-info.h
+
 # =========================
 # App Engine Files
 # =========================

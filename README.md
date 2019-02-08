@@ -83,6 +83,9 @@ the Google Cloud Console](https://console.cloud.google.com/appengine/versions).
     [here](https://docs.particle.io/tutorials/developer-tools/cli/).
 1.  COMPLETELY OPTIONAL: Set up local build toolchain following
     [these steps](https://docs.particle.io/tutorials/developer-tools/cli/#compile-and-flash-code-locally)
+1.  Create a file at `boron/backend-info.h` and `#define BACKEND_DOMAIN` to the
+    backend you'd like to communicate with. This will probably be the domain
+    Google Cloud tells you after deploy the backend code.
 
 #### Compiling & flashing
 

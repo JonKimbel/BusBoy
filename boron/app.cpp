@@ -1,12 +1,12 @@
-// #include <Wire.h>
 #include <pb_decode.h>
-// #include "spark_wiring_string.h"
-// #include "spark_wiring_tcpclient.h"
-// #include "spark_wiring_usbserial.h"
-#include "LiquidCrystal_I2C.h"
-#include "bus-boy.pb.h"
 #include "array-list.h"
+#include "bus-boy.pb.h"
 #include "http-client.h"
+#include "LiquidCrystal_I2C.h"
+
+// This file should #define BACKEND_DOMAIN. Defining a separate file allows me
+// to hide my domain from source control via .gitignore.
+#include "backend-info.h"
 
 // Don't auto-connect to the Particle cloud. Speeds up testing.
 // TODO: remove before deployment so firmware can be updated in the field.
@@ -22,8 +22,8 @@ ArrayList responseBuffer;
 void setup() {
   http_init(
       &httpClient,
-      "api.onebusaway.org",
-      "/api/where/arrivals-and-departures-for-stop/1_26860.json?key=TEST",
+      BACKEND_DOMAIN,
+      "/?stop=1_26860",
       80);
 
   lcd.begin();
@@ -55,7 +55,7 @@ void setup() {
       lcd.print(status);
     } else {
       busboy_api_Response response = busboy_api_Response_init_default;
-      response.route.funcs.decode = &decode_route;  // pb_callback_t route;
+      // response.route.funcs.decode = &decode_route;  // pb_callback_t route;
       // pb_callback_t arrival;
       // pb_callback_t temporary_message;
           // pb_callback_t message;
@@ -68,6 +68,23 @@ void setup() {
       if (!status) {
         lcd.clear();
         lcd.print("proto error");
+      } else {
+        lcd.clear();
+        lcd.print("successful parse");
+        lcd.print("    ");
+
+        if (response.has_time) {
+          lcd.print("t=");
+          lcd.print(response.time.daylight_savings_time ? "dst" : "nodst");
+          lcd.print(",");
+          // Hack to print uint64_t through the LCD.
+          long upper = response.time.ms_since_epoch / 10000;
+          long lower = response.time.ms_since_epoch % 10000;
+          lcd.print(upper);
+          lcd.print(lower);
+        } else {
+          lcd.print("no time");
+        }
       }
       // TODO: print to LCD in various callbacks?
     }
@@ -92,5 +109,5 @@ bool decode_route(pb_istream_t *stream, const pb_field_t *field, void **arg) {
   // }
   // printf("%-10lld %s\n", (long long)fileinfo.inode, fileinfo.name);
 
-  return false;
+  return true;
 }

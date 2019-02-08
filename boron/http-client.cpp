@@ -4,13 +4,20 @@ Status _process_header(HttpClient* client);
 Status _get_status_from_code(const uint8_t* statusCode);
 bool _status_code_equals(const uint8_t* actual, const char* expected);
 
+const char *REQUEST_HEADER_FORMAT_STRING = "GET %s HTTP/1.0";
+const char *REQUEST_LINE_FORMAT_STRING = "Host: %s";
+const char *ENTITY_HEADER = "Content-Length: 0";
+
 void http_init(
     HttpClient* client,
-    char* domain,
-    char* path,
+    const char* domain,
+    const char* path,
     int port) {
-  client->domain = domain;
-  client->path = path;
+  // Allocate one extra character for the null terminator (\0).
+  client->domain = (char *) malloc((1 + strlen(domain)) * sizeof(char));
+  client->path = (char *) malloc((1 + strlen(path)) * sizeof(char));
+  strcpy(client->domain, domain);
+  strcpy(client->path, path);
   client->port = port;
 }
 
@@ -19,11 +26,29 @@ bool http_connect(HttpClient* client) {
 }
 
 void http_send_request(HttpClient* client) {
-  // TODO: string substitution.
-  client->_tcpClient.println("GET /api/where/arrivals-and-departures-for-stop/1_26860.json?key=TEST HTTP/1.0");
-  client->_tcpClient.println("Host: api.onebusaway.org");
-  client->_tcpClient.println("Content-Length: 0");
+  // Create the formatted strings for the HTTP request header.
+  // NOTE: the lengths are "-1" because the format placeholders (%s) will be
+  // consumed, but we need to add one space for the null-terminator (\0).
+  size_t request_header_length =
+      strlen(client->path) + strlen(REQUEST_HEADER_FORMAT_STRING) - 1;
+  char *request_header = (char *) malloc(request_header_length * sizeof(char));
+  snprintf(request_header, request_header_length,
+      REQUEST_HEADER_FORMAT_STRING, client->path);
+
+  size_t request_line_length =
+      strlen(client->domain) + strlen(REQUEST_LINE_FORMAT_STRING) - 1;
+  char *request_line = (char *) malloc(request_line_length * sizeof(char));
+  snprintf(request_line, request_line_length,
+      REQUEST_LINE_FORMAT_STRING, client->domain);
+
+  // Write the HTTP header to the TCP connection, with an empty body.
+  client->_tcpClient.println(request_header);
+  client->_tcpClient.println(request_line);
+  client->_tcpClient.println(ENTITY_HEADER);
   client->_tcpClient.println();
+
+  free(request_header);
+  free(request_line);
 }
 
 bool http_response_ready(HttpClient* client) {
@@ -48,6 +73,11 @@ Status http_get_response(HttpClient* client, ArrayList* body) {
   client->_tcpClient.stop();
 
   return status;
+}
+
+void http_clear(HttpClient* client) {
+  free(client->domain);
+  free(client->path);
 }
 
 enum HeaderMajorSection {

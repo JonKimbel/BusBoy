@@ -1,26 +1,25 @@
 // A dynamically sized array. Example usage:
 //
 // ArrayList arrayList;
+//
 // al_init(&arrayList, 10);
 // al_add(&arrayList, &myCharacter);
 // al_add(&arrayList, &myCharacter);
+//
 // for (int i = 0; i < arrayList.length; i++) {
 //   printf("Data at %d: %s\n", i, arrayList.data[i]);
 // }
+//
 // al_clear(&arrayList); // Can now be dropped out of scope OR added to again.
 
 #ifndef ARRAY_LIST_INCLUDED
 #define ARRAY_LIST_INCLUDED
 
-#include <stdint.h>
 #include <stdbool.h>
+#include <stdint.h>
 
-// Change this to change the datatype of the ArrayList.
+// Change this to change the desired datatype of the ArrayList.
 #define ARRAY_LIST_TYPE uint8_t
-
-// Note on C: typedef is only used here to avoid having to write
-// "struct arraylist" when defining instances of this struct. It's just a
-// shortcut, nothing more.
 
 typedef struct {
   int _allocatedLength;
