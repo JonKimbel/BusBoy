@@ -16,16 +16,10 @@ bool decode_route(pb_istream_t *stream, const pb_field_t *field, void **arg);
 
 // Set the LCD address to 0x27 for a 20 char, 4 line display.
 LiquidCrystal_I2C lcd(0x27,20,4);
-HttpClient httpClient;
+HttpClient httpClient(BACKEND_DOMAIN, "/?stop=1_26860", 80);
 ArrayList<uint8_t> responseBuffer(/* initialLength = */ 20);
 
 void setup() {
-  http_init(
-      &httpClient,
-      BACKEND_DOMAIN,
-      "/?stop=1_26860",
-      80);
-
   lcd.begin();
   lcd.backlight();
 
@@ -39,15 +33,15 @@ void setup() {
 
   lcd.clear();
   lcd.print("connecting...");
-  if (!http_connect(&httpClient)) {
+  if (!httpClient.connect()) {
     lcd.clear();
     lcd.print("connection failed");
   } else {
     lcd.clear();
     lcd.print("connected");
-    http_send_request(&httpClient);
+    httpClient.sendRequest();
 
-    Status status = http_get_response(&httpClient, &responseBuffer);
+    Status status = httpClient.getResponse(&responseBuffer);
 
     if (status != HTTP_STATUS_OK) {
       lcd.clear();

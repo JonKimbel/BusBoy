@@ -1,21 +1,16 @@
 // A wrapper for around TCPClient that makes HTTP requests. Example usage:
 //
-// HttpClient httpClient;
-// ArrayList<uint8_t> responseBuffer;
+// HttpClient httpClient("google.com", "/search?q=banana", 80);
+// ArrayList<uint8_t> responseBuffer(/* initialLength = */ 20);
 //
-// http_init(&httpClient, "google.com", "/search?q=banana", 80);
-// http_connect(&httpClient);
-// http_send_request(&httpClient);
-// http_get_response(&httpClient, &responseBuffer);
+// if (httpClient.connect()) {
+//   httpClient.sendRequest();
+//   httpClient.getResponse(&responseBuffer);
 //
-// for (int i = 0; i < responseBuffer.length; i++) {
-//   print(responseBuffer.data[i]);
+//   for (int i = 0; i < responseBuffer.length; i++) {
+//     print(responseBuffer.data[i]);
+//   }
 // }
-//
-// http_clear(&httpClient);
-// al_clear(&responseBuffer);
-// // httpClient and responseBuffer can now be dropped out of scope OR added to
-// // again.
 
 #ifndef HTTP_CLIENT_H
 #define HTTP_CLIENT_H
@@ -25,13 +20,6 @@
 #include "spark_wiring_string.h"
 #include "spark_wiring_tcpclient.h"
 #include "spark_wiring_usbserial.h"
-
-typedef struct {
-  TCPClient _tcpClient;
-  char* domain;
-  char* path;
-  int port;
-} HttpClient;
 
 // A mix of HTTP status codes and failure codes specific to this implementation.
 enum Status {
@@ -51,30 +39,37 @@ enum Status {
   HTTP_STATUS_SERVICE_UNAVAILABLE = 503,
 };
 
-// Initialize a HttpClient with the given server information.
-void http_init(
-    HttpClient* client,
-    const char* domain,
-    const char* path,
-    int port);
+class HttpClient {
+  public:
+    char* domain;
+    char* path;
+    int port;
 
-// Starts a TCP connection with the server. Required for sending requests.
-bool http_connect(HttpClient* client);
+    HttpClient(const char* domain, const char* path, int port);
+    ~HttpClient();
 
-// Sends an HTTP request over the TCP connection. http_connect() must be called
-// first.
-void http_send_request(HttpClient* client);
+    // Starts a TCP connection with the server. Required for sending requests.
+    bool connect();
 
-bool http_response_ready(HttpClient* client);
+    // Sends an HTTP request over the TCP connection. connect() must be called
+    // first.
+    void sendRequest();
 
-// Reads the response from the server, strips out the header, and writes the
-// body of the response to the given ArrayList. http_connect() and
-// http_send_request() must be called first.
-// The provided ArrayList must be un-initialized or cleared.
-Status http_get_response(HttpClient* client, ArrayList<uint8_t>* body);
+    bool responseReady();
 
-// Free the space used by the HttpClient. After this is called, http_init() must
-// be called before the HttpClient is used again.
-void http_clear(HttpClient* client);
+    // Reads the response from the server, strips out the header, and writes the
+    // body of the response to the given ArrayList. connect() and sendRequest()
+    // must be called first.
+    // The provided ArrayList must be un-initialized or cleared.
+    Status getResponse(ArrayList<uint8_t>* body);
+
+  private:
+    TCPClient _tcpClient;
+
+    Status _processHeader();
+    Status _getStatusFromCode(const uint8_t* statusCode);
+    bool _statusCodeEquals(const uint8_t* actual, const char* expected);
+
+};
 
 #endif // ARRAY_LIST_H
