@@ -17,7 +17,7 @@ bool decode_route(pb_istream_t *stream, const pb_field_t *field, void **arg);
 // Set the LCD address to 0x27 for a 20 char, 4 line display.
 LiquidCrystal_I2C lcd(0x27,20,4);
 HttpClient httpClient;
-ArrayList responseBuffer;
+ArrayList<uint8_t> responseBuffer(/* initialLength = */ 20);
 
 void setup() {
   http_init(

@@ -1,7 +1,7 @@
 // A wrapper for around TCPClient that makes HTTP requests. Example usage:
 //
 // HttpClient httpClient;
-// ArrayList responseBuffer;
+// ArrayList<uint8_t> responseBuffer;
 //
 // http_init(&httpClient, "google.com", "/search?q=banana", 80);
 // http_connect(&httpClient);
@@ -16,6 +16,9 @@
 // al_clear(&responseBuffer);
 // // httpClient and responseBuffer can now be dropped out of scope OR added to
 // // again.
+
+#ifndef HTTP_CLIENT_H
+#define HTTP_CLIENT_H
 
 #include <Wire.h>
 #include "array-list.h"
@@ -68,8 +71,10 @@ bool http_response_ready(HttpClient* client);
 // body of the response to the given ArrayList. http_connect() and
 // http_send_request() must be called first.
 // The provided ArrayList must be un-initialized or cleared.
-Status http_get_response(HttpClient* client, ArrayList* body);
+Status http_get_response(HttpClient* client, ArrayList<uint8_t>* body);
 
 // Free the space used by the HttpClient. After this is called, http_init() must
 // be called before the HttpClient is used again.
 void http_clear(HttpClient* client);
+
+#endif // ARRAY_LIST_H

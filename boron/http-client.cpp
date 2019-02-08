@@ -55,9 +55,7 @@ bool http_response_ready(HttpClient* client) {
   return client->_tcpClient.connected() && client->_tcpClient.available();
 }
 
-Status http_get_response(HttpClient* client, ArrayList* body) {
-  al_init(body, /* initialLength = */ 20);
-
+Status http_get_response(HttpClient* client, ArrayList<uint8_t>* body) {
   // Read HTTP header.
   Status status = _process_header(client);
   if (status != HTTP_STATUS_OK) {
@@ -67,7 +65,7 @@ Status http_get_response(HttpClient* client, ArrayList* body) {
   // Read body of response.
   while(client->_tcpClient.connected()) {
     if (client->_tcpClient.available()) {
-      al_add(body, client->_tcpClient.read());
+      body->add(client->_tcpClient.read());
     }
   }
   client->_tcpClient.stop();
