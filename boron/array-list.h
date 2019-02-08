@@ -24,6 +24,8 @@ class ArrayList {
     int length;
     T *data;
 
+    ArrayList() : ArrayList(0) {}
+
     // Initialize an ArrayList with the given starting length. The starting
     // length is merely a guess at how large the inner array will need to be, if
     // you don't care just pass 0.
