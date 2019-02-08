@@ -12,6 +12,9 @@ backend-info.h
 # App Engine Files
 # =========================
 
+# API keys that we don't want on github
+ApiKeys.java
+
 java-repo-tools
 service-account.json
 

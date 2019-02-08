@@ -47,6 +47,19 @@ https://github.com/GoogleCloudPlatform/appengine-try-java).
 
         gcloud components install app-engine-java
 
+1.  Create a file at
+    `appengine/src/main/java/com/jonkimbel/busboybackend/ApiKeys.java` and
+    paste in the following:
+
+        package com.jonkimbel.busboybackend;
+
+        public class ApiKeys {
+          // OneBusAway API key.
+          // Email OBA_API_KEY@soundtransit.org to get a real key if you're
+          // planning on actually using this app beyond testing.
+          public static final String OBA = "TEST";
+        }
+
 #### Running the backend locally
 
 To run the application locally, use the [Maven App Engine

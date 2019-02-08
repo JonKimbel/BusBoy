@@ -8,7 +8,7 @@ import dagger.Provides;
 @Module
 class ServletModule {
   @Provides static NetworkUtils provideNetworkUtils() {
-    return new NetworkUtils();
+    return new NetworkUtils(ApiKeys.OBA);
   }
 
   @Provides static TimeUtils provideTimeUtils() {

@@ -34,9 +34,7 @@ public class BusBoyServlet extends HttpServlet {
     this.timeUtils = timeUtils;
   }
 
-  /**
-   * Serves HTTP requests to /.
-   */
+  /** Serves HTTP requests to /. */
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response)
       throws IOException {

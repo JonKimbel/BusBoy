@@ -11,6 +11,7 @@ import com.google.protobuf.InvalidProtocolBufferException;
 import com.google.protobuf.TextFormat;
 import com.jonkimbel.busboybackend.model.ArrivalAndDepartureResponse;
 import com.jonkimbel.busboybackend.network.NetworkUtils;
+import com.jonkimbel.busboybackend.ApiKeys;
 import com.jonkimbel.busboybackend.proto.BusBoy;
 import com.jonkimbel.busboybackend.testing.FakeServletOutputStream;
 import com.jonkimbel.busboybackend.time.TimeUtils;
@@ -40,9 +41,6 @@ import org.mockito.MockitoAnnotations;
 public class BusBoyServletTest {
   private static final String FAKE_URL = "fake.fk/busboy?stop=ID";
   private static final String QUERY_STRING = "stop=ID";
-  private static final String EXPECTED_OBA_URL =
-      "http://api.onebusaway.org/api/where/arrivals-and-departures-for-stop/" +
-      "ID.json?key=TEST";
 
   // Set up a helper so that the ApiProxy returns a valid environment for local
   // testing.
@@ -63,7 +61,7 @@ public class BusBoyServletTest {
     MockitoAnnotations.initMocks(this);
     helper.setUp();
 
-    //  Set up some fake HTTP requests
+    //  Set up some fake HTTP requests.
     when(mockRequest.getRequestURI()).thenReturn(FAKE_URL);
     when(mockRequest.getQueryString()).thenReturn(QUERY_STRING);
 

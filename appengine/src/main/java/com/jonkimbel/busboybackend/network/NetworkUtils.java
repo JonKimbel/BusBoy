@@ -24,17 +24,28 @@ public class NetworkUtils {
   public final static int SC_SERVICE_UNAVAILABLE = 503;
 
   /**
-   * Format string for sending requests to OneBusAway. Takes one argument:
-   * a stop ID string.
+   * Format string for sending requests to OneBusAway. Takes two arguments:
+   *
+   * <ol>
+   *   <li>A stop ID (string).
+   *   <li>A OneBusAway API key (string).
+   * </ol>
    */
   private final static String OBA_URL_FORMAT_STRING =
       "http://api.onebusaway.org/api/where/arrivals-and-departures-for-stop" +
-      "/%s.json" +
-      // Email OBA_API_KEY@soundtransit.org to get a real key if you're planning
-      // on actually using this app beyond testing.
-      "?key=TEST";
+      "/%s.json?key=%s";
 
   private final Gson gson = new Gson();
+
+  /**
+   * OneBusAway API key. Contact OBA_API_KEY@soundtransit.org to get a real key
+   * once you deploy, but just use "TEST" for development purposes.
+   */
+  private final String apiKey;
+
+  public NetworkUtils(String apiKey) {
+    this.apiKey = apiKey;
+  }
 
   /**
    * Synchronously sends an HTTP GET request to the given URL, and returns the
@@ -66,7 +77,7 @@ public class NetworkUtils {
    */
   public ArrivalAndDepartureResponse getDataForStopId(String stopId)
       throws IOException, MalformedURLException {
-    String urlForStopId = String.format(OBA_URL_FORMAT_STRING, stopId);
+    String urlForStopId = String.format(OBA_URL_FORMAT_STRING, stopId, apiKey);
     String json = sendGetRequest(urlForStopId);
     return gson.fromJson(json, ArrivalAndDepartureResponse.class);
   }
