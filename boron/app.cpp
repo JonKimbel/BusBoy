@@ -80,59 +80,58 @@ void setup() {
 
   lcd.clear();
   lcd.print("connecting...");
+}
+
+void loop() {
   if (!httpClient.connect()) {
     lcd.clear();
     lcd.print("connection failed");
-  } else {
-    lcd.clear();
-    lcd.print("connected");
-    httpClient.sendRequest();
-
-    Status status = httpClient.getResponse(&responseBuffer);
-
-    if (status != HTTP_STATUS_OK) {
-      lcd.clear();
-      lcd.print("http error: ");
-      lcd.print(status);
-    } else {
-      busboy_api_Response response = busboy_api_Response_init_default;
-      response.route.funcs.decode = &decode_route;
-      response.arrival.funcs.decode = &decode_arrival;
-      response.temporary_message.funcs.decode = &decode_temporaryMessage;
-      response.temporary_style.funcs.decode = &decode_temporaryStyle;
-
-      pb_istream_t stream = pb_istream_from_buffer(
-          responseBuffer.data, responseBuffer.length);
-      bool status = pb_decode(&stream, busboy_api_Response_fields, &response);
-
-      if (!status) {
-        lcd.clear();
-        lcd.print("proto error");
-      } else {
-        responseTime = response.time;
-
-        lcd.clear();
-        // NOTE: this is using some transitive dependency's "min" declaration,
-        // which is pretty jank. Would be better if the app was in its own
-        // namespace.
-        for (int i = 0; i < min(arrivals.length, 4); i++) {
-          busboy_api_Arrival *arrival = &arrivals.data[i];
-          Route *route = &routes.data[arrival->route_index];
-
-          int minutes_to_arrival = (int)(arrival->ms_to_arrival / 60000);
-
-          lcd.setCursor(0, i);
-          lcd.printf("%d %s %s",
-              minutes_to_arrival, route->headsign, route->short_name);
-        }
-      }
-    }
+    return;
   }
 
-  for(;;);
-}
+  httpClient.sendRequest();
+  Status status = httpClient.getResponse(&responseBuffer);
+  if (status != HTTP_STATUS_OK) {
+    lcd.clear();
+    lcd.print("http error: ");
+    lcd.print(status);
+    return;
+  }
 
-void loop() { /* Not implemented. */ }
+  busboy_api_Response response = busboy_api_Response_init_default;
+  response.route.funcs.decode = &decode_route;
+  response.arrival.funcs.decode = &decode_arrival;
+  response.temporary_message.funcs.decode = &decode_temporaryMessage;
+  response.temporary_style.funcs.decode = &decode_temporaryStyle;
+
+  pb_istream_t stream = pb_istream_from_buffer(
+      responseBuffer.data, responseBuffer.length);
+  if (!pb_decode(&stream, busboy_api_Response_fields, &response)) {
+    lcd.clear();
+    lcd.print("proto decode error");
+    return;
+  }
+
+  responseTime = response.time;
+
+  lcd.clear();
+  // NOTE: this is using some transitive dependency's "min" declaration,
+  // which is pretty jank. Would be better if the app was in its own
+  // namespace.
+  for (int i = 0; i < min(arrivals.length, 4); i++) {
+    busboy_api_Arrival *arrival = &arrivals.data[i];
+    Route *route = &routes.data[arrival->route_index];
+
+    int minutes_to_arrival = (int)(arrival->ms_to_arrival / 60000);
+
+    lcd.setCursor(0, i);
+    lcd.printf("%d %s %s",
+        minutes_to_arrival, route->headsign, route->short_name);
+  }
+
+  // Wait 60s before fetching new data.
+  delay(60000);
+}
 
 ////////////////////////////////////////////////////////////////////////////////
 // NANOPB DECODE CALLBACKS.
