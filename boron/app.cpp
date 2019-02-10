@@ -1,3 +1,4 @@
+#include <stdlib.h>
 #include <pb_decode.h>
 #include "array-list.h"
 #include "bus-boy.pb.h"
@@ -57,10 +58,10 @@ ArrayList<uint8_t> responseBuffer;
 
 // Data parsed out of the response from the server.
 busboy_api_DisplayedTime responseTime;
-ArrayList<Route*> routes;
-ArrayList<busboy_api_Arrival*> arrivals;
-ArrayList<TemporaryMessage*> temporaryMessages;
-ArrayList<busboy_api_TemporaryStyle*> temporaryStyles;
+ArrayList<Route> routes;
+ArrayList<busboy_api_Arrival> arrivals;
+ArrayList<TemporaryMessage> temporaryMessages;
+ArrayList<busboy_api_TemporaryStyle> temporaryStyles;
 
 ////////////////////////////////////////////////////////////////////////////////
 // CODE.
@@ -115,14 +116,14 @@ void setup() {
         // which is pretty jank. Would be better if the app was in its own
         // namespace.
         for (int i = 0; i < min(arrivals.length, 4); i++) {
-          busboy_api_Arrival *arrival = arrivals.data[i];
-          Route *route = routes.data[arrival->route_index];
+          busboy_api_Arrival *arrival = &arrivals.data[i];
+          Route *route = &routes.data[arrival->route_index];
 
           int minutes_to_arrival = (int)(arrival->ms_to_arrival / 60000);
 
           lcd.setCursor(0, i);
-          lcd.printf("%s %s %d",
-              route->short_name, route->headsign, minutes_to_arrival);
+          lcd.printf("%d %s %s",
+              minutes_to_arrival, route->headsign, route->short_name);
         }
       }
     }
@@ -151,7 +152,7 @@ bool decode_route(pb_istream_t *stream, const pb_field_t *field, void **arg) {
     return false;
   }
 
-  routes.add(&route);
+  routes.add(route);
   return true;
 }
 
@@ -161,7 +162,7 @@ bool decode_arrival(pb_istream_t *stream, const pb_field_t *field, void **arg) {
     return false;
   }
 
-  arrivals.add(&arrival_proto);
+  arrivals.add(arrival_proto);
   return true;
 }
 
@@ -180,7 +181,7 @@ bool decode_temporaryMessage(pb_istream_t *stream, const pb_field_t *field, void
   temporaryMessage.time_frame = temporaryMessage_proto.time_frame;
   temporaryMessage.color_scheme_override = temporaryMessage_proto.color_scheme_override;
 
-  temporaryMessages.add(&temporaryMessage);
+  temporaryMessages.add(temporaryMessage);
   return true;
 }
 
@@ -190,17 +191,26 @@ bool decode_temporaryStyle(pb_istream_t *stream, const pb_field_t *field, void *
     return false;
   }
 
-  temporaryStyles.add(&temporaryStyle_proto);
+  temporaryStyles.add(temporaryStyle_proto);
   return true;
 }
 
-// The pb_callback_t.arg should be a non-initialized char*.
+// The pb_callback_t.arg should be a pointer to an uninitialized char*.
 bool decode_string(pb_istream_t *stream, const pb_field_t *field, void **arg) {
-  uint8_t *buffer = (uint8_t*) malloc(stream->bytes_left * sizeof(uint8_t));
-  if (!pb_read(stream, buffer, stream->bytes_left)) {
+  if (sizeof(char) != sizeof(uint8_t)) {
+    return false;
+  }
+  // Allocate string space, write the null terminator.
+  char* buffer = (char*) malloc((stream->bytes_left + 1) * sizeof(char));
+  buffer[stream->bytes_left] = '\0';
+
+  if (!pb_read(stream, (uint8_t*) buffer, stream->bytes_left)) {
     return false;
   }
 
-  *arg = (char*) buffer;
+  // Overwrite the char** set as the arg of the pb_callback_t.
+  // We cast the 'arg' passed to this method to a char*** because nanopb adds an
+  // additional layer of indirection on top of the ones we need...
+  **((char***)arg) = buffer;
   return true;
 }
