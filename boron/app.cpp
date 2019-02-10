@@ -111,6 +111,9 @@ void setup() {
         responseTime = response.time;
 
         lcd.clear();
+        // NOTE: this is using some transitive dependency's "min" declaration,
+        // which is pretty jank. Would be better if the app was in its own
+        // namespace.
         for (int i = 0; i < min(arrivals.length, 4); i++) {
           busboy_api_Arrival *arrival = arrivals.data[i];
           Route *route = routes.data[arrival->route_index];
