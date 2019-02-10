@@ -15,16 +15,32 @@ SYSTEM_MODE(SEMI_AUTOMATIC);
 ////////////////////////////////////////////////////////////////////////////////
 // DECLARATIONS.
 
+// Field-specific nanopb decoders.
 bool decode_route(pb_istream_t *stream, const pb_field_t *field, void **arg);
-bool decode_short_name(pb_istream_t *stream, const pb_field_t *field, void **arg);
+bool decode_arrival(pb_istream_t *stream, const pb_field_t *field, void **arg);
+bool decode_temporaryMessage(pb_istream_t *stream, const pb_field_t *field, void **arg);
+bool decode_temporaryStyle(pb_istream_t *stream, const pb_field_t *field, void **arg);
+
+// Generic nanopb decoders.
+bool decode_string(pb_istream_t *stream, const pb_field_t *field, void **arg);
 
 ////////////////////////////////////////////////////////////////////////////////
 // STRUCTS.
 
+// We define our own version of any message that contains a pb_callback_t so we
+// can store the data after parsing-time. Without these, we couldn't save
+// repeated fields or strings for later consumption.
+
 typedef struct  {
-    uint8_t * short_name;
-    uint8_t * headsign;
+  char *short_name;
+  char *headsign;
 } Route;
+
+typedef struct {
+  busboy_api_TimeFrame time_frame;
+  char *message;
+  busboy_api_ColorScheme color_scheme_override;
+} TemporaryMessage;
 
 ////////////////////////////////////////////////////////////////////////////////
 // VARIABLES.
@@ -42,9 +58,9 @@ ArrayList<uint8_t> responseBuffer;
 // Data parsed out of the response from the server.
 busboy_api_DisplayedTime responseTime;
 ArrayList<Route*> routes;
-ArrayList<busboy_api_Arrival> arrivals;
-ArrayList<busboy_api_TemporaryMessage> temporaryMessages;
-ArrayList<busboy_api_TemporaryStyle> temporaryStyles;
+ArrayList<busboy_api_Arrival*> arrivals;
+ArrayList<TemporaryMessage*> temporaryMessages;
+ArrayList<busboy_api_TemporaryStyle*> temporaryStyles;
 
 ////////////////////////////////////////////////////////////////////////////////
 // CODE.
@@ -79,11 +95,10 @@ void setup() {
       lcd.print(status);
     } else {
       busboy_api_Response response = busboy_api_Response_init_default;
-      response.route.funcs.decode = &decode_route;  // pb_callback_t route;
-      // pb_callback_t arrival;
-      // pb_callback_t temporary_message;
-          // pb_callback_t message;
-      // pb_callback_t temporary_style;
+      response.route.funcs.decode = &decode_route;
+      response.arrival.funcs.decode = &decode_arrival;
+      response.temporary_message.funcs.decode = &decode_temporaryMessage;
+      response.temporary_style.funcs.decode = &decode_temporaryStyle;
 
       pb_istream_t stream = pb_istream_from_buffer(
           responseBuffer.data, responseBuffer.length);
@@ -92,25 +107,21 @@ void setup() {
       if (!status) {
         lcd.clear();
         lcd.print("proto error");
+      } else {
+        responseTime = response.time;
+
+        lcd.clear();
+        for (int i = 0; i < min(arrivals.length, 4); i++) {
+          busboy_api_Arrival *arrival = arrivals.data[i];
+          Route *route = routes.data[arrival->route_index];
+
+          int minutes_to_arrival = (int)(arrival->ms_to_arrival / 60000);
+
+          lcd.setCursor(0, i);
+          lcd.printf("%s %s %d",
+              route->short_name, route->headsign, minutes_to_arrival);
+        }
       }
-      //  else {
-      //   lcd.clear();
-      //   lcd.print("successful parse");
-      //   lcd.print("    ");
-      //
-      //   if (response.has_time) {
-      //     lcd.print("t=");
-      //     lcd.print(response.time.daylight_savings_time ? "dst" : "nodst");
-      //     lcd.print(",");
-      //     // Hack to print uint64_t through the LCD.
-      //     long upper = response.time.ms_since_epoch / 10000;
-      //     long lower = response.time.ms_since_epoch % 10000;
-      //     lcd.print(upper);
-      //     lcd.print(lower);
-      //   } else {
-      //     lcd.print("no time");
-      //   }
-      // }
     }
   }
 
@@ -120,57 +131,18 @@ void setup() {
 void loop() { /* Not implemented. */ }
 
 ////////////////////////////////////////////////////////////////////////////////
-// DECODE CALLBACKS.
+// NANOPB DECODE CALLBACKS.
 
-// Methods in this section are based on
-// https://github.com/nanopb/nanopb/blob/e21e78c67cbd6566fe9d8368eeaf3298ae22b75d/examples/network_server/client.c
-
-
-// busboy_api_DisplayedTime time;
-//
-// busboy_api_Route busboy_api_Route_init_default busboy_api_Route_fields
-// ArrayList routes;
-//
-// busboy_api_Arrival busboy_api_Arrival_init_default busboy_api_Arrival_fields
-// ArrayList arrivals;
-//
-// busboy_api_TemporaryMessage busboy_api_TemporaryMessage_init_default busboy_api_TemporaryMessage_fields
-// ArrayList temporaryMessages;
-//
-// busboy_api_TemporaryStyle busboy_api_TemporaryStyle_init_default busboy_api_TemporaryStyle_fields
-// ArrayList temporaryStyles;
-
-// void foo(void *x) {
-//     void **xs = x;
-//     int *n = xs[0];
-//     char *name = xs[1];
-//     printf("foo: %d - %s\n", *n, name);
-// }
-//
-// int main() {
-//     int n = 42;
-//     char *name = "Arthur";
-//     void *foo_load[2];
-//     foo_load[0] = &n;
-//     foo_load[1] = name;
-//
-//     foo(foo_load);
-//     return 0;
-// }
-
-
-// Decode callback for routes in response messages.
-// Based on https://github.com/nanopb/nanopb/blob/e21e78c67cbd6566fe9d8368eeaf3298ae22b75d/examples/network_server/client.c
 bool decode_route(pb_istream_t *stream, const pb_field_t *field, void **arg) {
   Route route;
 
   busboy_api_Route route_proto = busboy_api_Route_init_default;
   // pb_callback_t short_name;
-  route_proto.short_name.funcs.decode = &decode_short_name;
+  route_proto.short_name.funcs.decode = &decode_string;
   route_proto.short_name.arg = &route.short_name;
-  // // pb_callback_t headsign;
-  // route.headsign.funcs.decode = &decode_headsign;
-  // route.headsign.arg = &route;
+  // pb_callback_t headsign;
+  route_proto.headsign.funcs.decode = &decode_string;
+  route_proto.headsign.arg = &route.headsign;
 
   if (!pb_decode(stream, busboy_api_Route_fields, &route_proto)) {
     return false;
@@ -180,21 +152,52 @@ bool decode_route(pb_istream_t *stream, const pb_field_t *field, void **arg) {
   return true;
 }
 
-// Decode callback for short names in route messages.
-bool decode_short_name(pb_istream_t *stream, const pb_field_t *field, void **arg) {
-  uint8_t *short_name = (uint8_t*) *arg;
-  int length = stream->bytes_left;
-  short_name = (uint8_t*) malloc(length * sizeof(uint8_t));
-
-  if (!pb_read(stream, short_name, stream->bytes_left)) {
+bool decode_arrival(pb_istream_t *stream, const pb_field_t *field, void **arg) {
+  busboy_api_Arrival arrival_proto = busboy_api_Arrival_init_default;
+  if (!pb_decode(stream, busboy_api_Arrival_fields, &arrival_proto)) {
     return false;
   }
 
-  // TODO: decode from ASCII.
-  lcd.clear();
-  for (int i = 0; i < length; i++) {
-    lcd.print(short_name[i]);
+  arrivals.add(&arrival_proto);
+  return true;
+}
+
+bool decode_temporaryMessage(pb_istream_t *stream, const pb_field_t *field, void **arg) {
+  TemporaryMessage temporaryMessage;
+
+  busboy_api_TemporaryMessage temporaryMessage_proto = busboy_api_TemporaryMessage_init_default;
+  // pb_callback_t message;
+  temporaryMessage_proto.message.funcs.decode = &decode_string;
+  temporaryMessage_proto.message.arg = &temporaryMessage.message;
+
+  if (!pb_decode(stream, busboy_api_TemporaryMessage_fields, &temporaryMessage_proto)) {
+    return false;
   }
 
+  temporaryMessage.time_frame = temporaryMessage_proto.time_frame;
+  temporaryMessage.color_scheme_override = temporaryMessage_proto.color_scheme_override;
+
+  temporaryMessages.add(&temporaryMessage);
+  return true;
+}
+
+bool decode_temporaryStyle(pb_istream_t *stream, const pb_field_t *field, void **arg) {
+  busboy_api_TemporaryStyle temporaryStyle_proto = busboy_api_TemporaryStyle_init_default;
+  if (!pb_decode(stream, busboy_api_TemporaryStyle_fields, &temporaryStyle_proto)) {
+    return false;
+  }
+
+  temporaryStyles.add(&temporaryStyle_proto);
+  return true;
+}
+
+// The pb_callback_t.arg should be a non-initialized char*.
+bool decode_string(pb_istream_t *stream, const pb_field_t *field, void **arg) {
+  uint8_t *buffer = (uint8_t*) malloc(stream->bytes_left * sizeof(uint8_t));
+  if (!pb_read(stream, buffer, stream->bytes_left)) {
+    return false;
+  }
+
+  *arg = (char*) buffer;
   return true;
 }
