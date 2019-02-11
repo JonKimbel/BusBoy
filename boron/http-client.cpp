@@ -53,6 +53,8 @@ bool HttpClient::responseReady() {
 }
 
 Status HttpClient::getResponse(ArrayList<uint8_t>* body) {
+  body->clear();
+
   // Read HTTP header.
   Status status = _processHeader();
   if (status != HTTP_STATUS_OK) {

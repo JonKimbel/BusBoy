@@ -1,3 +1,4 @@
+#include <Wire.h>
 #include <stdlib.h>
 #include <pb_decode.h>
 #include "array-list.h"
@@ -12,18 +13,6 @@
 // Don't auto-connect to the Particle cloud. Speeds up testing.
 // TODO: remove before deployment so firmware can be updated in the field.
 SYSTEM_MODE(SEMI_AUTOMATIC);
-
-////////////////////////////////////////////////////////////////////////////////
-// DECLARATIONS.
-
-// Field-specific nanopb decoders.
-bool decode_route(pb_istream_t *stream, const pb_field_t *field, void **arg);
-bool decode_arrival(pb_istream_t *stream, const pb_field_t *field, void **arg);
-bool decode_temporaryMessage(pb_istream_t *stream, const pb_field_t *field, void **arg);
-bool decode_temporaryStyle(pb_istream_t *stream, const pb_field_t *field, void **arg);
-
-// Generic nanopb decoders.
-bool decode_string(pb_istream_t *stream, const pb_field_t *field, void **arg);
 
 ////////////////////////////////////////////////////////////////////////////////
 // STRUCTS.
@@ -42,6 +31,22 @@ typedef struct {
   char *message;
   busboy_api_ColorScheme color_scheme_override;
 } TemporaryMessage;
+
+////////////////////////////////////////////////////////////////////////////////
+// METHOD DECLARATIONS.
+
+// Utilities.
+void format_arrival(busboy_api_Arrival *arrival, char* arrivalString, int arrivalStringLength);
+void clear_response_data();
+
+// Field-specific nanopb decoders.
+bool decode_route(pb_istream_t *stream, const pb_field_t *field, void **arg);
+bool decode_arrival(pb_istream_t *stream, const pb_field_t *field, void **arg);
+bool decode_temporaryMessage(pb_istream_t *stream, const pb_field_t *field, void **arg);
+bool decode_temporaryStyle(pb_istream_t *stream, const pb_field_t *field, void **arg);
+
+// Generic nanopb decoders.
+bool decode_string(pb_istream_t *stream, const pb_field_t *field, void **arg);
 
 ////////////////////////////////////////////////////////////////////////////////
 // VARIABLES.
@@ -64,9 +69,10 @@ ArrayList<TemporaryMessage> temporaryMessages;
 ArrayList<busboy_api_TemporaryStyle> temporaryStyles;
 
 ////////////////////////////////////////////////////////////////////////////////
-// CODE.
+// MAIN CODE.
 
 void setup() {
+  Serial.begin(9600);
   lcd.begin();
   lcd.backlight();
 
@@ -104,6 +110,8 @@ void loop() {
   response.temporary_message.funcs.decode = &decode_temporaryMessage;
   response.temporary_style.funcs.decode = &decode_temporaryStyle;
 
+  clear_response_data();
+
   pb_istream_t stream = pb_istream_from_buffer(
       responseBuffer.data, responseBuffer.length);
   if (!pb_decode(&stream, busboy_api_Response_fields, &response)) {
@@ -119,18 +127,52 @@ void loop() {
   // which is pretty jank. Would be better if the app was in its own
   // namespace.
   for (int i = 0; i < min(arrivals.length, 4); i++) {
-    busboy_api_Arrival *arrival = &arrivals.data[i];
-    Route *route = &routes.data[arrival->route_index];
-
-    int minutes_to_arrival = (int)(arrival->ms_to_arrival / 60000);
+    int arrivalStringLength = 21; // LCD width + 1 for null char.
+    char* arrivalString = (char*) malloc(arrivalStringLength * sizeof(char));
+    format_arrival(&arrivals.data[i], arrivalString, arrivalStringLength);
 
     lcd.setCursor(0, i);
-    lcd.printf("%d %s %s",
-        minutes_to_arrival, route->headsign, route->short_name);
+    lcd.print(arrivalString);
+
+    free(arrivalString);
   }
 
   // Wait 60s before fetching new data.
   delay(60000);
+}
+
+////////////////////////////////////////////////////////////////////////////////
+// UTILITY METHODS.
+
+void format_arrival(busboy_api_Arrival *arrival, char* arrivalString, int arrivalStringLength) {
+  int minutesToArrival = (int)(arrival->ms_to_arrival / 60000);
+  Route *route = &routes.data[arrival->route_index];
+
+  // Add minutesToArrival to string.
+  snprintf(arrivalString, arrivalStringLength, "%dmin", minutesToArrival);
+
+  // Add short name to string.
+  snprintf(arrivalString, arrivalStringLength, "%s %s",
+      arrivalString, route->short_name);
+
+  // Add headsign to string.
+  snprintf(arrivalString, arrivalStringLength, "%s %s",
+      arrivalString, route->headsign);
+}
+
+void clear_response_data() {
+  for (int i = 0; i < routes.length; i++) {
+    free(routes.data[i].short_name);
+    free(routes.data[i].headsign);
+  }
+  for (int i = 0; i < temporaryMessages.length; i++) {
+    free(temporaryMessages.data[i].message);
+  }
+
+  routes.clear();
+  arrivals.clear();
+  temporaryMessages.clear();
+  temporaryStyles.clear();
 }
 
 ////////////////////////////////////////////////////////////////////////////////

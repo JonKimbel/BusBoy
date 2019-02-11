@@ -39,7 +39,7 @@ class ArrayList {
 
     // Clear all data out of the ArrayList and re-initialize it with the given
     // length.
-    void clear(int initialLength);
+    void clear(int initialLength = 0);
   private:
     int _allocatedLength;
 
