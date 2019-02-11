@@ -120,3 +120,20 @@ To flash the compiled binary to a usb-connected device:
 1.  Run this flash command:
 
         particle flash --usb out.bin
+
+### AVR (frontend screen driver)
+
+This code requires an Arduino UNO or equivalent and one or more of [a specific
+line of LED screens sold by Adafruit](https://www.adafruit.com/product/2276).
+
+Adafruit outlines the connection of these panels to an Arduino
+[here](https://learn.adafruit.com/32x16-32x32-rgb-led-matrix/).
+
+Install the Arduino IDE from [here](https://www.arduino.cc/en/Main/Software).
+
+Install the [Adafruit GFX](https://github.com/adafruit/Adafruit-GFX-Library) and
+[RGB Matrix Panel](https://github.com/adafruit/RGB-matrix-Panel) libraries.
+
+Open `avr/avr.ino` in the Arduino IDE, make sure you have the correct board/port
+selected, and use the 'verify' and 'upload' buttons to compile and deploy the
+code, respectively.

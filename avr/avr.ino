@@ -16,7 +16,6 @@ void setup() {
   // uint16_t color =
   //     matrix.ColorHSV(hue, sat, val, /* gflag (gamma corrected) = */ true);
   // matrix.drawPixel(x, y, color);
-
 }
 
 void loop() {
